@@ -162,7 +162,13 @@ export default function HomePage() {
       : services.filter((s) => s.category === activeTab);
 
   return (
-    <div className="min-h-screen font-sans selection:bg-blue-500 selection:text-white transition-colors duration-300" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+    <div
+      className="min-h-screen font-sans selection:bg-blue-500 selection:text-white transition-colors duration-300"
+      style={{
+        backgroundColor: "var(--bg-primary)",
+        color: "var(--text-primary)",
+      }}
+    >
       {/* Navigation */}
       <nav
         className={`fixed w-full z-50 transition-all duration-300 ${
