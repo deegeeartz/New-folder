@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: #2563eb;
+  --brand-secondary: #06b6d4;
+  --brand-magenta: #a855f7;
+  
+  /* Dark theme (default) */
+  --bg-primary: #0b1224;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --border-color: rgba(148, 163, 184, 0.15);
+  --panel: rgba(15, 23, 42, 0.7);
+  --panel-border: rgba(148, 163, 184, 0.15);
+  --card-bg: rgba(15, 23, 42, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Light theme */
+:root[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+  --border-color: rgba(15, 23, 42, 0.1);
+  --panel: rgba(255, 255, 255, 0.8);
+  --panel-border: rgba(15, 23, 42, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.08), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(168, 85, 247, 0.08), transparent 35%),
+    var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+:root[data-theme='light'] body {
+  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.05), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(168, 85, 247, 0.05), transparent 35%),
+    var(--bg-primary);
+}
+
+a {
+  color: inherit;
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(8px);
+}
+
+.floating-card {
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  box-shadow: 0 10px 40px rgba(37, 99, 235, 0.08);
+}
+
+.floating-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 60px rgba(37, 99, 235, 0.15);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.float-slow {
+  animation: floaty 12s ease-in-out infinite;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: rise-in 700ms ease forwards;
+}
+
+@keyframes floaty {
+  0% {
+    transform: translate3d(0, 0px, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0px, 0);
+  }
+}
+
+@keyframes rise-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .float-slow,
+  .reveal-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
