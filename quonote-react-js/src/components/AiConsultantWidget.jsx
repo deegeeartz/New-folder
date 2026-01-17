@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Sparkles, Send, Loader2, Bot } from 'lucide-react';
+import { X, Loader2, Bot } from 'lucide-react';
 import { sendMessageToAI } from '../api/gemini';
+import ChatHeader from './ChatHeader';
+import ChatMessage from './ChatMessage';
+import ChatInput from './ChatInput';
 
 const AiConsultantWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -41,43 +44,17 @@ const AiConsultantWidget = () => {
       }
     };
 
-    const handleKeyPress = (e) => {
-      if (e.key === 'Enter') handleSend();
-    };
-
     return (
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         {/* Chat Window */}
         {isOpen && (
           <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-80 sm:w-96 mb-4 overflow-hidden flex flex-col animate-fade-in-up transition-all" style={{ height: '500px' }}>
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-700 to-blue-600 p-4 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Sparkles className="text-yellow-300" size={20} />
-                <div>
-                  <h3 className="text-white font-bold text-sm">Quonote AI Consultant</h3>
-                  <p className="text-blue-100 text-xs opacity-90">Powered by Gemini ✨</p>
-                </div>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white">
-                <X size={18} />
-              </button>
-            </div>
+            <ChatHeader onClose={() => setIsOpen(false)} />
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900/95">
               {messages.map((msg, index) => (
-                <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${ 
-                      msg.role === 'user'
-                        ? 'bg-blue-600 text-white rounded-br-none'
-                        : 'bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-none'
-                    }`}
-                  >
-                    <p className="whitespace-pre-wrap">{msg.text}</p>
-                  </div>
-                </div>
+                <ChatMessage key={index} message={msg} />
               ))}
               {isLoading && (
                 <div className="flex justify-start">
@@ -90,28 +67,12 @@ const AiConsultantWidget = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
-            <div className="p-3 bg-slate-800 border-t border-slate-700">
-              <div className="flex items-center gap-2 bg-slate-900 border border-slate-600 rounded-full px-4 py-2 focus-within:border-blue-500 transition-colors">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask about digital strategy..."
-                  className="bg-transparent border-none outline-none text-white text-sm flex-grow placeholder:text-slate-500"
-                />
-                <button
-                  onClick={handleSend}
-                  disabled={isLoading}
-                  className={`p-1.5 rounded-full transition-colors ${ 
-                    input.trim() ? 'bg-blue-600 text-white hover:bg-blue-500' : 'bg-slate-700 text-slate-500'
-                  }`}
-                >
-                  <Send size={16} />
-                </button>
-              </div>
-            </div>
+            <ChatInput 
+              input={input} 
+              setInput={setInput} 
+              handleSend={handleSend} 
+              isLoading={isLoading} 
+            />
           </div>
         )}
 
