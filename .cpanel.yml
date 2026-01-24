@@ -1,0 +1,7 @@
+---
+# This file is often used for pushing files to public_html.
+# Since we are using "Setup Node.js App" pointing directly to the repo folder,
+# we usually don't need this unless we separate source from serve.
+# Leaving empty to prevent auto-copying to wrong places.
+deployment:
+  tasks: []

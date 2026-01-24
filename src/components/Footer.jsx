@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
 
           <div className="border-t border-slate-900 pt-8 lg:pt-10 text-center text-slate-600 text-sm lg:text-base">
-            &copy; 2025 Quonote Digital. All rights reserved.
+            &copy; 2026 Quonote Digital. All rights reserved.
           </div>
         </div>
       </footer>

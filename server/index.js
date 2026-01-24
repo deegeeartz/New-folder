@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import { config } from 'dotenv';
 import cors from 'cors';
 import path from 'path';
@@ -11,7 +12,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+// cPanel often sets PORT to a named pipe like /tmp/passenger.blah, so we must rely on process.env.PORT
+const PORT = process.env.PORT || 3001; 
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
@@ -23,7 +25,6 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -33,27 +34,55 @@ app.use(cors({
   credentials: true
 }));
 
-// API routes (must come before static file serving)
+// API routes
 app.use(geminiProxy);
 
 // Serve static files in production
-if (isProduction) {
-  const distPath = path.join(__dirname, '../dist');
-  
-  app.use(express.static(distPath));
-  
-  // Handle client-side routing - serve index.html for all non-API routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+  // Debug logging for dist path
+  const logFile = path.join(__dirname, '../../server_debug.log');
+  try {
+      fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist Path Resolved to: ${distPath}\n`);
+      if (fs.existsSync(distPath)) {
+           fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist folder exists.\n`);
+           // List children to verify
+           const files = fs.readdirSync(distPath);
+           fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist contents: ${files.join(', ')}\n`);
+      } else {
+           fs.appendFileSync(logFile, `[${new Date().toISOString()}] CRITICAL: Dist folder NOT found at ${distPath}\n`);
+      }
+  } catch (e) {
+      console.error(e);
+  }
+
+  // Serve static files with caching
+  app.use(express.static(distPath, {
+    maxAge: '1d', // Cache static assets for 1 day
+    etag: false
+  }));
+
+  // Use regex for catch-all to avoid Express 5/path-to-regexp issues with '*'
+  app.get(/.*/, (req, res) => {
+    // Log what is falling through to catch-all
+    try {
+        fs.appendFileSync(logFile, `[${new Date().toISOString()}] 404 Fallthrough: ${req.url}\n`);
+    } catch (e) {}
+
+    res.sendFile(path.join(distPath, 'index.html'), (err) => {
+      if (err) {
+        const msg = `[${new Date().toISOString()}] Error sending index.html for url ${req.url}: ${err.message}\n`;
+        try { fs.appendFileSync(logFile, msg); } catch(e) {}
+        console.error('Error sending index.html:', err);
+        res.status(500).send('Server Error: Could not find client build files. See server_debug.log.');
+      }
+    });
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`✅ Quonote server running on port ${PORT}`);
-  console.log(`📦 Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-  if (isProduction) {
-    console.log(`🌐 Serving static files from dist/`);
-  }
-});
+// Only listen if executed directly (not imported)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+  });
+}
 
 export default app;

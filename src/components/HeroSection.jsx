@@ -14,7 +14,7 @@ const HeroSection = () => {
           <div className="max-w-4xl space-y-6">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-900/40 border border-blue-500/30 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide animate-fade-in-up">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-              Accepting New Clients for 2025
+              Accepting New Clients for 2026
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-tight">
               We build the tech that

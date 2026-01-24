@@ -2,6 +2,7 @@
   "name": "quonote-react-js",
   "private": true,
   "version": "0.0.0",
+  "main": "server.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
