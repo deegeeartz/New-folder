@@ -40,6 +40,7 @@ Since your hosting has cPanel, you can use the **"Setup Node.js App"** feature (
 2.  Go to the folder you just created (e.g., `quonote_app`).
 3.  **Upload** your `project.zip` file.
 4.  **Extract** it inside this folder.
+    *   *Note: If you see a warning about "backslashes as path separators", you can ignore it. This is normal when uploading from Windows to Linux.*
 5.  **Important**: Rename `.env.production` to `.env`.
     *   *(If you can't see .env files, click "Settings" in top-right of File Manager and check "Show Hidden Files")*.
 
