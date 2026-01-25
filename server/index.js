@@ -57,29 +57,35 @@ if (isProduction) {
       console.error(e);
   }
 
-  // ASSET DEBUG MIDDLEWARE
-  app.use('/assets', (req, res, next) => {
-      // req.path will be /index-BmwjzAi-.css
-      const fullPath = path.join(distPath, 'assets', req.path);
-      try {
-          const exists = fs.existsSync(fullPath);
-          const stats = exists ? fs.statSync(fullPath) : null;
-          const msg = `[Asset Check] Request: ${req.originalUrl} -> Mapped: ${fullPath} -> Exists: ${exists} -> Size: ${stats ? stats.size : 'N/A'}\n`;
-          fs.appendFileSync(logFile, msg);
-      } catch (e) {
-          fs.appendFileSync(logFile, `[Asset Check Error] ${e.message}\n`);
-      }
-      next();
-  });
-
   // Serve static files with caching
   app.use(express.static(distPath, {
     maxAge: '1d', // Cache static assets for 1 day
     etag: false
   }));
 
+  // Manual fallback for assets to catch "500" errors from express.static
+  // and ensure we don't serve HTML for missing JS files
+  app.get('/assets/*', (req, res) => {
+      const fullPath = path.join(distPath, req.path);
+      res.sendFile(fullPath, (err) => {
+          if (err) {
+              const msg = `[Asset Fallback Error] ${req.path}: ${err.message} (Code: ${err.code})\n`;
+              try { fs.appendFileSync(logFile, msg); } catch(e) {}
+              // Do NOT serve index.html here. Send 404/500 directly.
+              if (!res.headersSent) {
+                   res.status(404).send('Asset not found');
+              }
+          }
+      });
+  });
+
   // Use regex for catch-all to avoid Express 5/path-to-regexp issues with '*'
   app.get(/.*/, (req, res) => {
+    // SECURITY: Do not serve index.html for missing assets
+    if (req.url.startsWith('/assets/') || req.url.includes('.js') || req.url.includes('.css')) {
+        return res.status(404).send('Not found');
+    }
+
     // Log what is falling through to catch-all
     try {
         fs.appendFileSync(logFile, `[${new Date().toISOString()}] 404 Fallthrough: ${req.url}\n`);
