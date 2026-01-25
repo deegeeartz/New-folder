@@ -40,22 +40,9 @@ app.use(geminiProxy);
 // Serve static files in production
 if (isProduction) {
   const distPath = path.join(__dirname, '../dist');
+  const logFile = path.join(__dirname, '../server_debug.log');
   
-  // Debug logging for dist path
-  const logFile = path.join(__dirname, '../../server_debug.log');
-  try {
-      fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist Path Resolved to: ${distPath}\n`);
-      if (fs.existsSync(distPath)) {
-           fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist folder exists.\n`);
-           // List children to verify
-           const files = fs.readdirSync(distPath);
-           fs.appendFileSync(logFile, `[${new Date().toISOString()}] Dist contents: ${files.join(', ')}\n`);
-      } else {
-           fs.appendFileSync(logFile, `[${new Date().toISOString()}] CRITICAL: Dist folder NOT found at ${distPath}\n`);
-      }
-  } catch (e) {
-      console.error(e);
-  }
+  // Quick startup - no heavy logging here
 
   // Serve static files with caching
   app.use(express.static(distPath, {
