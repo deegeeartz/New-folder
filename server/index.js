@@ -42,29 +42,46 @@ if (isProduction) {
   const distPath = path.join(__dirname, '../dist');
   const logFile = path.join(__dirname, '../server_debug.log');
   
-  // Quick startup - no heavy logging here
+  // MIME type map
+  const mimeTypes = {
+    '.js': 'application/javascript',
+    '.css': 'text/css',
+    '.html': 'text/html',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.ico': 'image/x-icon',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.ttf': 'font/ttf',
+    '.webmanifest': 'application/manifest+json'
+  };
 
-  // Serve static files with caching
+  // MANUAL asset serving - more reliable than express.static on cold starts
+  app.get(/^\/assets\/.*$/, (req, res) => {
+    const fullPath = path.join(distPath, req.path);
+    const ext = path.extname(fullPath).toLowerCase();
+    const contentType = mimeTypes[ext] || 'application/octet-stream';
+    
+    fs.readFile(fullPath, (err, data) => {
+      if (err) {
+        try { fs.appendFileSync(logFile, `[Asset Error] ${req.path}: ${err.message}\n`); } catch(e) {}
+        return res.status(404).send('Asset not found');
+      }
+      res.setHeader('Content-Type', contentType);
+      res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day
+      res.send(data);
+    });
+  });
+
+  // Serve other static files (images, manifest, etc.)
   app.use(express.static(distPath, {
-    maxAge: '1d', // Cache static assets for 1 day
+    maxAge: '1d',
     etag: false
   }));
-
-  // Manual fallback for assets to catch "500" errors from express.static
-  // and ensure we don't serve HTML for missing JS files
-  app.get(/^\/assets\/.*$/, (req, res) => {
-      const fullPath = path.join(distPath, req.path);
-      res.sendFile(fullPath, (err) => {
-          if (err) {
-              const msg = `[Asset Fallback Error] ${req.path}: ${err.message} (Code: ${err.code})\n`;
-              try { fs.appendFileSync(logFile, msg); } catch(e) {}
-              // Do NOT serve index.html here. Send 404/500 directly.
-              if (!res.headersSent) {
-                   res.status(404).send('Asset not found');
-              }
-          }
-      });
-  });
 
   // Use regex for catch-all to avoid Express 5/path-to-regexp issues with '*'
   app.get(/.*/, (req, res) => {
