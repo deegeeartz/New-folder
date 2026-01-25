@@ -1,15 +1,17 @@
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
-PassengerAppRoot "/home/fjeyytqhry/Quonote_website"
+PassengerAppRoot "/home/fjeyytqhry/repositories/quonote_app"
 PassengerBaseURI "/"
 PassengerAppType node
 PassengerStartupFile server.cjs
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
 
-# Application Entry Point
-DirectoryIndex server.cjs
-
+# SPA Fallback - serve index.html for non-file requests
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REQUEST_URI} ^/+(.*)$
-    RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
 </IfModule>
