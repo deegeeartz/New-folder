@@ -65,7 +65,7 @@ if (isProduction) {
 
   // Manual fallback for assets to catch "500" errors from express.static
   // and ensure we don't serve HTML for missing JS files
-  app.get('/assets/*', (req, res) => {
+  app.get(/^\/assets\/.*$/, (req, res) => {
       const fullPath = path.join(distPath, req.path);
       res.sendFile(fullPath, (err) => {
           if (err) {
