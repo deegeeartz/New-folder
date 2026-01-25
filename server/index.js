@@ -57,6 +57,21 @@ if (isProduction) {
       console.error(e);
   }
 
+  // ASSET DEBUG MIDDLEWARE
+  app.use('/assets', (req, res, next) => {
+      // req.path will be /index-BmwjzAi-.css
+      const fullPath = path.join(distPath, 'assets', req.path);
+      try {
+          const exists = fs.existsSync(fullPath);
+          const stats = exists ? fs.statSync(fullPath) : null;
+          const msg = `[Asset Check] Request: ${req.originalUrl} -> Mapped: ${fullPath} -> Exists: ${exists} -> Size: ${stats ? stats.size : 'N/A'}\n`;
+          fs.appendFileSync(logFile, msg);
+      } catch (e) {
+          fs.appendFileSync(logFile, `[Asset Check Error] ${e.message}\n`);
+      }
+      next();
+  });
+
   // Serve static files with caching
   app.use(express.static(distPath, {
     maxAge: '1d', // Cache static assets for 1 day
