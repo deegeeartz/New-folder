@@ -38,6 +38,9 @@ app.use(cors({
 app.use(geminiProxy);
 
 // Serve static files in production
+if (isProduction) {
+  const distPath = path.join(__dirname, '../dist');
+  
   // Debug logging for dist path
   const logFile = path.join(__dirname, '../../server_debug.log');
   try {
