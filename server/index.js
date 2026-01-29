@@ -130,6 +130,22 @@ if (isProduction) {
       }
     });
   });
+
+  // Global Error Handler
+  app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err);
+    // Log to file for persistence
+    const logPath = path.join(__dirname, '../server_debug.log');
+    const timestamp = new Date().toISOString();
+    const logMessage = `[${timestamp}] ERROR: ${err.message}\n${err.stack}\n\n`;
+    try {
+      fs.appendFileSync(logPath, logMessage);
+    } catch (e) {
+      console.error('Could not write to log file:', e);
+    }
+    
+    res.status(500).send('Internal Server Error');
+  });
 }
 
 // Only listen if executed directly (not imported)
