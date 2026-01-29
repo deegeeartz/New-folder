@@ -23,6 +23,7 @@ app.get('/debug-deployment', (req, res) => {
   const distPath = path.join(__dirname, '../dist');
   res.json({
     status: 'ok',
+    version: 'v2-static-fix',
     env: {
       NODE_ENV: process.env.NODE_ENV,
       PORT: process.env.PORT,
