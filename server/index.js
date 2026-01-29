@@ -105,8 +105,8 @@ if (isProduction) {
     }
   });
 
-  // SPA Catch-all
-  app.get('*', (req, res) => {
+  // SPA Catch-all (Express 5 syntax)
+  app.get('/{*splat}', (req, res) => {
     // SECURITY: Do not serve index.html for known missing asset patterns
     if (req.url.startsWith('/assets/') || req.url.includes('.js') || req.url.includes('.css')) {
         return res.status(404).send('Not found');
