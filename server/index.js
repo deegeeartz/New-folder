@@ -83,47 +83,38 @@ if (isProduction) {
     '.webmanifest': 'application/manifest+json'
   };
 
-  // MANUAL asset serving - more reliable than express.static on cold starts
-  app.get(/^\/assets\/.*$/, (req, res) => {
-    const fullPath = path.join(distPath, req.path);
-    const ext = path.extname(fullPath).toLowerCase();
-    const contentType = mimeTypes[ext] || 'application/octet-stream';
-    
-    fs.readFile(fullPath, (err, data) => {
-      if (err) {
-        try { fs.appendFileSync(logFile, `[Asset Error] ${req.path}: ${err.message}\n`); } catch(e) {}
-        return res.status(404).send('Asset not found');
-      }
-      res.setHeader('Content-Type', contentType);
-      res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day
-      res.send(data);
-    });
-  });
-
-  // Serve other static files (images, manifest, etc.)
-  app.use(express.static(distPath, {
+  // Serve static assets with explicit caching policy
+  app.use('/assets', express.static(path.join(distPath, 'assets'), {
     maxAge: '1d',
-    etag: false
+    fallthrough: false // processing stops here if file not found in assets, preventing 404 falling to index.html
   }));
 
-  // Use regex for catch-all to avoid Express 5/path-to-regexp issues with '*'
-  app.get(/.*/, (req, res) => {
-    // SECURITY: Do not serve index.html for missing assets
+  // Serve other root files (favicon, manifest, etc.)
+  app.use(express.static(distPath, {
+    maxAge: '1d'
+  }));
+
+  // Debug route to view server logs
+  app.get('/debug-logs', (req, res) => {
+    const logPath = path.join(__dirname, '../server_debug.log');
+    if (fs.existsSync(logPath)) {
+      res.sendFile(logPath);
+    } else {
+      res.send('No log file found.');
+    }
+  });
+
+  // SPA Catch-all
+  app.get('*', (req, res) => {
+    // SECURITY: Do not serve index.html for known missing asset patterns
     if (req.url.startsWith('/assets/') || req.url.includes('.js') || req.url.includes('.css')) {
         return res.status(404).send('Not found');
     }
 
-    // Log what is falling through to catch-all
-    try {
-        fs.appendFileSync(logFile, `[${new Date().toISOString()}] 404 Fallthrough: ${req.url}\n`);
-    } catch (e) {}
-
     res.sendFile(path.join(distPath, 'index.html'), (err) => {
       if (err) {
-        const msg = `[${new Date().toISOString()}] Error sending index.html for url ${req.url}: ${err.message}\n`;
-        try { fs.appendFileSync(logFile, msg); } catch(e) {}
         console.error('Error sending index.html:', err);
-        res.status(500).send('Server Error: Could not find client build files. See server_debug.log.');
+        res.status(500).send('Server Error: Could not load application.');
       }
     });
   });
