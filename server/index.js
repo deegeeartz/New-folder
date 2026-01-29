@@ -96,14 +96,20 @@ if (isProduction) {
   };
 
   // Serve static assets with explicit caching policy
-  app.use('/assets', express.static(path.join(distPath, 'assets'), {
-    maxAge: '1d',
-    fallthrough: false // processing stops here if file not found in assets, preventing 404 falling to index.html
+  // Robust static file serving
+  app.use(express.static(distPath, {
+    maxAge: '1y',
+    dotfiles: 'allow',
+    setHeaders: (res, path) => {
+      if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
+      if (path.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
+    }
   }));
 
-  // Serve other root files (favicon, manifest, etc.)
-  app.use(express.static(distPath, {
-    maxAge: '1d'
+  // Explicitly serve assets folder again to be safe
+  app.use('/assets', express.static(path.join(distPath, 'assets'), {
+    maxAge: '1y',
+    fallthrough: true
   }));
 
   // Debug route to view server logs
