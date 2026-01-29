@@ -53,16 +53,30 @@ app.get('/debug-assets', (req, res) => {
   });
 });
 
-// CORS configuration
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ['http://localhost:5173', 'http://localhost:5174'];
+// Enable strict CORS but allow Vercel/Localhost
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://quonote.com',
+  'https://www.quonote.com',
+  'https://quonote-frontend.vercel.app', // Generic Vercel stub (user will need to update this if different)
+  process.env.VITE_VERCEL_URL // dynamic Vercel URL
+];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin matches any allowed domain
+    const isAllowed = allowedOrigins.some(allowed => 
+      origin === allowed || origin.endsWith('.vercel.app') // Allow all vercel preview deployments
+    );
+
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.warn(`Blocked CORS for origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -72,87 +86,27 @@ app.use(cors({
 // API routes
 app.use(geminiProxy);
 
-// Serve static files in production
-if (isProduction) {
-  const distPath = path.join(__dirname, '../dist');
-  const logFile = path.join(__dirname, '../server_debug.log');
-  
-  // MIME type map
-  const mimeTypes = {
-    '.js': 'application/javascript',
-    '.css': 'text/css',
-    '.html': 'text/html',
-    '.json': 'application/json',
-    '.png': 'image/png',
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.gif': 'image/gif',
-    '.svg': 'image/svg+xml',
-    '.ico': 'image/x-icon',
-    '.woff': 'font/woff',
-    '.woff2': 'font/woff2',
-    '.ttf': 'font/ttf',
-    '.webmanifest': 'application/manifest+json'
-  };
-
-  // Serve static assets with explicit caching policy
-  // Robust static file serving
-  app.use(express.static(distPath, {
-    maxAge: '1y',
-    dotfiles: 'allow',
-    setHeaders: (res, path) => {
-      if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
-      if (path.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
-    }
-  }));
-
-  // Explicitly serve assets folder again to be safe
-  app.use('/assets', express.static(path.join(distPath, 'assets'), {
-    maxAge: '1y',
-    fallthrough: true
-  }));
-
-  // Debug route to view server logs
-  app.get('/debug-logs', (req, res) => {
-    const logPath = path.join(__dirname, '../server_debug.log');
-    if (fs.existsSync(logPath)) {
-      res.sendFile(logPath);
-    } else {
-      res.send('No log file found.');
+// Debug route to diagnose deployment issues
+app.get('/debug-deployment', (req, res) => {
+  res.json({
+    status: 'ok',
+    mode: 'API-ONLY',
+    timestamp: new Date().toISOString(),
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+    },
+    paths: {
+      cwd: process.cwd(),
+      __dirname
     }
   });
+});
 
-  // SPA Catch-all (Express 5 syntax)
-  app.get('/{*splat}', (req, res) => {
-    // SECURITY: Do not serve index.html for known missing asset patterns
-    if (req.url.startsWith('/assets/') || req.url.includes('.js') || req.url.includes('.css')) {
-        return res.status(404).send('Not found');
-    }
-
-    res.sendFile(path.join(distPath, 'index.html'), (err) => {
-      if (err) {
-        console.error('Error sending index.html:', err);
-        res.status(500).send('Server Error: Could not load application.');
-      }
-    });
-  });
-
-  // Global Error Handler
-  app.use((err, req, res, next) => {
-    console.error('Unhandled Error:', err);
-    // Log to file for persistence
-    const logPath = path.join(__dirname, '../server_debug.log');
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] ERROR: ${err.message}\n${err.stack}\n\n`;
-    try {
-      fs.appendFileSync(logPath, logMessage);
-    } catch (e) {
-      console.error('Could not write to log file:', e);
-    }
-    
-    res.status(500).send('Internal Server Error');
-  });
-}
+// Basic Health Check
+app.get('/', (req, res) => {
+  res.send('Quonote API is running.');
+});
 
 // Only listen if executed directly (not imported)
 if (import.meta.url === `file://${process.argv[1]}`) {
