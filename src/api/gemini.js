@@ -24,7 +24,9 @@ const systemPrompt = `
 
 export const sendMessageToAI = async (input) => {
     try {
-        const response = await fetch('/api/gemini', {
+        // Use environment variable for API URL in production (Vercel), fall back to relative path (Vite Proxy) in dev
+        const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/gemini`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
