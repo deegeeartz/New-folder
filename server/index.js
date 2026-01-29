@@ -42,6 +42,17 @@ app.get('/debug-deployment', (req, res) => {
   });
 });
 
+// Debug route to check assets folder
+app.get('/debug-assets', (req, res) => {
+  const distPath = path.join(__dirname, '../dist');
+  const assetsPath = path.join(distPath, 'assets');
+  res.json({
+    assetsPath,
+    assetsExists: fs.existsSync(assetsPath),
+    assetsContents: fs.existsSync(assetsPath) ? fs.readdirSync(assetsPath) : []
+  });
+});
+
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',') 
