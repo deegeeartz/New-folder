@@ -14,9 +14,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 // cPanel often sets PORT to a named pipe like /tmp/passenger.blah, so we must rely on process.env.PORT
 const PORT = process.env.PORT || 3001; 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV !== 'development';
 
 app.use(express.json());
+
+// Debug route to diagnose deployment issues
+app.get('/debug-deployment', (req, res) => {
+  const distPath = path.join(__dirname, '../dist');
+  res.json({
+    status: 'ok',
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+      isProduction
+    },
+    paths: {
+      cwd: process.cwd(),
+      __dirname,
+      distPath
+    },
+    fileSystem: {
+      distExists: fs.existsSync(distPath),
+      indexHtmlExists: fs.existsSync(path.join(distPath, 'index.html')),
+      distContents: fs.existsSync(distPath) ? fs.readdirSync(distPath).slice(0, 10) : []
+    }
+  });
+});
 
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
