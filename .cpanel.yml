@@ -5,4 +5,4 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/fjeyytqhry/public_html
     - /bin/cp -rf dist/* $DEPLOYPATH/
-    - /bin/cp -f dist/.htaccess $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/cp -f .htaccess $DEPLOYPATH/ 2>/dev/null || true
