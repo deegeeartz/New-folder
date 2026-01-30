@@ -4,13 +4,16 @@ require('dotenv').config();
 
 // Create Express App
 const app = express();
-// Use port 3001 as default, but cPanel might override via PORT env var
 const PORT = process.env.PORT || 3001;
 
 // ---------------------------------------------------------
-// MIDDLEWARE
+// APP LOGIC (Router)
+// Start a router so we can mount it at multiple paths
 // ---------------------------------------------------------
-app.use(express.json());
+const apiRouter = express.Router();
+
+// MIDDLEWARE ON ROUTER
+apiRouter.use(express.json());
 
 // STRICT CORS CONFIGURATION
 const allowedOrigins = [
@@ -23,9 +26,8 @@ const allowedOrigins = [
   '.vercel.app' 
 ];
 
-app.use(cors({
+apiRouter.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
     // Check if origin matches any allowed domain
@@ -46,10 +48,8 @@ app.use(cors({
   credentials: true
 }));
 
-// ---------------------------------------------------------
 // API ROUTES
-// ---------------------------------------------------------
-app.post('/api/gemini', async (req, res) => {
+apiRouter.post('/api/gemini', async (req, res) => {
   try {
     const { prompt } = req.body;
     
@@ -63,7 +63,6 @@ app.post('/api/gemini', async (req, res) => {
       return res.status(500).json({ error: 'API key not configured on server' });
     }
 
-    // Check for global fetch (Node 18+)
     if (typeof fetch === 'undefined') {
         console.error("CRITICAL: Global 'fetch' is undefined. Node version: " + process.version);
         return res.status(500).json({ error: 'Server configuration error: Node version too low' });
@@ -100,17 +99,22 @@ app.post('/api/gemini', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
+apiRouter.get('/', (req, res) => {
   res.send('Quonote API is running (CJS).');
 });
 
-// CRITICAL FIX: Handle cPanel/Passenger path quirk where it passes the full folder path
-app.get('/repositories/New-folder/', (req, res) => {
-    console.log("Redirecting /repositories/New-folder/ to root");
-    res.redirect('/');
-});
+// ---------------------------------------------------------
+// MOUNTING
+// ---------------------------------------------------------
 
-// 404 Handler for debugging
+// Mount the app logic at root
+app.use('/', apiRouter);
+
+// ALSO mount the app logic at the cPanel directory path
+// This ensures that /repositories/New-folder/api/gemini works exactly like /api/gemini
+app.use('/repositories/New-folder', apiRouter);
+
+// 404 Handler for debugging (Global)
 app.use((req, res) => {
     console.log(`[404] ${req.method} ${req.url}`);
     res.status(404).json({
