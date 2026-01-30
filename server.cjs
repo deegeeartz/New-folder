@@ -104,6 +104,23 @@ app.get('/', (req, res) => {
   res.send('Quonote API is running (CJS).');
 });
 
+// CRITICAL FIX: Handle cPanel/Passenger path quirk where it passes the full folder path
+app.get('/repositories/New-folder/', (req, res) => {
+    console.log("Redirecting /repositories/New-folder/ to root");
+    res.redirect('/');
+});
+
+// 404 Handler for debugging
+app.use((req, res) => {
+    console.log(`[404] ${req.method} ${req.url}`);
+    res.status(404).json({
+        error: 'Not Found',
+        path: req.url,
+        method: req.method,
+        timestamp: new Date().toISOString()
+    });
+});
+
 // ---------------------------------------------------------
 // STARTUP
 // ---------------------------------------------------------
