@@ -1,5 +1,5 @@
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
-PassengerAppRoot "/home/fjeyytqhry/repositories/New-folder"
+PassengerAppRoot "/home/olgmxestep/repositories/quonote-app"
 PassengerBaseURI "/"
 PassengerAppType node
 PassengerStartupFile server.cjs
