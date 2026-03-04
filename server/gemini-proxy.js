@@ -1,5 +1,4 @@
 import express from 'express';
-import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
 
@@ -10,16 +9,11 @@ const logger = {
   info: (msg) => process.env.NODE_ENV !== 'production' && console.log(msg)
 };
 
-// Rate limiter: 10 requests per 15 minutes per IP
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: { error: 'Too many requests, please try again later' },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// TODO: Add rate limiter back once npm install works on server
+// import rateLimit from 'express-rate-limit';
+// const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10 });
 
-router.post('/api/gemini', apiLimiter, async (req, res) => {
+router.post('/api/gemini', async (req, res) => {
   try {
     const { prompt } = req.body;
     
