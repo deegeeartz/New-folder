@@ -86,26 +86,14 @@ app.use(cors({
 // API routes
 app.use(geminiProxy);
 
-// Debug route to diagnose deployment issues
-app.get('/debug-deployment', (req, res) => {
-  res.json({
-    status: 'ok',
-    mode: 'API-ONLY',
-    timestamp: new Date().toISOString(),
-    env: {
-      NODE_ENV: process.env.NODE_ENV,
-      PORT: process.env.PORT,
-    },
-    paths: {
-      cwd: process.cwd(),
-      __dirname
-    }
-  });
-});
-
 // Basic Health Check
 app.get('/', (req, res) => {
   res.send('Quonote API is running.');
+});
+
+// Health check endpoint for Docker/monitoring
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
 // Only listen if executed directly (not imported)

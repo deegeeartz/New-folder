@@ -24,6 +24,18 @@ const systemPrompt = `
 
 export const sendMessageToAI = async (input) => {
     try {
+        // Input validation
+        if (!input || input.trim().length === 0) {
+          throw new Error('Please enter a message');
+        }
+        
+        if (input.length > 500) {
+          throw new Error('Message too long (max 500 characters)');
+        }
+        
+        // Sanitize input to prevent injection attacks
+        const sanitizedInput = input.replace(/[<>]/g, '').trim();
+        
         // Use environment variable for API URL in production (Vercel), fall back to relative path (Vite Proxy) in dev
         const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
         const response = await fetch(`${baseUrl}/api/gemini`, {
@@ -32,18 +44,20 @@ export const sendMessageToAI = async (input) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            prompt: `${systemPrompt}\n\nUser: ${input}`
+            prompt: `${systemPrompt}\n\nUser: ${sanitizedInput}`
           })
         });
   
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+          throw new Error('Unable to get response. Please try again.');
         }
 
         const data = await response.json();
         return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having a little trouble connecting to the digital brain right now. Please try again later!";
       } catch (error) {
-        console.error("AI Error:", error);
-        throw new Error("Sorry, I encountered a connection error. Please try again.");
+        if (import.meta.env.DEV) {
+          console.error("AI Error:", error);
+        }
+        throw error.message ? error : new Error("Sorry, I encountered a connection error. Please try again.");
       }
 }

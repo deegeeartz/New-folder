@@ -1,8 +1,25 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
 
-router.post('/api/gemini', async (req, res) => {
+// Logger utility
+const logger = {
+  error: (msg) => process.env.NODE_ENV !== 'production' && console.error(msg),
+  warn: (msg) => process.env.NODE_ENV !== 'production' && console.warn(msg),
+  info: (msg) => process.env.NODE_ENV !== 'production' && console.log(msg)
+};
+
+// Rate limiter: 10 requests per 15 minutes per IP
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { error: 'Too many requests, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.post('/api/gemini', apiLimiter, async (req, res) => {
   try {
     const { prompt } = req.body;
     
@@ -10,9 +27,15 @@ router.post('/api/gemini', async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    const apiKey = process.env.VITE_GEMINI_API_KEY;
+    // Server-side validation
+    if (prompt.length > 1000) {
+      return res.status(400).json({ error: 'Prompt too long' });
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: 'API key not configured' });
+      logger.error('API key not configured');
+      return res.status(500).json({ error: 'Service temporarily unavailable' });
     }
 
     const response = await fetch(
@@ -28,20 +51,20 @@ router.post('/api/gemini', async (req, res) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Gemini API error:', errorText);
-      return res.status(response.status).json({ 
-        error: 'Failed to get response from AI service',
-        details: errorText 
+      logger.error(`Gemini API error: ${response.status}`);
+      // Don't expose API error details to client
+      return res.status(503).json({ 
+        error: 'AI service temporarily unavailable'
       });
     }
 
     const data = await response.json();
     res.json(data);
   } catch (error) {
-    console.error('Proxy error:', error);
+    logger.error(`Proxy error: ${error.message}`);
+    // Don't expose internal error details
     res.status(500).json({ 
-      error: 'Internal server error',
-      message: error.message 
+      error: 'Internal server error'
     });
   }
 });

@@ -1,0 +1,61 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Development files
+.git
+.gitignore
+.env.local
+.env.development
+*.md
+!README.md
+
+# Build artifacts (will be copied separately)
+dist-ssr
+.vite
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+*.log
+tmp
+temp
+.cache
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Documentation
+docs
+DEPLOYMENT*.md
+PERFORMANCE.md
+CPANEL_DEPLOYMENT.md
+
+# cPanel specific
+.cpanel.yml
+.htaccess
+loader.cjs
+server.cjs
+server-app.js
