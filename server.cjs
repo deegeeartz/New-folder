@@ -7,8 +7,21 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV !== 'development';
+const distPath = path.join(__dirname, 'dist');
 
 app.use(express.json());
+
+// Serve static files from dist FIRST (before any other routes)
+app.use(express.static(distPath, {
+  maxAge: '1h',
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.set('Content-Type', 'application/javascript');
+    } else if (path.endsWith('.css')) {
+      res.set('Content-Type', 'text/css');
+    }
+  }
+}));
 
 // Debug routes
 app.get('/debug-deployment', (req, res) => {
@@ -105,10 +118,6 @@ app.post('/api/gemini', async (req, res) => {
     });
   }
 });
-
-// Serve static files from dist
-const distPath = path.join(__dirname, 'dist');
-app.use(express.static(distPath));
 
 // Health check
 app.get('/health', (req, res) => {
