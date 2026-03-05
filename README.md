@@ -2,6 +2,12 @@
 
 This project is a React-based landing page for Quonote Digital, a fictional tech firm. It's built with Vite and Tailwind CSS.
 
+## Deployment Docs
+
+For production deployment and troubleshooting on cPanel/Passenger, see:
+
+- [`DEPLOYMENT_RUNBOOK.md`](./DEPLOYMENT_RUNBOOK.md)
+
 ## Getting Started
 
 ### Prerequisites
@@ -12,12 +18,14 @@ This project is a React-based landing page for Quonote Digital, a fictional tech
 ### Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone <repository-url>
     cd quonote-react-js
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     npm install
     ```
