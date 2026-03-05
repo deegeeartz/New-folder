@@ -6,11 +6,11 @@ const CtaSection = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to Digitalize?
+            Transform your business with technology that scales.
           </h2>
           <p className="text-blue-100 text-xl lg:text-2xl max-w-3xl mx-auto mb-10">
-            Whether you need a complex AI algorithm, a new website, or just 10
-            laptops for your new office. We are ready.
+            Scale faster with AI, build custom software, automate operations, and infrastructure solutions.
+            No lock-in contracts. Transparent pricing. Let's talk about your vision.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button className="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg shadow-xl hover:bg-gray-100 transition-transform transform hover:-translate-y-1 w-full sm:w-auto">

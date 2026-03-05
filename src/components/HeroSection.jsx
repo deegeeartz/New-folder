@@ -16,16 +16,16 @@ const HeroSection = () => {
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
               Accepting New Clients for 2026
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-tight">
-              We build the tech that
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight" style={{ color: 'var(--text-primary)' }}>
+              Digital systems that drive
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 mt-2">
-                builds your business.
+                measurable business growth.
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-300 max-w-2xl leading-relaxed">
-              From AI consulting for startups to digital literacy and hardware
-              procurement for the informal sector. We are your end-to-end
-              digital partner.
+            <p className="text-lg sm:text-xl max-w-2xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              AI strategy, custom development, process automation, and infrastructure solutions
+              for scaling businesses. From startups to enterprise. We've delivered for organizations
+              across Europe, Africa, and beyond.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
@@ -46,10 +46,10 @@ const HeroSection = () => {
                 AI Strategy
               </span>
               <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
-                Process Automation
+                Custom Development
               </span>
               <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
-                Hardware & Support
+                Trusted by Lanzcape (Belgium) & ASMB (Morocco)
               </span>
             </div>
           </div>

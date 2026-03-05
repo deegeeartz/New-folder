@@ -32,17 +32,17 @@
 
 /* Light theme */
 :root[data-theme='light'] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-tertiary: #e2e8f0;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
   --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-tertiary: #64748b;
-  --border-color: rgba(15, 23, 42, 0.1);
-  --panel: rgba(255, 255, 255, 0.8);
-  --panel-border: rgba(15, 23, 42, 0.1);
-  --card-bg: rgba(255, 255, 255, 0.9);
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --text-secondary: #1e293b;
+  --text-tertiary: #475569;
+  --border-color: rgba(15, 23, 42, 0.15);
+  --panel: rgba(248, 250, 252, 0.95);
+  --panel-border: rgba(15, 23, 42, 0.12);
+  --card-bg: rgba(255, 255, 255, 1);
+  --shadow-color: rgba(0, 0, 0, 0.08);
 }
 
 body {
