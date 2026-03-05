@@ -25,7 +25,7 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 flex justify-between items-center">
-        <QuonoteLogo />
+        <QuonoteLogo className="h-8 w-auto sm:h-9 md:h-10" />
         <div className="hidden md:flex space-x-8 xl:space-x-10 items-center text-sm font-medium">
           <a href="#services" className="hover:text-blue-400 transition-colors">
             Solutions
