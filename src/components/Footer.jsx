@@ -65,35 +65,35 @@ const Footer = () => {
               Solutions
             </h4>
             <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
-                <li>
-                  <a
-                    href="/services/ai-consulting/"
-                    className="hover:text-blue-400"
-                  >
-                    Digital Strategy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/services/software-development/"
-                    className="hover:text-blue-400"
-                  >
-                    Software Development
-                  </a>
-                </li>
-                <li>
-                  <a href="/services/automation/" className="hover:text-blue-400">
-                    Data Analytics
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/services/hardware-procurement/"
-                    className="hover:text-blue-400"
-                  >
-                    Hardware Sales
-                  </a>
-                </li>
+              <li>
+                <a
+                  href="/services/ai-consulting/"
+                  className="hover:text-blue-400"
+                >
+                  Digital Strategy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/services/software-development/"
+                  className="hover:text-blue-400"
+                >
+                  Software Development
+                </a>
+              </li>
+              <li>
+                <a href="/services/automation/" className="hover:text-blue-400">
+                  Data Analytics
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/services/hardware-procurement/"
+                  className="hover:text-blue-400"
+                >
+                  Hardware Sales
+                </a>
+              </li>
             </ul>
           </div>
 

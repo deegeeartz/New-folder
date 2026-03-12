@@ -35,7 +35,16 @@ const TypewriterText = ({
     }
 
     return () => clearTimeout(timeout);
-  }, [charIndex, deleteSpeed, isDeleting, pauseMs, prefersReducedMotion, safeWords, typeSpeed, wordIndex]);
+  }, [
+    charIndex,
+    deleteSpeed,
+    isDeleting,
+    pauseMs,
+    prefersReducedMotion,
+    safeWords,
+    typeSpeed,
+    wordIndex,
+  ]);
 
   if (!safeWords.length) {
     return null;
@@ -49,7 +58,10 @@ const TypewriterText = ({
     <span className={`inline-flex items-center ${className}`}>
       <span>{visibleText}</span>
       {!prefersReducedMotion && (
-        <span className={`typewriter-caret ${caretClassName}`} aria-hidden="true">
+        <span
+          className={`typewriter-caret ${caretClassName}`}
+          aria-hidden="true"
+        >
           |
         </span>
       )}
