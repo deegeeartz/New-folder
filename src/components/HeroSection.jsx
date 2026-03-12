@@ -55,6 +55,9 @@ const HeroSection = () => {
                   "smarter AI-powered workflows.",
                   "scalable digital execution.",
                 ]}
+                typeSpeed={80}
+                deleteSpeed={28}
+                pauseMs={2200}
               />
             </span>
           </h1>
