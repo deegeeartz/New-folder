@@ -120,18 +120,22 @@ function sendIndexResponse(req, res) {
   }
 
   const rawHtml = fs.readFileSync(indexPath, 'utf8');
-  const slugMatch = req.path.match(/^\/services\/([^/?#]+)\/?$/i);
+  const requestPath = (req.originalUrl || req.url || req.path || '/').split('?')[0];
+  const slugMatch = requestPath.match(/^\/services\/([^/?#]+)\/?$/i);
   const slug = slugMatch ? slugMatch[1] : null;
   const seo = slug ? serviceSeo[slug] : null;
 
   if (seo) {
-    const seoHtml = renderIndexWithSeo(rawHtml, seo, `/services/${slug}`);
+    const seoPath = `/services/${slug}`;
+    const seoHtml = renderIndexWithSeo(rawHtml, seo, seoPath);
     res.setHeader('Content-Type', 'text/html; charset=UTF-8');
     res.setHeader('X-Quonote-SEO', `service:${slug}`);
+    res.setHeader('X-Quonote-Path', requestPath);
     return res.status(200).send(seoHtml);
   }
 
   res.setHeader('X-Quonote-SEO', 'default');
+  res.setHeader('X-Quonote-Path', requestPath);
   return res.sendFile(indexPath);
 }
 
