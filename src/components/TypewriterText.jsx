@@ -11,6 +11,16 @@ const TypewriterText = ({
 }) => {
   const prefersReducedMotion = useReducedMotion();
   const safeWords = useMemo(() => words.filter(Boolean), [words]);
+  const longestWord = useMemo(() => {
+    if (!safeWords.length) {
+      return "";
+    }
+
+    return safeWords.reduce(
+      (longest, current) => (current.length > longest.length ? current : longest),
+      "",
+    );
+  }, [safeWords]);
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -55,16 +65,19 @@ const TypewriterText = ({
     : safeWords[wordIndex].slice(0, charIndex);
 
   return (
-    <span className={`inline-flex items-center ${className}`}>
-      <span>{visibleText}</span>
-      {!prefersReducedMotion && (
-        <span
-          className={`typewriter-caret ${caretClassName}`}
-          aria-hidden="true"
-        >
-          |
-        </span>
-      )}
+    <span className={`relative inline-block max-w-full align-baseline ${className}`}>
+      <span className="invisible block max-w-full">{longestWord}</span>
+      <span className="absolute inset-0 block max-w-full">
+        <span>{visibleText}</span>
+        {!prefersReducedMotion && (
+          <span
+            className={`typewriter-caret ${caretClassName}`}
+            aria-hidden="true"
+          >
+            |
+          </span>
+        )}
+      </span>
     </span>
   );
 };
