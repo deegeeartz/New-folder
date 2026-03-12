@@ -1,34 +1,25 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
 import StatsBar from "../components/StatsBar";
 import AudienceSection from "../components/AudienceSection";
 import ServicesSection from "../components/ServicesSection";
 import HardwareSection from "../components/HardwareSection";
 import FaqSection from "../components/FaqSection";
+import ContactSection from "../components/ContactSection";
 import CtaSection from "../components/CtaSection";
-import Footer from "../components/Footer";
-import AiConsultantWidget from "../components/AiConsultantWidget";
+import SiteLayout from "../components/SiteLayout";
 
 export default function HomePage() {
   return (
-    <div
-      className="min-h-screen font-sans selection:bg-blue-500 selection:text-white transition-colors duration-300"
-      style={{
-        backgroundColor: "var(--bg-primary)",
-        color: "var(--text-primary)",
-      }}
-    >
-      <Navbar />
+    <SiteLayout>
       <HeroSection />
       <StatsBar />
       <AudienceSection />
       <ServicesSection />
       <HardwareSection />
       <FaqSection />
+      <ContactSection />
       <CtaSection />
-      <Footer />
-      <AiConsultantWidget />
-    </div>
+    </SiteLayout>
   );
 }

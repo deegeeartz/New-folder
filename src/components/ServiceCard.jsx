@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const ServiceCard = ({ icon: Icon, title, description, desc, category }) => (
+const ServiceCard = ({ icon: Icon, title, description, desc, category, href }) => (
   <div className="group relative p-6 lg:p-7 xl:p-8 bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20 h-full flex flex-col overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     <div className="w-12 h-12 lg:w-14 lg:h-14 bg-slate-800 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors duration-300 relative z-10">
@@ -15,6 +16,13 @@ const ServiceCard = ({ icon: Icon, title, description, desc, category }) => (
     <p className="text-slate-400 text-sm leading-relaxed flex-grow relative z-10">
       {description || desc}
     </p>
+    {href && (
+      <div className="relative z-10 mt-5">
+        <Link to={href} className="text-sm font-semibold text-blue-400 hover:text-blue-300 hover:underline">
+          Learn more
+        </Link>
+      </div>
+    )}
   </div>
 );
 

@@ -28,14 +28,14 @@ const Footer = () => {
                   Strategy Chat
                 </button>
                 <a
-                  href="#services"
+                  href="/#services"
                   className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
                 >
                   <Briefcase size={16} />
                   Services
                 </a>
                 <a
-                  href="#hardware"
+                  href="/#hardware"
                   className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
                 >
                   <MonitorSmartphone size={16} />
@@ -56,10 +56,10 @@ const Footer = () => {
                 Solutions
               </h4>
               <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
-                <li><a href="#services" className="hover:text-blue-400">Digital Strategy</a></li>
-                <li><a href="#services" className="hover:text-blue-400">Software Development</a></li>
-                <li><a href="#services" className="hover:text-blue-400">Data Analytics</a></li>
-                <li><a href="#hardware" className="hover:text-blue-400">Hardware Sales</a></li>
+                <li><a href="/services/ai-consulting" className="hover:text-blue-400">Digital Strategy</a></li>
+                <li><a href="/services/software-development" className="hover:text-blue-400">Software Development</a></li>
+                <li><a href="/services/automation" className="hover:text-blue-400">Data Analytics</a></li>
+                <li><a href="/services/hardware-procurement" className="hover:text-blue-400">Hardware Sales</a></li>
               </ul>
             </div>
 
@@ -68,9 +68,9 @@ const Footer = () => {
                 Company
               </h4>
               <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
-                <li><a href="#audiences" className="hover:text-blue-400">About Us</a></li>
-                <li><a href="#audiences" className="hover:text-blue-400">For Startups</a></li>
-                <li><a href="#audiences" className="hover:text-blue-400">For MSMEs</a></li>
+                <li><a href="/#audiences" className="hover:text-blue-400">About Us</a></li>
+                <li><a href="/#audiences" className="hover:text-blue-400">For Startups</a></li>
+                <li><a href="/#audiences" className="hover:text-blue-400">For MSMEs</a></li>
                 <li>
                   <a href="mailto:info@quonote.com" className="inline-flex items-center gap-2 hover:text-blue-400">
                     Contact

@@ -27,17 +27,17 @@ const Navbar = () => {
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 flex justify-between items-center">
         <QuonoteLogo className="h-8 w-auto sm:h-9 md:h-10" priority />
         <div className="hidden md:flex space-x-8 xl:space-x-10 items-center text-sm font-medium">
-          <a href="#services" className="hover:text-blue-400 transition-colors">
+          <a href="/#services" className="hover:text-blue-400 transition-colors">
             Solutions
           </a>
-          <a href="#audiences" className="hover:text-blue-400 transition-colors">
+          <a href="/#audiences" className="hover:text-blue-400 transition-colors">
             Who We Serve
           </a>
-          <a href="#hardware" className="hover:text-blue-400 transition-colors">
+          <a href="/#hardware" className="hover:text-blue-400 transition-colors">
             Hardware Store
           </a>
           <ThemeToggle />
-          <Button variant="primary" href="#contact" className="py-2 px-4 text-sm">
+          <Button variant="primary" href="/#contact" className="py-2 px-4 text-sm">
             Get Started
           </Button>
         </div>
@@ -55,27 +55,27 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 dark:bg-slate-900/95 light:bg-white/95 border-b border-slate-800 dark:border-slate-800 light:border-slate-200 py-6 px-6 flex flex-col space-y-4 shadow-xl backdrop-blur">
           <a
-            href="#services"
+            href="/#services"
             onClick={() => setIsMenuOpen(false)}
             className="block py-2 text-lg border-b border-slate-800"
           >
             Solutions
           </a>
           <a
-            href="#audiences"
+            href="/#audiences"
             onClick={() => setIsMenuOpen(false)}
             className="block py-2 text-lg border-b border-slate-800"
           >
             Who We Serve
           </a>
           <a
-            href="#hardware"
+            href="/#hardware"
             onClick={() => setIsMenuOpen(false)}
             className="block py-2 text-lg border-b border-slate-800"
           >
             Hardware Store
           </a>
-          <Button variant="primary" href="#contact" className="w-full">
+          <Button variant="primary" href="/#contact" className="w-full">
             Get Started
           </Button>
         </div>

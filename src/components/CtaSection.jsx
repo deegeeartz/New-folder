@@ -3,7 +3,7 @@ import { openConsultant } from "../utils/consultant";
 
 const CtaSection = () => {
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-blue-600 relative overflow-hidden scroll-mt-24">
+    <section className="py-16 sm:py-24 bg-blue-600 relative overflow-hidden scroll-mt-24">
       <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">

@@ -16,6 +16,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import ServiceCard from './ServiceCard';
+import { featuredServiceLinks } from '../data/serviceDetails';
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -185,7 +186,7 @@ const ServicesSection = () => {
                 className="floating-card rounded-2xl border border-slate-800/70 bg-slate-900/60 reveal-up"
                 style={{ animationDelay: `${80 * index}ms` }}
               >
-                <ServiceCard {...service} />
+                <ServiceCard {...service} href={featuredServiceLinks[service.title]} />
               </div>
             ))}
           </div>
