@@ -26,20 +26,18 @@ const CtaSection = () => {
           >
             Book Free Consultation
           </button>
-          <button
-            type="button"
-            onClick={() =>
-              openConsultant(
-                "I want to talk about project scope, pricing, and implementation timelines."
-              )
-            }
-            className="px-8 py-4 bg-blue-700 text-white font-bold rounded-lg border border-blue-500 hover:bg-blue-800 transition-transform transform hover:-translate-y-1 w-full sm:w-auto"
+          <a
+            href="mailto:info@quonote.com?subject=Quonote%20Sales%20Enquiry"
+            className="px-8 py-4 bg-blue-700 text-white font-bold rounded-lg border border-blue-500 hover:bg-blue-800 transition-transform transform hover:-translate-y-1 w-full sm:w-auto text-center"
           >
             Contact Sales Team
-          </button>
+          </a>
         </div>
         <p className="text-blue-100/90 text-sm max-w-2xl mx-auto mt-5">
           Use the AI consultant to share your goals, budget, and timeline. We'll turn that into a practical next-step conversation.
+        </p>
+        <p className="text-blue-100/80 text-sm max-w-2xl mx-auto mt-2">
+          Prefer email? Reach us directly at <a href="mailto:info@quonote.com" className="font-semibold underline underline-offset-2">info@quonote.com</a>.
         </p>
       </div>
     </section>

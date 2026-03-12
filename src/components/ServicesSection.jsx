@@ -33,31 +33,31 @@ const ServicesSection = () => {
     // Build & Design
     {
       title: "Software Development",
-      desc: "Custom web and mobile applications tailored to your business logic.",
+      desc: "Build custom web and mobile products that streamline operations and unlock new revenue channels.",
       category: "Build",
       icon: Code,
     },
     {
       title: "E-commerce Development",
-      desc: "Robust online stores designed for sales conversion and inventory management.",
+      desc: "Launch conversion-focused online stores with smoother buying journeys and stronger inventory control.",
       category: "Build",
       icon: ShoppingBag,
     },
     {
       title: "UX/UI Design",
-      desc: "User-centric interfaces that make complex technology feel simple.",
+      desc: "Turn complex workflows into clear user experiences that boost adoption and reduce friction.",
       category: "Build",
       icon: PenTool,
     },
     {
       title: "Brand Development",
-      desc: "Creating distinct digital identities that resonate with your market.",
+      desc: "Clarify your market position with a brand system that builds trust and differentiates your business.",
       category: "Build",
       icon: Globe,
     },
     {
       title: "Graphic Design",
-      desc: "Visual assets that communicate your value proposition instantly.",
+      desc: "Create sales-ready visuals that communicate your value quickly across web, pitch, and campaign assets.",
       category: "Build",
       icon: Layers,
     },
@@ -65,25 +65,25 @@ const ServicesSection = () => {
     // Grow & Strategy
     {
       title: "Digital Strategy Consulting",
-      desc: "Blueprints for digital transformation aligned with business goals.",
+      desc: "Prioritize the right digital moves with strategy tied to growth targets, efficiency, and ROI.",
       category: "Grow",
       icon: Briefcase,
     },
     {
       title: "Digital Marketing",
-      desc: "Data-driven campaigns to acquire customers and retain loyalty.",
+      desc: "Generate qualified demand with data-led campaigns that improve acquisition and retention performance.",
       category: "Grow",
       icon: TrendingUp,
     },
     {
       title: "Technology Roadmapping",
-      desc: "Long-term tech planning to ensure scalability and future-proofing.",
+      desc: "Map the next 12-24 months of technology decisions so your systems scale without costly rework.",
       category: "Grow",
       icon: Monitor,
     },
     {
       title: "IT Project Management",
-      desc: "Agile delivery of tech projects on time and within budget.",
+      desc: "Keep delivery on track with stronger execution, clearer ownership, and fewer project bottlenecks.",
       category: "Grow",
       icon: Settings,
     },
@@ -91,19 +91,19 @@ const ServicesSection = () => {
     // Automate & Intelligence
     {
       title: "AI Automations",
-      desc: "Chatbots and workflows that reduce manual labor by up to 70%.",
+      desc: "Cut repetitive work with AI assistants and workflows that improve speed, consistency, and response time.",
       category: "Automate",
       icon: BrainCircuit,
     },
     {
       title: "Process Automation",
-      desc: "Streamlining operations to eliminate bottlenecks and errors.",
+      desc: "Eliminate bottlenecks, handoff delays, and manual errors across your core business processes.",
       category: "Automate",
       icon: Zap,
     },
     {
       title: "Data Analytics",
-      desc: "Turning raw data into actionable insights and visualizations.",
+      desc: "Turn scattered data into decision-ready dashboards, reporting, and performance insight.",
       category: "Automate",
       icon: BarChart,
     },
@@ -111,25 +111,25 @@ const ServicesSection = () => {
     // Infrastructure (New)
     {
       title: "Device Sales & Procurement",
-      desc: "High-performance laptops and devices for your workforce.",
+      desc: "Equip your team with the right devices faster, with procurement guidance matched to your workflow and budget.",
       category: "Infrastructure",
       icon: Monitor,
     },
     {
       title: "After-Sales Support",
-      desc: "Maintenance, warranty handling, and technical support for your hardware.",
+      desc: "Reduce downtime with setup, maintenance, warranty coordination, and ongoing device support.",
       category: "Infrastructure",
       icon: Wrench,
     },
     {
       title: "Digital Literacy Training",
-      desc: "Upskilling teams to use modern tools effectively.",
+      desc: "Help teams adopt new tools confidently so technology investments actually get used.",
       category: "Empower",
       icon: Users,
     },
     {
       title: "Remote Team Management",
-      desc: "Systems and culture building for distributed workforces.",
+      desc: "Build healthier remote operations with better coordination, visibility, and team accountability.",
       category: "Empower",
       icon: Globe,
     },
@@ -154,8 +154,9 @@ const ServicesSection = () => {
                 Our Expertise
               </h2>
               <p className="text-slate-400 max-w-xl">
-                Comprehensive digital solutions. Filter by category to find
-                exactly what you need.
+                Outcome-focused services across strategy, software, automation,
+                and infrastructure. Filter by category to find the support that
+                fits your next growth move.
               </p>
             </div>
 

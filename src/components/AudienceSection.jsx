@@ -11,42 +11,42 @@ const AudienceSection = () => {
         <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
           <SectionHeader
             title="Tailored for Every Stage"
-            subtitle="Technology isn't one-size-fits-all. We have specific playbooks for where you are right now."
+            subtitle="Different businesses need different systems. We tailor strategy, delivery, and support to your stage, pace, and operating reality."
           />
 
           <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 title: "Startups",
-                desc: "Rapid MVP development and scalable architecture for high-growth ventures.",
+                desc: "Launch faster with MVP delivery, lean systems, and product foundations built for growth.",
                 color: "blue",
                 features: [
-                  "Custom Software Dev",
-                  "Pitch Deck Design",
-                  "Tech Roadmapping",
-                  "User Acquisition Strategy",
+                  "MVP Delivery",
+                  "Product Roadmapping",
+                  "Scalable Architecture",
+                  "Go-to-Market Systems",
                 ],
               },
               {
-                title: "SMEs & MSMEs",
-                desc: "Process optimization to cut costs and increase profit margins.",
+                title: "Growing Businesses",
+                desc: "Reduce operational drag, improve visibility, and build systems that support revenue growth.",
                 color: "purple",
                 features: [
-                  "Inventory Automation",
-                  "E-commerce Sales",
-                  "Staff Digital Training",
-                  "Hardware Procurement",
+                  "Process Automation",
+                  "Sales Enablement",
+                  "Operational Dashboards",
+                  "Team Training",
                 ],
               },
               {
-                title: "Informal Sector",
-                desc: "Simple, effective tools to digitize your trade and expand reach.",
+                title: "Established Teams",
+                desc: "Modernize legacy workflows, equip teams properly, and improve delivery across departments.",
                 color: "emerald",
                 features: [
-                  "WhatsApp Business Setup",
-                  "Basic Digital Literacy",
-                  "Smartphone/Laptop Sales",
-                  "Social Media Basics",
+                  "System Modernization",
+                  "AI Workflow Integration",
+                  "Hardware Procurement",
+                  "Cross-Team Enablement",
                 ],
               },
             ].map((audience, idx) => (

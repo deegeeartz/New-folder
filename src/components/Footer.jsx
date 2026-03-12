@@ -41,6 +41,13 @@ const Footer = () => {
                   <MonitorSmartphone size={16} />
                   Hardware
                 </a>
+                <a
+                  href="mailto:info@quonote.com"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                >
+                  <MessageSquareText size={16} />
+                  info@quonote.com
+                </a>
               </div>
             </div>
 
@@ -65,14 +72,10 @@ const Footer = () => {
                 <li><a href="#audiences" className="hover:text-blue-400">For Startups</a></li>
                 <li><a href="#audiences" className="hover:text-blue-400">For MSMEs</a></li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => openConsultant("I want to get in touch about a new project.")}
-                    className="inline-flex items-center gap-2 hover:text-blue-400"
-                  >
+                  <a href="mailto:info@quonote.com" className="inline-flex items-center gap-2 hover:text-blue-400">
                     Contact
                     <ArrowRight size={14} />
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
