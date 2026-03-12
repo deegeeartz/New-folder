@@ -113,6 +113,28 @@ function renderIndexWithSeo(indexHtml, seo, pathname) {
   return html;
 }
 
+function sendIndexResponse(req, res) {
+  const indexPath = path.join(distPath, 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    return res.status(404).json({ error: 'App not built. Run npm run build first.' });
+  }
+
+  const rawHtml = fs.readFileSync(indexPath, 'utf8');
+  const slugMatch = req.path.match(/^\/services\/([^/?#]+)\/?$/i);
+  const slug = slugMatch ? slugMatch[1] : null;
+  const seo = slug ? serviceSeo[slug] : null;
+
+  if (seo) {
+    const seoHtml = renderIndexWithSeo(rawHtml, seo, `/services/${slug}`);
+    res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+    res.setHeader('X-Quonote-SEO', `service:${slug}`);
+    return res.status(200).send(seoHtml);
+  }
+
+  res.setHeader('X-Quonote-SEO', 'default');
+  return res.sendFile(indexPath);
+}
+
 if (compression) app.use(compression());
 app.use(express.json());
 
@@ -245,25 +267,12 @@ app.get('/services/:slug', (req, res, next) => {
     return next();
   }
 
-  const indexPath = path.join(distPath, 'index.html');
-  if (!fs.existsSync(indexPath)) {
-    return res.status(404).json({ error: 'App not built. Run npm run build first.' });
-  }
-
-  const rawHtml = fs.readFileSync(indexPath, 'utf8');
-  const seoHtml = renderIndexWithSeo(rawHtml, seo, `/services/${slug}`);
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-  return res.status(200).send(seoHtml);
+  return sendIndexResponse(req, res);
 });
 
 // SPA fallback - serve index.html for all non-API routes
 app.get('*', (req, res) => {
-  const indexPath = path.join(distPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).json({ error: 'App not built. Run npm run build first.' });
-  }
+  return sendIndexResponse(req, res);
 });
 
 app.listen(PORT, () => {
