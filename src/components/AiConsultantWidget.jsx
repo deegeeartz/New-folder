@@ -25,6 +25,25 @@ const AiConsultantWidget = () => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    const handleOpenConsultant = (event) => {
+      const prompt = event?.detail?.prompt?.trim() || "";
+      setIsOpen(true);
+      if (prompt) {
+        setInput(prompt);
+      }
+    };
+
+    window.addEventListener("quonote:open-consultant", handleOpenConsultant);
+
+    return () => {
+      window.removeEventListener(
+        "quonote:open-consultant",
+        handleOpenConsultant
+      );
+    };
+  }, []);
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -92,6 +111,7 @@ const AiConsultantWidget = () => {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "Close AI consultant" : "Open AI consultant"}
         className="group flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full shadow-lg shadow-blue-600/30 hover:scale-110 transition-transform duration-300"
       >
         {isOpen ? (

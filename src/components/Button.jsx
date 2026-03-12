@@ -5,6 +5,9 @@ const Button = ({
   variant = "primary",
   className = "",
   onClick,
+  href,
+  target,
+  rel,
   type = "button",
   disabled = false,
 }) => {
@@ -18,6 +21,20 @@ const Button = ({
     outline: "border-2 border-blue-500 text-blue-500 hover:bg-blue-500/10",
     white: "bg-white text-blue-900 hover:bg-gray-100",
   };
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        onClick={onClick}
+        className={`${baseStyles} ${variants[variant]} ${className}`}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button

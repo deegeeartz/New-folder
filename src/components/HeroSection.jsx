@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button";
+import { openConsultant } from "../utils/consultant";
 
 const HeroSection = () => {
   return (
@@ -37,12 +38,18 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               variant="primary"
+              href="#services"
               className="px-7 py-3 text-base w-full sm:w-auto"
             >
               Explore Services
             </Button>
             <Button
               variant="secondary"
+              onClick={() =>
+                openConsultant(
+                  "I want help choosing the right hardware and infrastructure setup for my business."
+                )
+              }
               className="px-7 py-3 text-base w-full sm:w-auto"
             >
               View Hardware Store

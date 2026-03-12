@@ -5,6 +5,7 @@ import StatsBar from "../components/StatsBar";
 import AudienceSection from "../components/AudienceSection";
 import ServicesSection from "../components/ServicesSection";
 import HardwareSection from "../components/HardwareSection";
+import FaqSection from "../components/FaqSection";
 import CtaSection from "../components/CtaSection";
 import Footer from "../components/Footer";
 import AiConsultantWidget from "../components/AiConsultantWidget";
@@ -24,6 +25,7 @@ export default function HomePage() {
       <AudienceSection />
       <ServicesSection />
       <HardwareSection />
+      <FaqSection />
       <CtaSection />
       <Footer />
       <AiConsultantWidget />

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Globe } from 'lucide-react';
+import { MessageSquareText, Briefcase, MonitorSmartphone, ArrowRight } from 'lucide-react';
 import QuonoteLogo from './QuonoteLogo';
+import { openConsultant } from '../utils/consultant';
 
 const Footer = () => {
   return (
@@ -13,19 +14,33 @@ const Footer = () => {
               </div>
 
               <p className="text-slate-500 max-w-sm mb-6">
-                A subsidiary of <strong>Quonote Enterprise</strong>. Bridging
-                the gap between the informal sector and high-tech innovation.
-                Your partner in digital transformation.
+                A subsidiary of <strong>Quonote Enterprise</strong>. We design
+                AI, software, automation, and infrastructure systems for
+                ambitious teams across growth-stage and established businesses.
               </p>
-              <div className="flex gap-4 lg:gap-5">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
-                  >
-                    <Globe size={20} />
-                  </div>
-                ))}
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => openConsultant("I want strategic advice for my business growth plan.")}
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                >
+                  <MessageSquareText size={16} />
+                  Strategy Chat
+                </button>
+                <a
+                  href="#services"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                >
+                  <Briefcase size={16} />
+                  Services
+                </a>
+                <a
+                  href="#hardware"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                >
+                  <MonitorSmartphone size={16} />
+                  Hardware
+                </a>
               </div>
             </div>
 
@@ -34,18 +49,10 @@ const Footer = () => {
                 Solutions
               </h4>
               <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
-                <li className="hover:text-blue-400 cursor-pointer">
-                  Digital Strategy
-                </li>
-                <li className="hover:text-blue-400 cursor-pointer">
-                  Software Development
-                </li>
-                <li className="hover:text-blue-400 cursor-pointer">
-                  Data Analytics
-                </li>
-                <li className="hover:text-blue-400 cursor-pointer">
-                  Hardware Sales
-                </li>
+                <li><a href="#services" className="hover:text-blue-400">Digital Strategy</a></li>
+                <li><a href="#services" className="hover:text-blue-400">Software Development</a></li>
+                <li><a href="#services" className="hover:text-blue-400">Data Analytics</a></li>
+                <li><a href="#hardware" className="hover:text-blue-400">Hardware Sales</a></li>
               </ul>
             </div>
 
@@ -54,14 +61,19 @@ const Footer = () => {
                 Company
               </h4>
               <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
-                <li className="hover:text-blue-400 cursor-pointer">About Us</li>
-                <li className="hover:text-blue-400 cursor-pointer">
-                  For Startups
+                <li><a href="#audiences" className="hover:text-blue-400">About Us</a></li>
+                <li><a href="#audiences" className="hover:text-blue-400">For Startups</a></li>
+                <li><a href="#audiences" className="hover:text-blue-400">For MSMEs</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => openConsultant("I want to get in touch about a new project.")}
+                    className="inline-flex items-center gap-2 hover:text-blue-400"
+                  >
+                    Contact
+                    <ArrowRight size={14} />
+                  </button>
                 </li>
-                <li className="hover:text-blue-400 cursor-pointer">
-                  For MSMEs
-                </li>
-                <li className="hover:text-blue-400 cursor-pointer">Contact</li>
               </ul>
             </div>
           </div>

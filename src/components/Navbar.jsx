@@ -37,7 +37,7 @@ const Navbar = () => {
             Hardware Store
           </a>
           <ThemeToggle />
-          <Button variant="primary" className="py-2 px-4 text-sm">
+          <Button variant="primary" href="#contact" className="py-2 px-4 text-sm">
             Get Started
           </Button>
         </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
           >
             Hardware Store
           </a>
-          <Button variant="primary" className="w-full">
+          <Button variant="primary" href="#contact" className="w-full">
             Get Started
           </Button>
         </div>

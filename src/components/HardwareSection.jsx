@@ -1,6 +1,7 @@
 import React from 'react';
 import { Monitor, ShieldCheck } from 'lucide-react';
 import Button from './Button';
+import { openConsultant } from '../utils/consultant';
 
 const HardwareSection = () => {
   return (
@@ -56,7 +57,16 @@ const HardwareSection = () => {
                 </div>
               </div>
 
-              <Button variant="white">Visit Hardware Store</Button>
+              <Button
+                variant="white"
+                onClick={() =>
+                  openConsultant(
+                    "I need a hardware shortlist and procurement quote for my business."
+                  )
+                }
+              >
+                Visit Hardware Store
+              </Button>
             </div>
 
             {/* Visual Representation */}
@@ -67,9 +77,17 @@ const HardwareSection = () => {
                   <h3 className="text-xl font-bold text-white">
                     Featured Equipment
                   </h3>
-                  <span className="text-blue-400 text-sm cursor-pointer">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openConsultant(
+                        "Show me the hardware categories and devices Quonote can source for my team."
+                      )
+                    }
+                    className="text-blue-400 text-sm hover:underline"
+                  >
                     View All
-                  </span>
+                  </button>
                 </div>
 
                 {/* Mock Products */}
@@ -119,7 +137,15 @@ const HardwareSection = () => {
                   <p className="text-sm text-slate-400 italic">
                     Need to equip a full office?
                   </p>
-                  <button className="text-white font-semibold text-sm hover:underline mt-1">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openConsultant(
+                        "I want a bulk procurement quote for devices and office equipment."
+                      )
+                    }
+                    className="text-white font-semibold text-sm hover:underline mt-1"
+                  >
                     Get a bulk procurement quote
                   </button>
                 </div>
