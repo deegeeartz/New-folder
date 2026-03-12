@@ -27,7 +27,8 @@ const ContactSection = () => {
       `Company: ${form.company || "Not provided"}`,
       `Service: ${form.service}`,
       "",
-      form.message || "Please tell us about your goals, timelines, and what you need help with.",
+      form.message ||
+        "Please tell us about your goals, timelines, and what you need help with.",
     ].join("\n");
 
     return `mailto:info@quonote.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -49,25 +50,58 @@ const ContactSection = () => {
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-300 text-xs font-semibold tracking-wide mb-5">
               Contact Quonote
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-5" style={{ color: "var(--text-primary)" }}>
+            <h2
+              className="text-3xl md:text-5xl font-bold mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Start the conversation with the right context.
             </h2>
-            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
-              Tell us what you are building, where your bottlenecks are, and what kind of outcome you need. We will use that to shape a useful first conversation.
+            <p
+              className="text-base sm:text-lg leading-relaxed mb-6"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Tell us what you are building, where your bottlenecks are, and
+              what kind of outcome you need. We will use that to shape a useful
+              first conversation.
             </p>
 
-            <div className="space-y-4 text-sm sm:text-base" style={{ color: "var(--text-secondary)" }}>
+            <div
+              className="space-y-4 text-sm sm:text-base"
+              style={{ color: "var(--text-secondary)" }}
+            >
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>Email:</span>{" "}
-                <a href="mailto:info@quonote.com" className="text-blue-400 hover:underline">
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Email:
+                </span>{" "}
+                <a
+                  href="mailto:info@quonote.com"
+                  className="text-blue-400 hover:underline"
+                >
                   info@quonote.com
                 </a>
               </div>
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>Best for:</span> discovery calls, project scoping, automation audits, software builds, and procurement enquiries.
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Best for:
+                </span>{" "}
+                discovery calls, project scoping, automation audits, software
+                builds, and procurement enquiries.
               </div>
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>Tip:</span> include your timeline, team size, and what is currently slowing you down.
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Tip:
+                </span>{" "}
+                include your timeline, team size, and what is currently slowing
+                you down.
               </div>
             </div>
           </div>
@@ -75,7 +109,12 @@ const ContactSection = () => {
           <div className="rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-6 sm:p-8 shadow-2xl shadow-slate-950/30">
             <div className="grid sm:grid-cols-2 gap-4">
               <label className="block">
-                <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Name</span>
+                <span
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Name
+                </span>
                 <input
                   name="name"
                   value={form.name}
@@ -87,7 +126,12 @@ const ContactSection = () => {
                 />
               </label>
               <label className="block">
-                <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Email</span>
+                <span
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Email
+                </span>
                 <input
                   name="email"
                   value={form.email}
@@ -102,7 +146,12 @@ const ContactSection = () => {
 
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <label className="block">
-                <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Company</span>
+                <span
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Company
+                </span>
                 <input
                   name="company"
                   value={form.company}
@@ -114,7 +163,12 @@ const ContactSection = () => {
                 />
               </label>
               <label className="block">
-                <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Service</span>
+                <span
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Service
+                </span>
                 <select
                   name="service"
                   value={form.service}
@@ -132,7 +186,12 @@ const ContactSection = () => {
             </div>
 
             <label className="block mt-4">
-              <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Project brief</span>
+              <span
+                className="block text-sm font-medium mb-2"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Project brief
+              </span>
               <textarea
                 name="message"
                 value={form.message}

@@ -1,6 +1,10 @@
 import React from "react";
 
-const QuonoteLogo = ({ className = "h-9 w-auto md:h-10 lg:h-11", priority = false, lazy = false }) => (
+const QuonoteLogo = ({
+  className = "h-9 w-auto md:h-10 lg:h-11",
+  priority = false,
+  lazy = false,
+}) => (
   <div className="flex items-center gap-2 md:gap-3">
     <picture>
       <source srcSet="/logo2.webp" type="image/webp" />

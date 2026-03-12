@@ -34,11 +34,18 @@ const FaqSection = () => {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
+          <h2
+            className="text-3xl md:text-5xl font-bold mb-4"
+            style={{ color: "var(--text-primary)" }}
+          >
             Frequently asked questions
           </h2>
-          <p className="text-base sm:text-lg" style={{ color: "var(--text-secondary)" }}>
-            Clear answers about strategy, software delivery, automation, and infrastructure support.
+          <p
+            className="text-base sm:text-lg"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Clear answers about strategy, software delivery, automation, and
+            infrastructure support.
           </p>
         </div>
 
@@ -56,7 +63,10 @@ const FaqSection = () => {
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
                   className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                 >
-                  <span className="font-semibold text-base sm:text-lg" style={{ color: "var(--text-primary)" }}>
+                  <span
+                    className="font-semibold text-base sm:text-lg"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {faq.question}
                   </span>
                   <ChevronDown
@@ -66,7 +76,10 @@ const FaqSection = () => {
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-5 text-sm sm:text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                  <div
+                    className="px-6 pb-5 text-sm sm:text-base leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     {faq.answer}
                   </div>
                 )}
