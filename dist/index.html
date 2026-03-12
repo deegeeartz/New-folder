@@ -48,13 +48,17 @@
         "logo": "https://quonote.com/logo2.png",
         "email": "info@quonote.com",
         "description": "Quonote delivers AI consulting, custom software development, business automation, and infrastructure solutions for scaling businesses.",
-        "serviceType": [
-          "AI Consulting",
-          "Custom Software Development",
-          "Business Automation",
-          "Cloud and Infrastructure Support",
-          "Hardware Procurement"
-        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Quonote Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Consulting" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Software Development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Automation" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cloud and Infrastructure Support" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hardware Procurement" } }
+          ]
+        },
         "areaServed": "Global",
         "contactPoint": {
           "@type": "ContactPoint",
