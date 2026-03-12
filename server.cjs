@@ -145,6 +145,7 @@ app.use(express.json());
 // Serve static files from dist FIRST (before any other routes)
 app.use(express.static(distPath, {
   maxAge: '1h',
+  redirect: false,
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.js')) {
       res.set('Content-Type', 'application/javascript');
