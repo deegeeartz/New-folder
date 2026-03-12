@@ -39,7 +39,7 @@ function escapeHtml(value = '') {
 function renderServiceHtml(indexHtml, slug, seo) {
   const title = escapeHtml(seo.title);
   const description = escapeHtml(seo.description);
-  const canonical = `https://quonote.com/services/${slug}`;
+  const canonical = `https://quonote.com/services/${slug}/`;
 
   let html = indexHtml;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);

@@ -126,7 +126,7 @@ function sendIndexResponse(req, res) {
   const seo = slug ? serviceSeo[slug] : null;
 
   if (seo) {
-    const seoPath = `/services/${slug}`;
+    const seoPath = `/services/${slug}/`;
     const seoHtml = renderIndexWithSeo(rawHtml, seo, seoPath);
     res.setHeader('Content-Type', 'text/html; charset=UTF-8');
     res.setHeader('X-Quonote-SEO', `service:${slug}`);

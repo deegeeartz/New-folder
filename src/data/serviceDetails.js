@@ -90,10 +90,10 @@ export const featuredServiceDetails = {
 };
 
 export const featuredServiceLinks = {
-  "AI Automations": "/services/ai-consulting",
-  "Software Development": "/services/software-development",
-  "Process Automation": "/services/automation",
-  "Device Sales & Procurement": "/services/hardware-procurement",
+  "AI Automations": "/services/ai-consulting/",
+  "Software Development": "/services/software-development/",
+  "Process Automation": "/services/automation/",
+  "Device Sales & Procurement": "/services/hardware-procurement/",
 };
 
 export const featuredServiceList = Object.values(featuredServiceDetails);
