@@ -47,7 +47,7 @@ const HeroSection = () => {
             style={{ color: "var(--text-primary)" }}
           >
             Digital systems that drive
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 mt-2">
+            <span className="block mt-2">
               <TypewriterText
                 words={[
                   "measurable business growth.",
@@ -55,6 +55,7 @@ const HeroSection = () => {
                   "smarter AI-powered workflows.",
                   "scalable digital execution.",
                 ]}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400"
                 typeSpeed={80}
                 deleteSpeed={28}
                 pauseMs={2200}

@@ -65,10 +65,10 @@ const TypewriterText = ({
     : safeWords[wordIndex].slice(0, charIndex);
 
   return (
-    <span className={`relative inline-block max-w-full align-baseline ${className}`}>
-      <span className="invisible block max-w-full">{longestWord}</span>
+    <span className="relative inline-block max-w-full align-baseline">
+      <span className={`invisible block max-w-full ${className}`}>{longestWord}</span>
       <span className="absolute inset-0 block max-w-full">
-        <span>{visibleText}</span>
+        <span className={className}>{visibleText}</span>
         {!prefersReducedMotion && (
           <span
             className={`typewriter-caret ${caretClassName}`}
