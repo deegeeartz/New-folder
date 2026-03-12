@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-10 lg:gap-12 xl:gap-16 mb-12">
             <div className="col-span-1 md:col-span-2 lg:col-span-2">
               <div className="mb-6">
-                <QuonoteLogo className="h-10 w-auto md:h-11" />
+                <QuonoteLogo className="h-10 w-auto md:h-11" lazy />
               </div>
 
               <p className="text-slate-500 max-w-sm mb-6">

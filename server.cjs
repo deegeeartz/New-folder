@@ -4,21 +4,34 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 
+// Compression middleware (gzip/brotli for all responses)
+let compression;
+try { compression = require('compression'); } catch (e) { compression = null; }
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV !== 'development';
 const distPath = path.join(__dirname, 'dist');
 
+if (compression) app.use(compression());
 app.use(express.json());
 
 // Serve static files from dist FIRST (before any other routes)
 app.use(express.static(distPath, {
   maxAge: '1h',
-  setHeaders: (res, path) => {
-    if (path.endsWith('.js')) {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.js')) {
       res.set('Content-Type', 'application/javascript');
-    } else if (path.endsWith('.css')) {
+    } else if (filePath.endsWith('.css')) {
       res.set('Content-Type', 'text/css');
+    }
+    // Hashed assets (e.g. index-AbCdEf.js) — cache 1 year immutable
+    if (/assets\/[^/]+-[A-Za-z0-9]{8}\.(js|css)$/.test(filePath)) {
+      res.set('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+    // Logo images — cache 7 days (not versioned by filename)
+    if (filePath.endsWith('logo2.webp') || filePath.endsWith('logo2.png')) {
+      res.set('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
     }
   }
 }));

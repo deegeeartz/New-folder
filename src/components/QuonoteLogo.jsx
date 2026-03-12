@@ -1,13 +1,21 @@
 import React from "react";
 
-const QuonoteLogo = ({ className = "h-9 w-auto md:h-10 lg:h-11" }) => (
+const QuonoteLogo = ({ className = "h-9 w-auto md:h-10 lg:h-11", priority = false, lazy = false }) => (
   <div className="flex items-center gap-2 md:gap-3">
-    <img
-      src="/logo2.png"
-      alt="Quonote Logo"
-      className={`${className} object-contain shrink-0 drop-shadow-lg`}
-      style={{ filter: "brightness(1.1) contrast(1.2)" }}
-    />
+    <picture>
+      <source srcSet="/logo2.webp" type="image/webp" />
+      <img
+        src="/logo2.png"
+        alt="Quonote Logo"
+        width={44}
+        height={44}
+        className={`${className} object-contain shrink-0 drop-shadow-lg`}
+        style={{ filter: "brightness(1.1) contrast(1.2)" }}
+        fetchPriority={priority ? "high" : "auto"}
+        loading={lazy ? "lazy" : "eager"}
+        decoding={priority ? "sync" : "async"}
+      />
+    </picture>
 
     <div className="flex flex-col leading-none">
       <span
