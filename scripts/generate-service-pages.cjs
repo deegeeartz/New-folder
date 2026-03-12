@@ -40,7 +40,7 @@ function renderServiceHtml(indexHtml, slug, seo) {
   const title = escapeHtml(seo.title);
   const description = escapeHtml(seo.description);
   const canonical = `https://quonote.com/services/${slug}/`;
-  const shareImage = 'https://quonote.com/logo2.png';
+  const shareImage = 'https://quonote.com/logo.png';
 
   let html = indexHtml;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
@@ -86,11 +86,11 @@ function renderServiceHtml(indexHtml, slug, seo) {
   );
   html = html.replace(
     /<meta property="og:image:width" content="[\s\S]*?"\s*\/>/i,
-    `<meta property="og:image:width" content="1440" />`
+    `<meta property="og:image:width" content="3464" />`
   );
   html = html.replace(
     /<meta property="og:image:height" content="[\s\S]*?"\s*\/>/i,
-    `<meta property="og:image:height" content="1351" />`
+    `<meta property="og:image:height" content="3464" />`
   );
   html = html.replace(
     /<meta name="twitter:image" content="[\s\S]*?"\s*\/>/i,
