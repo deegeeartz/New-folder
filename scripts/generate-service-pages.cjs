@@ -40,6 +40,7 @@ function renderServiceHtml(indexHtml, slug, seo) {
   const title = escapeHtml(seo.title);
   const description = escapeHtml(seo.description);
   const canonical = `https://quonote.com/services/${slug}/`;
+  const shareImage = 'https://quonote.com/logo2.png';
 
   let html = indexHtml;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
@@ -70,6 +71,30 @@ function renderServiceHtml(indexHtml, slug, seo) {
   html = html.replace(
     /<meta name="twitter:description"\s*content="[\s\S]*?"\s*\/>/i,
     `<meta name="twitter:description" content="${description}" />`
+  );
+  html = html.replace(
+    /<meta property="og:image" content="[\s\S]*?"\s*\/>/i,
+    `<meta property="og:image" content="${shareImage}" />`
+  );
+  html = html.replace(
+    /<meta property="og:image:secure_url" content="[\s\S]*?"\s*\/>/i,
+    `<meta property="og:image:secure_url" content="${shareImage}" />`
+  );
+  html = html.replace(
+    /<meta property="og:image:type" content="[\s\S]*?"\s*\/>/i,
+    `<meta property="og:image:type" content="image/png" />`
+  );
+  html = html.replace(
+    /<meta property="og:image:width" content="[\s\S]*?"\s*\/>/i,
+    `<meta property="og:image:width" content="1440" />`
+  );
+  html = html.replace(
+    /<meta property="og:image:height" content="[\s\S]*?"\s*\/>/i,
+    `<meta property="og:image:height" content="1351" />`
+  );
+  html = html.replace(
+    /<meta name="twitter:image" content="[\s\S]*?"\s*\/>/i,
+    `<meta name="twitter:image" content="${shareImage}" />`
   );
 
   const faqScriptRegex = /<script type="application\/ld\+json">\s*\{[\s\S]*?"@type":\s*"FAQPage"[\s\S]*?<\/script>/i;
