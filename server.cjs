@@ -142,6 +142,18 @@ function sendIndexResponse(req, res) {
 if (compression) app.use(compression());
 app.use(express.json());
 
+// Handle service routes BEFORE static middleware to avoid directory redirect responses.
+app.get(/^\/services\/([^/?#]+)\/?$/i, (req, res, next) => {
+  const slug = req.params[0];
+  const seo = serviceSeo[slug];
+
+  if (!seo) {
+    return next();
+  }
+
+  return sendIndexResponse(req, res);
+});
+
 // Serve static files from dist FIRST (before any other routes)
 app.use(express.static(distPath, {
   maxAge: '1h',
