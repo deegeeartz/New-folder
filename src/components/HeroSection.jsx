@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Button from "./Button";
 import { openConsultant } from "../utils/consultant";
+import TypewriterText from "./TypewriterText";
 
 const HeroSection = () => {
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const section = heroRef.current;
+    if (!section) {
+      return;
+    }
+
+    const updateSpotlight = (event) => {
+      const rect = section.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      section.style.setProperty("--cursor-x", `${x}%`);
+      section.style.setProperty("--cursor-y", `${y}%`);
+    };
+
+    section.addEventListener("mousemove", updateSpotlight);
+    return () => section.removeEventListener("mousemove", updateSpotlight);
+  }, []);
+
   return (
-    <header className="relative pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+    <header
+      ref={heroRef}
+      className="relative pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-28 overflow-hidden"
+    >
+      <div className="hero-spotlight absolute inset-0 pointer-events-none"></div>
       <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-blue-900/30 via-indigo-900/10 to-transparent blur-3xl pointer-events-none float-slow"></div>
       <div
         className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-purple-900/15 blur-3xl pointer-events-none float-slow"
@@ -23,7 +48,14 @@ const HeroSection = () => {
           >
             Digital systems that drive
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 mt-2">
-              measurable business growth.
+              <TypewriterText
+                words={[
+                  "measurable business growth.",
+                  "faster team operations.",
+                  "smarter AI-powered workflows.",
+                  "scalable digital execution.",
+                ]}
+              />
             </span>
           </h1>
           <p
@@ -47,7 +79,7 @@ const HeroSection = () => {
               variant="secondary"
               onClick={() =>
                 openConsultant(
-                  "I want help choosing the right hardware and infrastructure setup for my business."
+                  "I want help choosing the right hardware and infrastructure setup for my business.",
                 )
               }
               className="px-7 py-3 text-base w-full sm:w-auto"

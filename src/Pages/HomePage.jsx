@@ -8,18 +8,33 @@ import FaqSection from "../components/FaqSection";
 import ContactSection from "../components/ContactSection";
 import CtaSection from "../components/CtaSection";
 import SiteLayout from "../components/SiteLayout";
+import RevealOnScroll from "../components/RevealOnScroll";
 
 export default function HomePage() {
   return (
     <SiteLayout>
       <HeroSection />
-      <StatsBar />
-      <AudienceSection />
-      <ServicesSection />
-      <HardwareSection />
-      <FaqSection />
-      <ContactSection />
-      <CtaSection />
+      <RevealOnScroll delay={60}>
+        <StatsBar />
+      </RevealOnScroll>
+      <RevealOnScroll delay={80}>
+        <AudienceSection />
+      </RevealOnScroll>
+      <RevealOnScroll delay={100}>
+        <ServicesSection />
+      </RevealOnScroll>
+      <RevealOnScroll delay={120}>
+        <HardwareSection />
+      </RevealOnScroll>
+      <RevealOnScroll delay={80}>
+        <FaqSection />
+      </RevealOnScroll>
+      <RevealOnScroll delay={80}>
+        <ContactSection />
+      </RevealOnScroll>
+      <RevealOnScroll delay={60}>
+        <CtaSection />
+      </RevealOnScroll>
     </SiteLayout>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Code,
   BarChart,
@@ -15,8 +15,9 @@ import {
   Layers,
   Briefcase,
 } from "lucide-react";
-import ServiceCard from './ServiceCard';
-import { featuredServiceLinks } from '../data/serviceDetails';
+import ServiceCard from "./ServiceCard";
+import { featuredServiceLinks } from "../data/serviceDetails";
+import RevealOnScroll from "./RevealOnScroll";
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -143,57 +144,70 @@ const ServicesSection = () => {
 
   return (
     <section
-        id="services"
-        className="py-16 sm:py-24 bg-slate-800/30 dark:bg-slate-800/30 light:bg-blue-50/30 relative overflow-hidden scroll-mt-24"
-      >
-        <div className="absolute -left-40 top-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none"></div>
-        <div className="absolute -right-32 bottom-0 w-72 h-72 bg-gradient-to-br from-purple-500/15 via-blue-500/10 to-transparent blur-3xl pointer-events-none"></div>
-        <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                Our Expertise
-              </h2>
-              <p className="text-slate-400 max-w-xl">
-                Outcome-focused services across strategy, software, automation,
-                and infrastructure. Filter by category to find the support that
-                fits your next growth move.
-              </p>
-            </div>
-
-            {/* Category Tabs */}
-            <div className="mt-8 md:mt-0 flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveTab(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    activeTab === cat
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
-                      : "bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+      id="services"
+      className="py-16 sm:py-24 bg-slate-800/30 dark:bg-slate-800/30 light:bg-blue-50/30 relative overflow-hidden scroll-mt-24"
+    >
+      <div className="absolute -left-40 top-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none"></div>
+      <div className="absolute -right-32 bottom-0 w-72 h-72 bg-gradient-to-br from-purple-500/15 via-blue-500/10 to-transparent blur-3xl pointer-events-none"></div>
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              Our Expertise
+            </h2>
+            <p className="text-slate-400 max-w-xl">
+              Outcome-focused services across strategy, software, automation,
+              and infrastructure. Filter by category to find the support that
+              fits your next growth move.
+            </p>
+            <p className="text-blue-300 text-sm font-medium mt-3">
+              <span className="text-blue-400">↳ </span>
+              <span className="inline-flex items-center gap-1">
+                <span>Delivering:</span>
+                <span className="text-cyan-300">
+                  {activeTab === "All"
+                    ? "end-to-end digital execution"
+                    : `${activeTab.toLowerCase()} outcomes that scale`}
+                </span>
+              </span>
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 xl:gap-8">
-            {filteredServices.map((service, index) => (
-              <div
-                key={index}
-                className="floating-card rounded-2xl border border-slate-800/70 bg-slate-900/60 reveal-up"
-                style={{ animationDelay: `${80 * index}ms` }}
+          {/* Category Tabs */}
+          <div className="mt-8 md:mt-0 flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveTab(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  activeTab === cat
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
+                    : "bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
+                }`}
               >
-                <ServiceCard {...service} href={featuredServiceLinks[service.title]} />
-              </div>
+                {cat}
+              </button>
             ))}
           </div>
         </div>
-      </section>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 xl:gap-8">
+          {filteredServices.map((service, index) => (
+            <RevealOnScroll
+              key={index}
+              className="floating-card rounded-2xl border border-slate-800/70 bg-slate-900/60 h-full"
+              delay={70 * index}
+            >
+              <ServiceCard
+                {...service}
+                href={featuredServiceLinks[service.title]}
+              />
+            </RevealOnScroll>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
 export default ServicesSection;
-

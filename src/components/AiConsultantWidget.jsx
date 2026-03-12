@@ -10,6 +10,7 @@ const AiConsultantWidget = () => {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
+      typed: true,
       text: "Hello! 👋 I'm the Quonote AI Consultant.\n\nTell me a bit about your business (e.g., 'I run a pharmacy' or 'I have a fintech startup'), and I'll suggest a digital strategy for you!",
     },
   ]);
@@ -39,7 +40,7 @@ const AiConsultantWidget = () => {
     return () => {
       window.removeEventListener(
         "quonote:open-consultant",
-        handleOpenConsultant
+        handleOpenConsultant,
       );
     };
   }, []);

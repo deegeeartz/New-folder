@@ -12,7 +12,7 @@ const Button = ({
   disabled = false,
 }) => {
   const baseStyles =
-    "px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed shadow-md";
+    "btn-micro px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed shadow-md";
   const variants = {
     primary:
       "bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 hover:shadow-blue-500/40 hover:shadow-lg text-white",

@@ -20,24 +20,37 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-900/90 dark:bg-slate-900/90 light:bg-white/90 backdrop-blur-lg border-b border-slate-800 dark:border-slate-800 light:border-slate-200 py-3"
+          ? "bg-slate-900/85 dark:bg-slate-900/85 light:bg-white/85 backdrop-blur-xl nav-glass border-b border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 flex justify-between items-center">
         <QuonoteLogo className="h-8 w-auto sm:h-9 md:h-10" priority />
         <div className="hidden md:flex space-x-8 xl:space-x-10 items-center text-sm font-medium">
-          <a href="/#services" className="hover:text-blue-400 transition-colors">
+          <a
+            href="/#services"
+            className="hover:text-blue-400 transition-colors duration-200"
+          >
             Solutions
           </a>
-          <a href="/#audiences" className="hover:text-blue-400 transition-colors">
+          <a
+            href="/#audiences"
+            className="hover:text-blue-400 transition-colors duration-200"
+          >
             Who We Serve
           </a>
-          <a href="/#hardware" className="hover:text-blue-400 transition-colors">
+          <a
+            href="/#hardware"
+            className="hover:text-blue-400 transition-colors duration-200"
+          >
             Hardware Store
           </a>
           <ThemeToggle />
-          <Button variant="primary" href="/#contact" className="py-2 px-4 text-sm">
+          <Button
+            variant="primary"
+            href="/#contact"
+            className="py-2 px-4 text-sm"
+          >
             Get Started
           </Button>
         </div>

@@ -1,4 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import useReducedMotion from '../Hooks/useReducedMotion';
+
+const TypedMessage = ({ text }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const [visibleLength, setVisibleLength] = useState(prefersReducedMotion ? text.length : 0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisibleLength(text.length);
+      return;
+    }
+
+    let timeout;
+    if (visibleLength < text.length) {
+      timeout = setTimeout(() => {
+        setVisibleLength((current) => current + 1);
+      }, 14);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [prefersReducedMotion, text, visibleLength]);
+
+  return <p className="whitespace-pre-wrap">{text.slice(0, visibleLength)}</p>;
+};
 
 const ChatMessage = ({ message }) => {
   const isUser = message.role === 'user';
@@ -12,7 +36,11 @@ const ChatMessage = ({ message }) => {
             : 'bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-none'
         }`}
       >
-        <p className="whitespace-pre-wrap">{message.text}</p>
+        {message.typed && !isUser ? (
+          <TypedMessage text={message.text} />
+        ) : (
+          <p className="whitespace-pre-wrap">{message.text}</p>
+        )}
       </div>
     </div>
   );
