@@ -16,12 +16,23 @@ const HeroSection = () => {
       const rect = section.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 100;
       const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+      // Smooth interpolation using requestAnimationFrame style approach
       section.style.setProperty("--cursor-x", `${x}%`);
       section.style.setProperty("--cursor-y", `${y}%`);
     };
 
+    const handleMouseLeave = () => {
+      section.style.setProperty("--cursor-x", "50%");
+      section.style.setProperty("--cursor-y", "40%");
+    };
+
     section.addEventListener("mousemove", updateSpotlight);
-    return () => section.removeEventListener("mousemove", updateSpotlight);
+    section.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      section.removeEventListener("mousemove", updateSpotlight);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, []);
 
   return (
@@ -75,9 +86,10 @@ const HeroSection = () => {
             <Button
               variant="primary"
               href="#services"
-              className="px-7 py-3 text-base w-full sm:w-auto"
+              className="px-8 py-3.5 text-base w-full sm:w-auto btn-micro group/btn"
             >
-              Explore Services
+              <span className="relative z-10">Explore Services</span>
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
             </Button>
             <Button
               variant="secondary"

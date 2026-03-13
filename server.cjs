@@ -242,8 +242,9 @@ app.post('/api/gemini', async (req, res) => {
       return res.status(500).json({ error: 'Service temporarily unavailable' });
     }
 
+    const model = 'gemini-2.5-flash';
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -254,10 +255,11 @@ app.post('/api/gemini', async (req, res) => {
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`Gemini API error: ${response.status}`);
-      return res.status(503).json({ 
-        error: 'AI service temporarily unavailable'
+      const errorData = await response.json().catch(() => ({}));
+      console.error(`Gemini API Error [${response.status}]:`, JSON.stringify(errorData, null, 2));
+      return res.status(response.status || 503).json({ 
+        error: 'AI service temporarily unavailable',
+        details: isProduction ? undefined : errorData
       });
     }
 

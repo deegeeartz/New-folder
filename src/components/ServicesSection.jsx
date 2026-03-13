@@ -181,8 +181,8 @@ const ServicesSection = () => {
                 onClick={() => setActiveTab(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   activeTab === cat
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
-                    : "bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25 border-transparent"
+                    : "bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 backdrop-blur-sm"
                 }`}
               >
                 {cat}
@@ -191,19 +191,45 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 xl:gap-8">
-          {filteredServices.map((service, index) => (
-            <RevealOnScroll
-              key={index}
-              className="floating-card rounded-2xl border border-slate-800/70 bg-slate-900/60 h-full"
-              delay={70 * index}
-            >
-              <ServiceCard
-                {...service}
-                href={featuredServiceLinks[service.title]}
-              />
-            </RevealOnScroll>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 auto-rows-[160px] gap-4 sm:gap-5 xl:gap-6">
+          {filteredServices.map((service, index) => {
+            // Bento logic: prioritize AI, Software Dev, and Strategy with larger cards
+            let spanClass = "md:col-span-2 md:row-span-2"; // default medium
+
+            if (
+              service.title === "Software Development" ||
+              service.title === "AI Automations"
+            ) {
+              spanClass =
+                "md:col-span-2 lg:col-span-3 md:row-span-3 lg:row-span-3 bg-gradient-to-br from-blue-900/20 to-indigo-900/20";
+            } else if (
+              service.title === "Digital Strategy Consulting" ||
+              service.title === "Process Automation"
+            ) {
+              spanClass = "md:col-span-2 lg:col-span-3 md:row-span-2";
+            } else if (index % 5 === 0) {
+              spanClass = "md:col-span-2 md:row-span-1";
+            } else {
+              spanClass = "md:col-span-1 lg:col-span-2 md:row-span-2";
+            }
+
+            return (
+              <RevealOnScroll
+                key={index}
+                className={`card-glow group rounded-3xl border border-slate-800/50 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-500 overflow-hidden ${spanClass}`}
+                delay={50 * (index % 5)}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-purple-500/5"></div>
+                </div>
+                <ServiceCard
+                  {...service}
+                  href={featuredServiceLinks[service.title]}
+                  isBento={true}
+                />
+              </RevealOnScroll>
+            );
+          })}
         </div>
       </div>
     </section>
