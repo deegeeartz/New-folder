@@ -3,9 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: path.join(__dirname, '.env') });
-}
+// Load environment variables from .env file
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // Compression middleware (gzip/brotli for all responses)
 let compression;
@@ -355,4 +354,5 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
   console.log(`Serving static files from: ${distPath}`);
+  console.log(`AI Configuration: Model=${process.env.GEMINI_MODEL || 'gemini-2.5-flash'}`);
 });
