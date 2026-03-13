@@ -302,7 +302,13 @@ app.post('/api/gemini', async (req, res) => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }]
+            contents: [{ parts: [{ text: prompt }] }],
+            safetySettings: [
+              { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+            ]
           })
         }
       );
@@ -313,7 +319,7 @@ app.post('/api/gemini', async (req, res) => {
       }
 
       const errorData = await response.json().catch(() => ({}));
-      console.error(`Gemini API Error [${response.status}] model=${model}:`, JSON.stringify(errorData, null, 2));
+      console.error(`Gemini API Error [${response.status}] model=${model} prompt="${prompt.slice(0, 50)}":`, JSON.stringify(errorData, null, 2));
       lastStatus = response.status || 503;
       lastErrorData = errorData;
     }
