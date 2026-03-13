@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 require('dotenv').config({ path: path.join(__dirname, '.env'), override: true });
 
 // Compression middleware (gzip/brotli for all responses)
@@ -195,6 +196,25 @@ app.get('/debug-deployment', (req, res) => {
       distExists: fs.existsSync(distPath),
       indexHtmlExists: fs.existsSync(path.join(distPath, 'index.html')),
       distContents: fs.existsSync(distPath) ? fs.readdirSync(distPath).slice(0, 10) : []
+    }
+  });
+});
+
+app.get('/debug-gemini', (req, res) => {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+  const keyFingerprint = apiKey
+    ? crypto.createHash('sha256').update(apiKey).digest('hex').slice(0, 12)
+    : null;
+
+  res.json({
+    status: 'ok',
+    version: 'v3-cjs-gemini-debug',
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      isProduction,
+      GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      hasGeminiApiKey: Boolean(apiKey),
+      geminiKeyFingerprint: keyFingerprint
     }
   });
 });
