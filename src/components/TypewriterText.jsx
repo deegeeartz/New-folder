@@ -17,7 +17,8 @@ const TypewriterText = ({
     }
 
     return safeWords.reduce(
-      (longest, current) => (current.length > longest.length ? current : longest),
+      (longest, current) =>
+        current.length > longest.length ? current : longest,
       "",
     );
   }, [safeWords]);
@@ -66,7 +67,9 @@ const TypewriterText = ({
 
   return (
     <span className="relative inline-block max-w-full align-baseline">
-      <span className={`invisible block max-w-full ${className}`}>{longestWord}</span>
+      <span className={`invisible block max-w-full ${className}`}>
+        {longestWord}
+      </span>
       <span className="absolute inset-0 block max-w-full">
         <span className={className}>{visibleText}</span>
         {!prefersReducedMotion && (
