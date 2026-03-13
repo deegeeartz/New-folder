@@ -326,7 +326,7 @@ app.post('/api/gemini', async (req, res) => {
 
     return res.status(lastStatus).json({
       error: 'AI service temporarily unavailable',
-      details: isProduction ? undefined : lastErrorData
+      details: errorData || lastErrorData
     });
   } catch (error) {
     console.error(`Proxy error: ${error.message}`);

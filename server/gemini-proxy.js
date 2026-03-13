@@ -70,7 +70,7 @@ router.post('/api/gemini', async (req, res) => {
 
     return res.status(lastStatus).json({ 
       error: 'AI service temporarily unavailable',
-      details: process.env.NODE_ENV === 'production' ? undefined : lastErrorData
+      details: errorData || lastErrorData
     });
   } catch (error) {
     logger.error(`Proxy error: ${error.message}`);
