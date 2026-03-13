@@ -26,7 +26,7 @@ router.post('/api/gemini', async (req, res) => {
       return res.status(400).json({ error: 'Prompt too long' });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       logger.error('API key not configured');
       return res.status(500).json({ error: 'Service temporarily unavailable' });

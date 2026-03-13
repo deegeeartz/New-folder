@@ -3,7 +3,9 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-require('dotenv').config({ path: path.join(__dirname, '.env'), override: true });
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: path.join(__dirname, '.env') });
+}
 
 // Compression middleware (gzip/brotli for all responses)
 let compression;
@@ -179,7 +181,7 @@ app.use(express.static(distPath, {
 // Debug routes
 app.get('/debug-deployment', (req, res) => {
   const distPath = path.join(__dirname, 'dist');
-  const runtimeApiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+  const runtimeApiKey = process.env.GEMINI_API_KEY || '';
   const runtimeKeyFingerprint = runtimeApiKey
     ? crypto.createHash('sha256').update(runtimeApiKey).digest('hex').slice(0, 12)
     : null;
@@ -226,7 +228,7 @@ app.get('/debug-deployment', (req, res) => {
 });
 
 app.get('/debug-gemini', (req, res) => {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+  const apiKey = process.env.GEMINI_API_KEY || '';
   const keyFingerprint = apiKey
     ? crypto.createHash('sha256').update(apiKey).digest('hex').slice(0, 12)
     : null;
@@ -281,7 +283,7 @@ app.post('/api/gemini', async (req, res) => {
       return res.status(400).json({ error: 'Prompt too long' });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       console.error('API key not configured');
       return res.status(500).json({ error: 'Service temporarily unavailable' });
