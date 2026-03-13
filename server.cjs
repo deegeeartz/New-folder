@@ -278,8 +278,8 @@ app.post('/api/gemini', async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    if (prompt.length > 1000) {
-      return res.status(400).json({ error: 'Prompt too long' });
+    if (prompt.length > 2000) {
+      return res.status(400).json({ error: 'Prompt too long (max 2000 chars)' });
     }
 
     const apiKey = process.env.GEMINI_API_KEY;

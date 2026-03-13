@@ -33,8 +33,14 @@ export const sendMessageToAI = async (input) => {
           throw new Error('Message too long (max 500 characters)');
         }
         
-        // Sanitize input to prevent injection attacks
         const sanitizedInput = input.replace(/[<>]/g, '').trim();
+        const fullPrompt = `${systemPrompt}\n\nUser: ${sanitizedInput}`;
+        
+        // Total budget is 2000 (System + User)
+        if (fullPrompt.length > 2000) {
+          const overage = fullPrompt.length - 2000;
+          throw new Error(`Your message is a bit too long. Please shorten it by about ${overage} characters so I can process it efficiently.`);
+        }
         
         // Use environment variable for API URL in production (Vercel), fall back to relative path (Vite Proxy) in dev
         const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
@@ -44,7 +50,7 @@ export const sendMessageToAI = async (input) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            prompt: `${systemPrompt}\n\nUser: ${sanitizedInput}`
+            prompt: fullPrompt
           })
         });
   
