@@ -179,13 +179,38 @@ app.use(express.static(distPath, {
 // Debug routes
 app.get('/debug-deployment', (req, res) => {
   const distPath = path.join(__dirname, 'dist');
+  const runtimeApiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+  const runtimeKeyFingerprint = runtimeApiKey
+    ? crypto.createHash('sha256').update(runtimeApiKey).digest('hex').slice(0, 12)
+    : null;
+
+  let envFileKeyFingerprint = null;
+  try {
+    const envPath = path.join(__dirname, '.env');
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, 'utf8');
+      const envKeyMatch = envContent.match(/^GEMINI_API_KEY=(.*)$/m);
+      const envFileKey = envKeyMatch?.[1]?.trim() || '';
+      envFileKeyFingerprint = envFileKey
+        ? crypto.createHash('sha256').update(envFileKey).digest('hex').slice(0, 12)
+        : null;
+    }
+  } catch (error) {
+    envFileKeyFingerprint = null;
+  }
+
   res.json({
     status: 'ok',
-    version: 'v3-cjs',
+    version: 'v3-cjs-key-diagnostics',
     env: {
       NODE_ENV: process.env.NODE_ENV,
       PORT: process.env.PORT,
-      isProduction
+      isProduction,
+      GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      hasRuntimeGeminiKey: Boolean(runtimeApiKey),
+      runtimeGeminiKeyFingerprint: runtimeKeyFingerprint,
+      envFileGeminiKeyFingerprint: envFileKeyFingerprint,
+      runtimeMatchesEnvFile: Boolean(runtimeKeyFingerprint && envFileKeyFingerprint && runtimeKeyFingerprint === envFileKeyFingerprint)
     },
     paths: {
       cwd: process.cwd(),
