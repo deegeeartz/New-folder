@@ -32,29 +32,40 @@ router.post('/api/gemini', async (req, res) => {
       return res.status(500).json({ error: 'Service temporarily unavailable' });
     }
 
-    const model = 'gemini-2.5-flash';
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
+    const configuredModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    const fallbackModels = [configuredModel, 'gemini-2.0-flash'];
+    const models = [...new Set(fallbackModels.filter(Boolean))];
 
-    if (!response.ok) {
+    let lastStatus = 503;
+    let lastErrorData = {};
+
+    for (const model of models) {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return res.json(data);
+      }
+
       const errorData = await response.json().catch(() => ({}));
-      logger.error(`Gemini API Error [${response.status}]: ${JSON.stringify(errorData)}`);
-      return res.status(response.status || 503).json({ 
-        error: 'AI service temporarily unavailable',
-        details: process.env.NODE_ENV === 'production' ? undefined : errorData
-      });
+      logger.error(`Gemini API Error [${response.status}] model=${model}: ${JSON.stringify(errorData)}`);
+      lastStatus = response.status || 503;
+      lastErrorData = errorData;
     }
 
-    const data = await response.json();
-    res.json(data);
+    return res.status(lastStatus).json({ 
+      error: 'AI service temporarily unavailable',
+      details: process.env.NODE_ENV === 'production' ? undefined : lastErrorData
+    });
   } catch (error) {
     logger.error(`Proxy error: ${error.message}`);
     // Don't expose internal error details
