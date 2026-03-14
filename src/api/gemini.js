@@ -32,7 +32,25 @@ const systemPrompt = `
       - If asked about hardware, mention Quonote's hardware support and authorized dealership guidance.
     `;
 
-export const sendMessageToAI = async (input) => {
+const MAX_PROMPT_CHARS = 6000;
+const MAX_HISTORY_MESSAGES = 8;
+const MAX_MESSAGE_CHARS = 320;
+
+const sanitizeText = (text = "") =>
+  text
+    .replace(/[<>]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const buildPrompt = (historyLines, currentInput) => {
+  const historyBlock = historyLines.length
+    ? `Conversation context:\n${historyLines.join("\n")}\n\n`
+    : "";
+
+  return `${systemPrompt}\n\n${historyBlock}Current user message: ${currentInput}`;
+};
+
+export const sendMessageToAI = async (input, messageHistory = []) => {
     try {
         // Input validation
         if (!input || input.trim().length === 0) {
@@ -43,12 +61,28 @@ export const sendMessageToAI = async (input) => {
           throw new Error('Message too long (max 500 characters)');
         }
         
-        const sanitizedInput = input.replace(/[<>]/g, '').trim();
-        const fullPrompt = `${systemPrompt}\n\nUser: ${sanitizedInput}`;
-        
-        // Total budget is 2000 (System + User)
-        if (fullPrompt.length > 2000) {
-          const overage = fullPrompt.length - 2000;
+        const sanitizedInput = sanitizeText(input);
+
+        const normalizedHistory = (Array.isArray(messageHistory) ? messageHistory : [])
+          .filter((item) => item?.role === "user" || item?.role === "assistant")
+          .map((item) => ({
+            role: item.role,
+            text: sanitizeText(String(item.text || "")).slice(0, MAX_MESSAGE_CHARS),
+          }))
+          .filter((item) => item.text.length > 0)
+          .slice(-MAX_HISTORY_MESSAGES)
+          .map((item) => `${item.role === "assistant" ? "Assistant" : "User"}: ${item.text}`);
+
+        let historyWindow = [...normalizedHistory];
+        let fullPrompt = buildPrompt(historyWindow, sanitizedInput);
+
+        while (fullPrompt.length > MAX_PROMPT_CHARS && historyWindow.length > 0) {
+          historyWindow = historyWindow.slice(1);
+          fullPrompt = buildPrompt(historyWindow, sanitizedInput);
+        }
+
+        if (fullPrompt.length > MAX_PROMPT_CHARS) {
+          const overage = fullPrompt.length - MAX_PROMPT_CHARS;
           throw new Error(`Your message is a bit too long. Please shorten it by about ${overage} characters so I can process it efficiently.`);
         }
         

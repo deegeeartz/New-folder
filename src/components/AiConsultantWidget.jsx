@@ -49,12 +49,13 @@ const AiConsultantWidget = () => {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", text: input };
+    const historyForModel = [...messages, userMessage];
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
     try {
-      const aiResponseText = await sendMessageToAI(input);
+      const aiResponseText = await sendMessageToAI(input, historyForModel);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", text: aiResponseText },
