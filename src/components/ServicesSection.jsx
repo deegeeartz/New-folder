@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Code,
   BarChart,
@@ -144,6 +144,21 @@ const ServicesSection = () => {
       ? services
       : services.filter((s) => s.category === activeTab);
 
+  useEffect(() => {
+    if (filteredServices.length === 0) {
+      setOpenMobileService(null);
+      return;
+    }
+
+    const isCurrentOpenVisible = filteredServices.some(
+      (service) => service.title === openMobileService,
+    );
+
+    if (!isCurrentOpenVisible) {
+      setOpenMobileService(filteredServices[0].title);
+    }
+  }, [activeTab, filteredServices, openMobileService]);
+
   return (
     <section
       id="services"
@@ -225,14 +240,22 @@ const ServicesSection = () => {
                   />
                 </button>
 
-                {isOpen && (
-                  <div className="px-3 pb-3">
-                    <ServiceCard
-                      {...service}
-                      href={featuredServiceLinks[service.title]}
-                    />
+                <div
+                  className={`grid transition-all duration-300 ease-out ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="px-3 pb-3 pt-1">
+                      <ServiceCard
+                        {...service}
+                        href={featuredServiceLinks[service.title]}
+                      />
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
