@@ -126,6 +126,10 @@ function sendIndexResponse(req, res) {
     return res.status(404).json({ error: 'App not built. Run npm run build first.' });
   }
 
+  res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   const rawHtml = fs.readFileSync(indexPath, 'utf8');
   const requestPath = (req.originalUrl || req.url || req.path || '/').split('?')[0];
   const slugMatch = requestPath.match(/^\/services\/([^/?#]+)\/?$/i);
