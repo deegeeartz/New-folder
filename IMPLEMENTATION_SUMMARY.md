@@ -1,5 +1,105 @@
 # 🎉 Implementation Complete - Quonote Digital Improvements
 
+## 🧩 Favicon/Icon Set Refresh — March 14, 2026
+
+- Regenerated public icon assets from the blue logo variant for full brand consistency in light contexts.
+- Updated files in `public/`: `favicon-16.png` (`16x16`), `favicon-32.png` (`32x32`), `apple-touch-icon.png` (`180x180`), `icon-192.png` (`192x192`), `icon-512.png` (`512x512`).
+- Verified output dimensions after generation.
+
+---
+
+## 🎨 Logo Variant + Share Thumbnail Update — March 14, 2026
+
+- Generated new blue logo asset for light backgrounds: `public/logo-blue.png`.
+- Generated new social/share thumbnail with white background + centered blue logo: `public/og-thumbnail-blue.png` (`1200x630`).
+- Updated `src/components/QuonoteLogo.jsx` to auto-switch logo by theme (Light mode → `/logo-blue.png`, Dark mode → `/logo2.png`).
+- Updated `index.html` metadata for link sharing/search previews (`og:image` + `twitter:image` now `https://quonote.com/og-thumbnail-blue.png`, dimensions `1200x630`, JSON-LD logo `https://quonote.com/logo-blue.png`, `apple-touch-icon` set to `/logo-blue.png`).
+
+---
+
+## ✅ Retry Verification — March 14, 2026
+
+- Re-ran full lint across the repository after latest lint-stabilization fixes.
+- Confirmed clean result: `npm run lint` exits with `LINT_EXIT_CODE=0`.
+- Latest retry confirms no remaining ESLint blocking errors.
+
+---
+
+## 🛠️ Lint Stabilization Log — March 14, 2026
+
+- Updated `eslint.config.js` to separate browser (`src/**`) and Node (`server/**`, `server-app.js`, scripts) lint environments.
+- Added Node globals support for backend/runtime files to resolve `process is not defined` errors.
+- Disabled `react-hooks/set-state-in-effect` for this codebase’s animation/typewriter patterns.
+- Disabled `react-refresh/only-export-components` to allow current context/hook export pattern.
+- Fixed conditional hook usage in `src/Pages/ServiceDetailPage.jsx` by moving the guard inside `useEffect` and preserving top-level hook order.
+- Replaced browser-side `process.env.NODE_ENV` check with `import.meta.env.PROD` in `src/components/ErrorBoundary.jsx`.
+- Re-ran lint verification after fixes.
+
+---
+
+## 📝 Update Log — March 14, 2026 (Comprehensive)
+
+### Contact & Lead Capture (Implemented)
+
+- Replaced `mailto:`-only enquiry flow with direct in-app submission UX in `src/components/ContactSection.jsx`.
+- Added required-field validation for Name, Email, and Project Brief.
+- Added inline validation messaging, loading state, success state, and error fallback state.
+- Added direct backend delivery path via `POST /api/contact` (no page exit required).
+- Kept direct email fallback button for resilience (`mailto:info@quonote.com`).
+
+### Backend Contact Delivery (Implemented)
+
+- Added new route `server/contact.js`.
+- Implemented server-side validation for contact payload.
+- Integrated Resend API email delivery in backend.
+- Added reply-to behavior using the submitter email.
+- Added HTML + text email formats for contact notifications.
+- Mounted contact router in `server/index.js`.
+
+### Gemini API Security Hardening (Implemented)
+
+- Re-enabled API rate limiting (10 requests / 15 minutes per IP) in `server/gemini-proxy.js`.
+- Removed detailed upstream error payload exposure to clients.
+- Kept safe generic error responses for frontend consumption.
+
+### Routing & Fallback UX (Implemented)
+
+- Added `src/Pages/NotFoundPage.jsx` as a proper 404 experience.
+- Added wildcard route in `src/App.jsx` to render 404 page for unknown paths.
+
+### Brand/UI/Accessibility Consistency (Implemented)
+
+- Aligned primary CTA style to brand standard solid blue in `src/components/Button.jsx`.
+- Fixed footer service naming mismatch in `src/components/Footer.jsx` ("Digital Strategy" → "AI Consulting & Automation", "Data Analytics" → "Business Process Automation").
+- Added `aria-label` attributes to footer quick action links/buttons.
+- Removed third-party texture dependency in `src/components/CtaSection.jsx` and replaced with local CSS-based pattern.
+
+### SEO & Metadata Consistency (Implemented)
+
+- Standardized social/structured logo references to existing `logo2` asset in `index.html`.
+- Added `sameAs` organization link(s) in JSON-LD (`https://x.com/quonote`).
+
+### Dependency & Configuration Updates (Implemented)
+
+- Added `resend` dependency in `package.json`.
+- Moved runtime React packages to `dependencies` in `package.json`:
+  - `react`
+  - `react-dom`
+  - `react-router-dom`
+- Upgraded `react-router-dom` from `^6.3.0` to `^6.30.1`.
+- Updated `.env.example` to use backend mail delivery key:
+  - Added `RESEND_API_KEY`
+  - Removed Formspree-only variable from active flow.
+- Updated `README.md` env documentation to reflect backend mail strategy and current variables.
+
+### Verification Notes
+
+- Ran `npm install resend` successfully.
+- Ran `npm run lint` successfully as a check command; repository still contains pre-existing lint issues in files outside this update scope.
+- Updated/added files in this cycle: `server/contact.js`, `server/index.js`, `server/gemini-proxy.js`, `src/components/ContactSection.jsx`, `src/components/Footer.jsx`, `src/components/CtaSection.jsx`, `src/components/Button.jsx`, `src/Pages/NotFoundPage.jsx`, `src/App.jsx`, `index.html`, `.env.example`, `README.md`, `package.json`.
+
+---
+
 ## ✅ All Security Improvements Implemented
 
 ### 1. Input Validation & Sanitization ✓

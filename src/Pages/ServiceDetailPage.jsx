@@ -9,11 +9,11 @@ const ServiceDetailPage = () => {
   const { slug } = useParams();
   const service = featuredServiceDetails[slug];
 
-  if (!service) {
-    return <Navigate to="/" replace />;
-  }
-
   useEffect(() => {
+    if (!service) {
+      return;
+    }
+
     const previousTitle = document.title;
     const descriptionTag = document.querySelector('meta[name="description"]');
     const previousDescription = descriptionTag?.getAttribute("content");
@@ -30,6 +30,10 @@ const ServiceDetailPage = () => {
       }
     };
   }, [service]);
+
+  if (!service) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <SiteLayout>

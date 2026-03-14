@@ -12,7 +12,7 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     // Log error to monitoring service in production
-    if (process.env.NODE_ENV === "production") {
+    if (import.meta.env.PROD) {
       // Example: logErrorToService(error, errorInfo);
     } else {
       console.error("Error caught by boundary:", error, errorInfo);

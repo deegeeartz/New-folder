@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import ServiceDetailPage from "./Pages/ServiceDetailPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function AnimatedRoutes() {
       <Routes location={location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

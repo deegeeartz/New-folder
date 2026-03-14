@@ -5,6 +5,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import geminiProxy from './gemini-proxy.js';
+import contactRouter from './contact.js';
 
 config();
 
@@ -85,6 +86,7 @@ app.use(cors({
 
 // API routes
 app.use(geminiProxy);
+app.use(contactRouter);
 
 // Basic Health Check
 app.get('/', (req, res) => {

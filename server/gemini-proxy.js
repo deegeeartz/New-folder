@@ -1,4 +1,5 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
 
@@ -9,11 +10,15 @@ const logger = {
   info: (msg) => process.env.NODE_ENV !== 'production' && console.log(msg)
 };
 
-// TODO: Add rate limiter back once npm install works on server
-// import rateLimit from 'express-rate-limit';
-// const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10 });
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please try again shortly.' }
+});
 
-router.post('/api/gemini', async (req, res) => {
+router.post('/api/gemini', apiLimiter, async (req, res) => {
   try {
     const { prompt } = req.body;
     
@@ -37,7 +42,6 @@ router.post('/api/gemini', async (req, res) => {
     const models = [...new Set(fallbackModels.filter(Boolean))];
 
     let lastStatus = 503;
-    let lastErrorData = {};
 
     for (const model of models) {
       const response = await fetch(
@@ -65,12 +69,10 @@ router.post('/api/gemini', async (req, res) => {
       const errorData = await response.json().catch(() => ({}));
       logger.error(`Gemini API Error [${response.status}] model=${model} prompt="${prompt.slice(0, 50)}": ${JSON.stringify(errorData)}`);
       lastStatus = response.status || 503;
-      lastErrorData = errorData;
     }
 
     return res.status(lastStatus).json({ 
-      error: 'AI service temporarily unavailable',
-      details: errorData || lastErrorData
+      error: 'AI service temporarily unavailable'
     });
   } catch (error) {
     logger.error(`Proxy error: ${error.message}`);

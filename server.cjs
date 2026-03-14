@@ -8,7 +8,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // Compression middleware (gzip/brotli for all responses)
 let compression;
-try { compression = require('compression'); } catch (e) { compression = null; }
+try { compression = require('compression'); } catch { compression = null; }
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -196,7 +196,7 @@ app.get('/debug-deployment', (req, res) => {
         ? crypto.createHash('sha256').update(envFileKey).digest('hex').slice(0, 12)
         : null;
     }
-  } catch (error) {
+  } catch {
     envFileKeyFingerprint = null;
   }
 
@@ -326,7 +326,7 @@ app.post('/api/gemini', async (req, res) => {
 
     return res.status(lastStatus).json({
       error: 'AI service temporarily unavailable',
-      details: errorData || lastErrorData
+      details: lastErrorData
     });
   } catch (error) {
     console.error(`Proxy error: ${error.message}`);

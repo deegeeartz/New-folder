@@ -31,6 +31,7 @@ const Footer = () => {
                     "I want strategic advice for my business growth plan.",
                   )
                 }
+                aria-label="Open strategy chat"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
                 <MessageSquareText size={16} />
@@ -38,6 +39,7 @@ const Footer = () => {
               </button>
               <a
                 href="/#services"
+                aria-label="View services"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
                 <Briefcase size={16} />
@@ -45,6 +47,7 @@ const Footer = () => {
               </a>
               <a
                 href="/#hardware"
+                aria-label="View hardware section"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
                 <MonitorSmartphone size={16} />
@@ -52,6 +55,7 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@quonote.com"
+                aria-label="Email info@quonote.com"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
                 <MessageSquareText size={16} />
@@ -70,7 +74,7 @@ const Footer = () => {
                   href="/services/ai-consulting/"
                   className="hover:text-blue-400"
                 >
-                  Digital Strategy
+                  AI Consulting & Automation
                 </a>
               </li>
               <li>
@@ -83,7 +87,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="/services/automation/" className="hover:text-blue-400">
-                  Data Analytics
+                  Business Process Automation
                 </a>
               </li>
               <li>
