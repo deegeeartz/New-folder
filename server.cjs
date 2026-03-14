@@ -207,7 +207,7 @@ app.get('/debug-deployment', (req, res) => {
 
   res.json({
     status: 'ok',
-    version: 'v3-cjs-key-diagnostics',
+    version: 'v3-cjs-key-diagnostics-contact',
     env: {
       NODE_ENV: process.env.NODE_ENV,
       PORT: process.env.PORT,
@@ -228,6 +228,15 @@ app.get('/debug-deployment', (req, res) => {
       indexHtmlExists: fs.existsSync(path.join(distPath, 'index.html')),
       distContents: fs.existsSync(distPath) ? fs.readdirSync(distPath).slice(0, 10) : []
     }
+  });
+});
+
+app.get('/debug-contact', (req, res) => {
+  res.json({
+    status: 'ok',
+    route: '/api/contact',
+    method: 'POST',
+    contactRouteLoaded: true
   });
 });
 
