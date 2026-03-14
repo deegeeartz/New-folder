@@ -3,8 +3,9 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-// Load environment variables from .env file
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: path.join(__dirname, '.env') });
+}
 
 // Compression middleware (gzip/brotli for all responses)
 let compression;
@@ -46,6 +47,10 @@ function escapeHtml(value = '') {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+function isValidEmail(email = '') {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function renderIndexWithSeo(indexHtml, seo, pathname) {
@@ -268,6 +273,93 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.post('/api/contact', async (req, res) => {
+  const { name, email, company, service, message } = req.body || {};
+
+  const errors = {};
+  if (!name?.trim()) errors.name = 'Name is required.';
+  if (!email?.trim()) {
+    errors.email = 'Email is required.';
+  } else if (!isValidEmail(email)) {
+    errors.email = 'Invalid email address.';
+  }
+  if (!message?.trim()) errors.message = 'Project brief is required.';
+  if (message && message.length > 5000) errors.message = 'Message too long.';
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(422).json({ error: 'Validation failed', fields: errors });
+  }
+
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (!resendApiKey) {
+    console.error('[contact] RESEND_API_KEY not configured');
+    return res.status(500).json({ error: 'Email service not configured.' });
+  }
+
+  const safeName = escapeHtml(name?.trim());
+  const safeEmail = escapeHtml(email?.trim());
+  const safeCompany = escapeHtml(company?.trim() || '—');
+  const safeService = escapeHtml(service || 'General Enquiry');
+  const safeMessage = escapeHtml(message?.trim());
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'Quonote Contact Form <onboarding@resend.dev>',
+        to: ['info@quonote.com'],
+        reply_to: email.trim(),
+        subject: `Quonote enquiry: ${service || 'General Enquiry'} — ${name.trim()}`,
+        html: `
+          <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;color:#1e293b;">
+            <div style="background:#2563eb;padding:24px 32px;border-radius:12px 12px 0 0;">
+              <h1 style="color:#ffffff;margin:0;font-size:20px;font-weight:700;">New enquiry from Quonote.com</h1>
+            </div>
+            <div style="background:#f8fafc;padding:32px;border:1px solid #e2e8f0;border-radius:0 0 12px 12px;">
+              <table style="width:100%;border-collapse:collapse;">
+                <tr><td style="padding:8px 0;font-weight:600;width:130px;color:#64748b;">Name</td><td style="padding:8px 0;">${safeName}</td></tr>
+                <tr><td style="padding:8px 0;font-weight:600;color:#64748b;">Email</td><td style="padding:8px 0;">${safeEmail}</td></tr>
+                <tr><td style="padding:8px 0;font-weight:600;color:#64748b;">Company</td><td style="padding:8px 0;">${safeCompany}</td></tr>
+                <tr><td style="padding:8px 0;font-weight:600;color:#64748b;">Service</td><td style="padding:8px 0;">${safeService}</td></tr>
+              </table>
+              <hr style="border:none;border-top:1px solid #e2e8f0;margin:24px 0;" />
+              <p style="font-weight:600;color:#64748b;margin:0 0 8px;">Project Brief</p>
+              <p style="margin:0;white-space:pre-wrap;line-height:1.7;">${safeMessage}</p>
+            </div>
+            <p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:16px;">Sent via quonote.com contact form</p>
+          </div>
+        `,
+        text: [
+          'New enquiry from Quonote.com',
+          '',
+          `Name: ${name.trim()}`,
+          `Email: ${email.trim()}`,
+          `Company: ${company?.trim() || '—'}`,
+          `Service: ${service || 'General Enquiry'}`,
+          '',
+          'Project Brief:',
+          message.trim()
+        ].join('\n')
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('[contact] Resend error:', JSON.stringify(errorData));
+      return res.status(502).json({ error: 'Failed to send email. Please try again.' });
+    }
+
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('[contact] Unexpected error:', error.message);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+});
 
 // Gemini API proxy route
 app.post('/api/gemini', async (req, res) => {
