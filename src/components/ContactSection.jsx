@@ -56,10 +56,13 @@ const ContactSection = () => {
 
     setStatus("loading");
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const response = await fetch(`${baseUrl}/api/contact`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           name: form.name,
           email: form.email,
@@ -113,41 +116,57 @@ const ContactSection = () => {
               style={{ color: "var(--text-secondary)" }}
             >
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Email:
                 </span>{" "}
-                <a href="mailto:info@quonote.com" className="text-blue-400 hover:underline">
+                <a
+                  href="mailto:info@quonote.com"
+                  className="text-blue-400 hover:underline"
+                >
                   info@quonote.com
                 </a>
               </div>
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Best for:
                 </span>{" "}
-                discovery calls, project scoping, automation audits, software builds, and
-                procurement enquiries.
+                discovery calls, project scoping, automation audits, software
+                builds, and procurement enquiries.
               </div>
               <div>
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Tip:
                 </span>{" "}
-                include your timeline, team size, and what is currently slowing you down.
+                include your timeline, team size, and what is currently slowing
+                you down.
               </div>
             </div>
           </div>
 
           {/* Right column — form */}
           <div className="rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-6 sm:p-8 shadow-2xl shadow-slate-950/30">
-
             {/* ── Success state ── */}
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center text-center py-10 gap-4">
                 <CheckCircle2 size={52} className="text-green-400" />
-                <h3 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
+                <h3
+                  className="text-2xl font-bold"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Message sent!
                 </h3>
                 <p style={{ color: "var(--text-secondary)" }}>
-                  Thanks for reaching out. We'll be in touch within one business day.
+                  Thanks for reaching out. We'll be in touch within one business
+                  day.
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
@@ -161,7 +180,10 @@ const ContactSection = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   {/* Name */}
                   <label className="block">
-                    <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                    <span
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       Name <span className="text-red-400">*</span>
                     </span>
                     <input
@@ -181,7 +203,10 @@ const ContactSection = () => {
 
                   {/* Email */}
                   <label className="block">
-                    <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                    <span
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       Email <span className="text-red-400">*</span>
                     </span>
                     <input
@@ -195,7 +220,9 @@ const ContactSection = () => {
                       autoComplete="email"
                     />
                     {errors.email && (
-                      <p className="mt-1 text-xs text-red-400">{errors.email}</p>
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.email}
+                      </p>
                     )}
                   </label>
                 </div>
@@ -203,7 +230,10 @@ const ContactSection = () => {
                 <div className="grid sm:grid-cols-2 gap-4 mt-4">
                   {/* Company */}
                   <label className="block">
-                    <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                    <span
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       Company
                     </span>
                     <input
@@ -220,7 +250,10 @@ const ContactSection = () => {
 
                   {/* Service */}
                   <label className="block">
-                    <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                    <span
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       Service
                     </span>
                     <select
@@ -241,7 +274,10 @@ const ContactSection = () => {
 
                 {/* Message */}
                 <label className="block mt-4">
-                  <span className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                  <span
+                    className="block text-sm font-medium mb-2"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     Project brief <span className="text-red-400">*</span>
                   </span>
                   <textarea
@@ -254,7 +290,9 @@ const ContactSection = () => {
                     placeholder="What are you trying to achieve? What systems are you using today? What outcome matters most?"
                   />
                   {errors.message && (
-                    <p className="mt-1 text-xs text-red-400">{errors.message}</p>
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.message}
+                    </p>
                   )}
                 </label>
 
@@ -262,8 +300,12 @@ const ContactSection = () => {
                 {status === "error" && (
                   <div className="mt-4 flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                     <AlertCircle size={16} className="shrink-0" />
-                    Something went wrong. Please try again or email us directly at{" "}
-                    <a href="mailto:info@quonote.com" className="underline ml-1">
+                    Something went wrong. Please try again or email us directly
+                    at{" "}
+                    <a
+                      href="mailto:info@quonote.com"
+                      className="underline ml-1"
+                    >
                       info@quonote.com
                     </a>
                     .
