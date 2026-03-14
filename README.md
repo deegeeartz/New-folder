@@ -42,6 +42,8 @@ For production deployment and troubleshooting on cPanel/Passenger, see:
     | --- | --- |
     | `GEMINI_API_KEY` | Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey) (server-side only) |
     | `RESEND_API_KEY` | Resend API key for contact form emails. Create a free account at [resend.com](https://resend.com) (3,000 emails/month free) |
+    | `CONTACT_TO_EMAIL` | Recipient inbox for contact form submissions (e.g. `info@yourdomain.com`) |
+    | `CONTACT_FROM_EMAIL` | Sender identity for outgoing contact emails (must be a verified sender/domain in Resend for production) |
     | `VITE_API_BASE_URL` | Leave empty for local dev; set to your domain in production |
     | `PORT` | Express server port (default: `3001`) |
 

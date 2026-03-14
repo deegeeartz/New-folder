@@ -32,12 +32,15 @@ router.post('/api/contact', async (req, res) => {
     return res.status(500).json({ error: 'Email service not configured.' });
   }
 
+  const contactToEmail = (process.env.CONTACT_TO_EMAIL || 'info@quonote.com').trim();
+  const contactFromEmail = (process.env.CONTACT_FROM_EMAIL || 'Quonote Contact Form <onboarding@resend.dev>').trim();
+
   const resend = new Resend(apiKey);
 
   try {
     const { error } = await resend.emails.send({
-      from:    'Quonote Contact Form <onboarding@resend.dev>', // swap for verified domain sender once domain is added in Resend
-      to:      ['info@quonote.com'],
+      from:    contactFromEmail,
+      to:      [contactToEmail],
       replyTo: email.trim(),
       subject: `Quonote enquiry: ${service ?? 'General Enquiry'} — ${name.trim()}`,
       html: `

@@ -306,6 +306,9 @@ app.post('/api/contact', async (req, res) => {
     return res.status(500).json({ error: 'Email service not configured.' });
   }
 
+  const contactToEmail = (process.env.CONTACT_TO_EMAIL || 'info@quonote.com').trim();
+  const contactFromEmail = (process.env.CONTACT_FROM_EMAIL || 'Quonote Contact Form <onboarding@resend.dev>').trim();
+
   const safeName = escapeHtml(name?.trim());
   const safeEmail = escapeHtml(email?.trim());
   const safeCompany = escapeHtml(company?.trim() || '—');
@@ -320,8 +323,8 @@ app.post('/api/contact', async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Quonote Contact Form <onboarding@resend.dev>',
-        to: ['info@quonote.com'],
+        from: contactFromEmail,
+        to: [contactToEmail],
         reply_to: email.trim(),
         subject: `Quonote enquiry: ${service || 'General Enquiry'} — ${name.trim()}`,
         html: `
