@@ -14,6 +14,7 @@ import {
   Settings,
   Layers,
   Briefcase,
+  ChevronDown,
 } from "lucide-react";
 import ServiceCard from "./ServiceCard";
 import { featuredServiceLinks } from "../data/serviceDetails";
@@ -21,6 +22,7 @@ import RevealOnScroll from "./RevealOnScroll";
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState("All");
+  const [openMobileService, setOpenMobileService] = useState(null);
 
   const categories = [
     "All",
@@ -191,7 +193,52 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 auto-rows-[160px] gap-4 sm:gap-5 xl:gap-6">
+        <div className="md:hidden space-y-3">
+          {filteredServices.map((service) => {
+            const isOpen = openMobileService === service.title;
+
+            return (
+              <div
+                key={service.title}
+                className="rounded-2xl border border-slate-800/70 bg-slate-900/50 overflow-hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenMobileService((current) =>
+                      current === service.title ? null : service.title,
+                    )
+                  }
+                  className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left"
+                >
+                  <div>
+                    <p className="text-[11px] font-bold tracking-[0.2em] text-blue-400/80 uppercase">
+                      {service.category}
+                    </p>
+                    <p className="text-white font-semibold text-base mt-1">
+                      {service.title}
+                    </p>
+                  </div>
+                  <ChevronDown
+                    size={18}
+                    className={`text-slate-300 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {isOpen && (
+                  <div className="px-3 pb-3">
+                    <ServiceCard
+                      {...service}
+                      href={featuredServiceLinks[service.title]}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 auto-rows-[160px] gap-4 sm:gap-5 xl:gap-6">
           {filteredServices.map((service, index) => {
             // Bento logic: prioritize AI, Software Dev, and Strategy with larger cards
             let spanClass = "md:col-span-2 md:row-span-2"; // default medium
