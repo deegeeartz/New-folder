@@ -7,7 +7,7 @@ const HardwareSection = () => {
   return (
     <section
       id="hardware"
-      className="py-16 sm:py-24 bg-gradient-to-br from-slate-900 to-blue-900/20 dark:from-slate-900 dark:to-blue-900/20 light:from-blue-50 light:to-cyan-50 relative overflow-hidden scroll-mt-24"
+      className="py-16 sm:py-24 bg-gradient-to-br from-slate-900 to-blue-900/20 relative overflow-hidden scroll-mt-24"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.08),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.08),transparent_35%)] opacity-60 pointer-events-none"></div>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10">

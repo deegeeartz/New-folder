@@ -7,7 +7,7 @@ const QuonoteLogo = ({
   lazy = false,
 }) => {
   const { theme } = useTheme();
-  const logoSrc = theme === "light" ? "/logo-blue.png" : "/logo2.png";
+  const logoSrc = theme === "light" ? "/logo-blue.png" : "/logo2.webp";
 
   return (
     <div className="flex items-center gap-2 md:gap-3">

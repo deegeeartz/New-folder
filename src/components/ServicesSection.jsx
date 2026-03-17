@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Code,
   BarChart,
@@ -139,10 +139,10 @@ const ServicesSection = () => {
     },
   ];
 
-  const filteredServices =
-    activeTab === "All"
-      ? services
-      : services.filter((s) => s.category === activeTab);
+  const filteredServices = useMemo(
+    () => (activeTab === "All" ? services : services.filter((s) => s.category === activeTab)),
+    [activeTab, services],
+  );
 
   useEffect(() => {
     if (filteredServices.length === 0) {
@@ -162,7 +162,7 @@ const ServicesSection = () => {
   return (
     <section
       id="services"
-      className="py-16 sm:py-24 bg-slate-800/30 dark:bg-slate-800/30 light:bg-blue-50/30 relative overflow-hidden scroll-mt-24"
+      className="py-16 sm:py-24 bg-slate-800/30 relative overflow-hidden scroll-mt-24"
     >
       <div className="absolute -left-40 top-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none"></div>
       <div className="absolute -right-32 bottom-0 w-72 h-72 bg-gradient-to-br from-purple-500/15 via-blue-500/10 to-transparent blur-3xl pointer-events-none"></div>
@@ -263,8 +263,8 @@ const ServicesSection = () => {
 
         <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 auto-rows-[160px] gap-4 sm:gap-5 xl:gap-6">
           {filteredServices.map((service, index) => {
-            // Bento logic: prioritize AI, Software Dev, and Strategy with larger cards
-            let spanClass = "md:col-span-2 md:row-span-2"; // default medium
+            // Bento logic: title-based only — no index-dependent fallbacks
+            let spanClass;
 
             if (
               service.title === "Software Development" ||
@@ -277,8 +277,6 @@ const ServicesSection = () => {
               service.title === "Process Automation"
             ) {
               spanClass = "md:col-span-2 lg:col-span-3 md:row-span-2";
-            } else if (index % 5 === 0) {
-              spanClass = "md:col-span-2 md:row-span-1";
             } else {
               spanClass = "md:col-span-1 lg:col-span-2 md:row-span-2";
             }

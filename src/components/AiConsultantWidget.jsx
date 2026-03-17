@@ -11,12 +11,13 @@ const AiConsultantWidget = () => {
     {
       role: "assistant",
       typed: true,
-      text: "Hello! 👋 I'm the Quonote AI Consultant.\n\nTell me a bit about your business (e.g., 'I run a pharmacy' or 'I have a fintech startup'), and I'll suggest a digital strategy for you!",
+      text: "Hi, I'm the Quonote AI Consultant.\n\nTell me a bit about your business (e.g., 'I run a pharmacy' or 'I have a fintech startup'), and I'll suggest a digital strategy for you.",
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const abortControllerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,8 +46,20 @@ const AiConsultantWidget = () => {
     };
   }, []);
 
+  // Cancel any in-flight request when the component unmounts
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
+
   const handleSend = async () => {
     if (!input.trim()) return;
+
+    // Cancel any previous in-flight request
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
     const userMessage = { role: "user", text: input };
     const historyForModel = [...messages, userMessage];
@@ -55,10 +68,11 @@ const AiConsultantWidget = () => {
     setIsLoading(true);
 
     try {
-      const aiResponseText = await sendMessageToAI(input, historyForModel);
+      const aiResponseText = await sendMessageToAI(input, historyForModel, controller.signal);
+      if (aiResponseText === null) return; // aborted
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: aiResponseText },
+        { role: "assistant", text: aiResponseText, typed: true },
       ]);
     } catch (error) {
       const errorMessage =
@@ -79,7 +93,7 @@ const AiConsultantWidget = () => {
       {isOpen && (
         <div
           className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-80 sm:w-96 mb-4 overflow-hidden flex flex-col animate-fade-in-up transition-all"
-          style={{ height: "500px" }}
+          style={{ height: "min(500px, 80vh)" }}
         >
           <ChatHeader onClose={() => setIsOpen(false)} />
 
@@ -125,7 +139,7 @@ const AiConsultantWidget = () => {
         {/* Tooltip hint when closed */}
         {!isOpen && (
           <span className="absolute right-full mr-4 bg-white text-blue-900 text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg pointer-events-none">
-            Ask AI for Strategy ✨
+            Ask AI for Strategy
           </span>
         )}
       </button>

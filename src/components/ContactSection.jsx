@@ -12,8 +12,18 @@ const initialForm = {
 const serviceOptions = [
   "AI Consulting & Automation",
   "Custom Software Development",
+  "E-commerce Development",
+  "UX/UI Design",
+  "Brand Development & Graphic Design",
+  "Digital Marketing",
+  "Digital Strategy Consulting",
+  "Technology Roadmapping",
+  "IT Project Management",
   "Business Process Automation",
+  "Data Analytics",
   "Hardware Procurement & Infrastructure",
+  "Digital Literacy Training",
+  "Remote Team Management",
   "General Enquiry",
 ];
 
@@ -30,7 +40,7 @@ const validate = (form) => {
 };
 
 const inputBase =
-  "w-full rounded-xl border bg-slate-950/70 light:bg-slate-50 px-4 py-3 outline-none transition-colors duration-200";
+  "w-full rounded-xl border bg-slate-950/70 px-4 py-3 outline-none transition-colors duration-200";
 const inputNormal = "border-slate-700 focus:border-blue-500";
 const inputError = "border-red-500 focus:border-red-400";
 
@@ -87,7 +97,7 @@ const ContactSection = () => {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-24 bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-50 scroll-mt-24"
+      className="py-16 sm:py-24 bg-slate-900/80 scroll-mt-24"
     >
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
@@ -153,7 +163,7 @@ const ContactSection = () => {
           </div>
 
           {/* Right column — form */}
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-6 sm:p-8 shadow-2xl shadow-slate-950/30">
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8 shadow-2xl shadow-slate-950/30">
             {/* ── Success state ── */}
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center text-center py-10 gap-4">

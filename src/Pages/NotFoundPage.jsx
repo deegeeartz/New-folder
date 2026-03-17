@@ -6,7 +6,7 @@ const NotFoundPage = () => {
   return (
     <SiteLayout>
       <main className="min-h-[70vh] flex items-center justify-center px-4 sm:px-6">
-        <div className="max-w-xl w-full text-center rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-8 sm:p-10 shadow-2xl shadow-slate-950/20">
+        <div className="max-w-xl w-full text-center rounded-3xl border border-slate-800 bg-slate-900/70 p-8 sm:p-10 shadow-2xl shadow-slate-950/20">
           <p className="text-blue-400 font-semibold tracking-wide uppercase text-sm mb-4">
             404 Error
           </p>

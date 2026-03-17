@@ -53,7 +53,7 @@ const StatsBar = () => {
   return (
     <div
       ref={ref}
-      className="border-y border-slate-900 dark:border-slate-900 light:border-slate-200 bg-slate-900/60 dark:bg-slate-900/60 light:bg-white/60 backdrop-blur"
+      className="border-y border-slate-900 bg-slate-900/60 backdrop-blur"
     >
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 py-8 sm:py-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 xl:gap-8">

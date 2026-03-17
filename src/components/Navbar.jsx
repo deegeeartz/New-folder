@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-900/85 dark:bg-slate-900/85 light:bg-white/85 backdrop-blur-xl nav-glass border-b border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 py-3"
+          ? "bg-slate-900/85 backdrop-blur-xl nav-glass border-b border-slate-800/80 py-3"
           : "bg-transparent py-5"
       }`}
     >
@@ -66,7 +66,7 @@ const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 dark:bg-slate-900/95 light:bg-white/95 border-b border-slate-800 dark:border-slate-800 light:border-slate-200 py-6 px-6 flex flex-col space-y-4 shadow-xl backdrop-blur">
+        <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 border-b border-slate-800 py-6 px-6 flex flex-col space-y-4 shadow-xl backdrop-blur">
           <a
             href="/#services"
             onClick={() => setIsMenuOpen(false)}

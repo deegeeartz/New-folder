@@ -1,6 +1,7 @@
 import React from "react";
 import {
   MessageSquareText,
+  Mail,
   Briefcase,
   MonitorSmartphone,
   ArrowRight,
@@ -10,7 +11,7 @@ import { openConsultant } from "../utils/consultant";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 dark:bg-slate-950 light:bg-white border-t border-slate-900 dark:border-slate-900 light:border-slate-200 pt-16 pb-8">
+    <footer className="bg-slate-950 border-t border-slate-900 pt-16 pb-8">
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="grid md:grid-cols-4 gap-10 lg:gap-12 xl:gap-16 mb-12">
           <div className="col-span-1 md:col-span-2 lg:col-span-2">
@@ -58,7 +59,7 @@ const Footer = () => {
                 aria-label="Email info@quonote.com"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
-                <MessageSquareText size={16} />
+                <Mail size={16} />
                 info@quonote.com
               </a>
             </div>
@@ -108,22 +109,22 @@ const Footer = () => {
             <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
               <li>
                 <a href="/#audiences" className="hover:text-blue-400">
-                  About Us
+                  Who We Serve
                 </a>
               </li>
               <li>
-                <a href="/#audiences" className="hover:text-blue-400">
+                <a href="/#contact" className="hover:text-blue-400">
                   For Startups
                 </a>
               </li>
               <li>
-                <a href="/#audiences" className="hover:text-blue-400">
+                <a href="/#contact" className="hover:text-blue-400">
                   For MSMEs
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:info@quonote.com"
+                  href="/#contact"
                   className="inline-flex items-center gap-2 hover:text-blue-400"
                 >
                   Contact
@@ -135,7 +136,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-slate-900 pt-8 lg:pt-10 text-center text-slate-600 text-sm lg:text-base">
-          &copy; 2026 Quonote Digital. All rights reserved.
+          &copy; {new Date().getFullYear()} Quonote Digital. All rights reserved.
         </div>
       </div>
     </footer>

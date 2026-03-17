@@ -82,10 +82,10 @@ const ServiceDetailPage = () => {
           </div>
         </section>
 
-        <section className="py-16 sm:py-20 bg-slate-900/50 dark:bg-slate-900/50 light:bg-slate-50">
+        <section className="py-16 sm:py-20 bg-slate-900/50">
           <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 grid lg:grid-cols-2 gap-10">
             <RevealOnScroll
-              className="rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-8 floating-card"
+              className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 floating-card"
               delay={80}
             >
               <h2
@@ -108,7 +108,7 @@ const ServiceDetailPage = () => {
               </ul>
             </RevealOnScroll>
             <RevealOnScroll
-              className="rounded-3xl border border-slate-800 bg-slate-900/70 light:bg-white p-8 floating-card"
+              className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 floating-card"
               delay={140}
             >
               <h2
