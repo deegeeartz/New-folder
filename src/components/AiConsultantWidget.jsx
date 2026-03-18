@@ -46,7 +46,7 @@ const AiConsultantWidget = () => {
     };
   }, []);
 
-  // Cancel any in-flight request when the component unmounts
+  // Cancel any in-flight request on unmount
   useEffect(() => {
     return () => {
       abortControllerRef.current?.abort();

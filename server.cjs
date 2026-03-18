@@ -180,7 +180,7 @@ app.use(express.static(distPath, {
       res.set('Cache-Control', 'public, max-age=31536000, immutable');
     }
     // Logo images — cache 7 days (not versioned by filename)
-    if (/\.(webp|png)$/.test(filePath) && /logo/.test(filePath)) {
+    if (filePath.endsWith('logo2.webp') || filePath.endsWith('logo2.png')) {
       res.set('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
     }
   }

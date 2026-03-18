@@ -64,28 +64,23 @@ export const sendMessageToAI = async (input, messageHistory = [], signal) => {
           .filter((item) => item.parts[0].text.length > 0)
           .slice(-MAX_HISTORY_MESSAGES);
 
-        // Ensure the last turn before the new message is from "user" if history is odd
-        // (Gemini requires alternating user/model turns)
+        // Gemini requires alternating user/model turns — skip duplicate consecutive roles
         const cleanHistory = [];
-        for (let i = 0; i < historyContents.length; i++) {
+        for (const turn of historyContents) {
           const prev = cleanHistory[cleanHistory.length - 1];
-          if (prev && prev.role === historyContents[i].role) continue; // skip duplicate roles
-          cleanHistory.push(historyContents[i]);
+          if (prev && prev.role === turn.role) continue;
+          cleanHistory.push(turn);
         }
 
-        // Trim history if total prompt would exceed limit
         const currentTurn = { role: "user", parts: [{ text: sanitizedInput }] };
         let contents = [...cleanHistory, currentTurn];
 
-        const estimatedSize = JSON.stringify(contents).length + systemPrompt.length;
-        if (estimatedSize > MAX_PROMPT_CHARS) {
-          // Drop oldest turns (pairs) until within limit
-          while (
-            contents.length > 1 &&
-            JSON.stringify(contents).length + systemPrompt.length > MAX_PROMPT_CHARS
-          ) {
-            contents = contents.slice(1);
-          }
+        // Trim oldest turns if payload exceeds limit
+        while (
+          contents.length > 1 &&
+          JSON.stringify(contents).length + systemPrompt.length > MAX_PROMPT_CHARS
+        ) {
+          contents = contents.slice(1);
         }
 
         if (JSON.stringify(contents).length + systemPrompt.length > MAX_PROMPT_CHARS) {
@@ -109,7 +104,7 @@ export const sendMessageToAI = async (input, messageHistory = [], signal) => {
         return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having a little trouble connecting to the digital brain right now. Please try again later!";
       } catch (error) {
         if (error.name === 'AbortError') {
-          return null; // Request was cancelled — caller handles this
+          return null;
         }
         if (import.meta.env.DEV) {
           console.error("AI Error:", error);
