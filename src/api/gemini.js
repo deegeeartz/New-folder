@@ -72,6 +72,11 @@ export const sendMessageToAI = async (input, messageHistory = [], signal) => {
           cleanHistory.push(turn);
         }
 
+        // Gemini requires contents to start with a "user" turn — drop any leading model turns
+        while (cleanHistory.length > 0 && cleanHistory[0].role === "model") {
+          cleanHistory.shift();
+        }
+
         const currentTurn = { role: "user", parts: [{ text: sanitizedInput }] };
         let contents = [...cleanHistory, currentTurn];
 
