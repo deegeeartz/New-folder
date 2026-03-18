@@ -380,15 +380,14 @@ app.post('/api/contact', async (req, res) => {
 // Gemini API proxy route
 app.post('/api/gemini', async (req, res) => {
   try {
-    const { contents, systemPrompt } = req.body;
+    const { prompt } = req.body;
 
-    if (!contents || !Array.isArray(contents) || contents.length === 0) {
-      return res.status(400).json({ error: 'contents array is required' });
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    const payloadSize = JSON.stringify(contents).length + (systemPrompt ? systemPrompt.length : 0);
-    if (payloadSize > 8000) {
-      return res.status(400).json({ error: 'Payload too large' });
+    if (prompt.length > 6000) {
+      return res.status(400).json({ error: 'Prompt too long (max 6000 chars)' });
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -401,20 +400,6 @@ app.post('/api/gemini', async (req, res) => {
     const fallbackModels = [configuredModel, 'gemini-2.0-flash'];
     const models = [...new Set(fallbackModels.filter(Boolean))];
 
-    const requestBody = {
-      contents,
-      safetySettings: [
-        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-      ]
-    };
-
-    if (systemPrompt) {
-      requestBody.systemInstruction = { parts: [{ text: systemPrompt }] };
-    }
-
     let lastStatus = 503;
     let lastErrorData = {};
 
@@ -424,7 +409,15 @@ app.post('/api/gemini', async (req, res) => {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody)
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            safetySettings: [
+              { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+            ]
+          })
         }
       );
 
@@ -434,7 +427,7 @@ app.post('/api/gemini', async (req, res) => {
       }
 
       const errorData = await response.json().catch(() => ({}));
-      console.error(`Gemini API Error [${response.status}] model=${model}:`, JSON.stringify(errorData, null, 2));
+      console.error(`Gemini API Error [${response.status}] model=${model} prompt="${prompt.slice(0, 50)}":`, JSON.stringify(errorData, null, 2));
       lastStatus = response.status || 503;
       lastErrorData = errorData;
     }

@@ -42,78 +42,82 @@ const sanitizeText = (text = "") =>
     .replace(/\s+/g, " ")
     .trim();
 
+const buildPrompt = (historyLines, currentInput) => {
+  const historyBlock = historyLines.length
+    ? `Conversation context:\n${historyLines.join("\n")}\n\n`
+    : "";
+  return `${systemPrompt}\n\n${historyBlock}Current user message: ${currentInput}`;
+};
+
 export const sendMessageToAI = async (input, messageHistory = [], signal) => {
-    try {
-        if (!input || input.trim().length === 0) {
-          throw new Error('Please enter a message');
-        }
+  try {
+    if (!input || input.trim().length === 0) {
+      throw new Error("Please enter a message");
+    }
 
-        if (input.length > MAX_INPUT_CHARS) {
-          throw new Error(`Message too long (max ${MAX_INPUT_CHARS} characters)`);
-        }
+    if (input.length > MAX_INPUT_CHARS) {
+      throw new Error(`Message too long (max ${MAX_INPUT_CHARS} characters)`);
+    }
 
-        const sanitizedInput = sanitizeText(input);
+    const sanitizedInput = sanitizeText(input);
 
-        // Build native Gemini multi-turn contents array
-        const historyContents = (Array.isArray(messageHistory) ? messageHistory : [])
-          .filter((item) => item?.role === "user" || item?.role === "assistant")
-          .map((item) => ({
-            role: item.role === "assistant" ? "model" : "user",
-            parts: [{ text: sanitizeText(String(item.text || "")).slice(0, MAX_INPUT_CHARS) }],
-          }))
-          .filter((item) => item.parts[0].text.length > 0)
-          .slice(-MAX_HISTORY_MESSAGES);
+    // Build flat history lines, excluding the initial assistant welcome message
+    const historyLines = (Array.isArray(messageHistory) ? messageHistory : [])
+      .filter((item) => item?.role === "user" || item?.role === "assistant")
+      .map((item) => ({
+        role: item.role,
+        text: sanitizeText(String(item.text || "")).slice(0, MAX_INPUT_CHARS),
+      }))
+      .filter((item) => item.text.length > 0)
+      // Only include turns starting from the first user message
+      .reduce((acc, item) => {
+        if (acc.length === 0 && item.role !== "user") return acc;
+        return [...acc, item];
+      }, [])
+      .slice(-MAX_HISTORY_MESSAGES)
+      .map((item) => `${item.role === "assistant" ? "Assistant" : "User"}: ${item.text}`);
 
-        // Gemini requires alternating user/model turns — skip duplicate consecutive roles
-        const cleanHistory = [];
-        for (const turn of historyContents) {
-          const prev = cleanHistory[cleanHistory.length - 1];
-          if (prev && prev.role === turn.role) continue;
-          cleanHistory.push(turn);
-        }
+    let historyWindow = [...historyLines];
+    let fullPrompt = buildPrompt(historyWindow, sanitizedInput);
 
-        // Gemini requires contents to start with a "user" turn — drop any leading model turns
-        while (cleanHistory.length > 0 && cleanHistory[0].role === "model") {
-          cleanHistory.shift();
-        }
+    while (fullPrompt.length > MAX_PROMPT_CHARS && historyWindow.length > 0) {
+      historyWindow = historyWindow.slice(1);
+      fullPrompt = buildPrompt(historyWindow, sanitizedInput);
+    }
 
-        const currentTurn = { role: "user", parts: [{ text: sanitizedInput }] };
-        let contents = [...cleanHistory, currentTurn];
+    if (fullPrompt.length > MAX_PROMPT_CHARS) {
+      const overage = fullPrompt.length - MAX_PROMPT_CHARS;
+      throw new Error(
+        `Your message is a bit too long. Please shorten it by about ${overage} characters.`
+      );
+    }
 
-        // Trim oldest turns if payload exceeds limit
-        while (
-          contents.length > 1 &&
-          JSON.stringify(contents).length + systemPrompt.length > MAX_PROMPT_CHARS
-        ) {
-          contents = contents.slice(1);
-        }
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+    const response = await fetch(`${baseUrl}/api/gemini`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: fullPrompt }),
+      signal,
+    });
 
-        if (JSON.stringify(contents).length + systemPrompt.length > MAX_PROMPT_CHARS) {
-          const overage = JSON.stringify(contents).length + systemPrompt.length - MAX_PROMPT_CHARS;
-          throw new Error(`Your message is a bit too long. Please shorten it by about ${overage} characters.`);
-        }
+    if (!response.ok) {
+      throw new Error("Unable to get response. Please try again.");
+    }
 
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
-        const response = await fetch(`${baseUrl}/api/gemini`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents, systemPrompt }),
-          signal,
-        });
-
-        if (!response.ok) {
-          throw new Error('Unable to get response. Please try again.');
-        }
-
-        const data = await response.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having a little trouble connecting to the digital brain right now. Please try again later!";
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          return null;
-        }
-        if (import.meta.env.DEV) {
-          console.error("AI Error:", error);
-        }
-        throw error.message ? error : new Error("Sorry, I encountered a connection error. Please try again.");
-      }
-}
+    const data = await response.json();
+    return (
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "I'm having a little trouble connecting to the digital brain right now. Please try again later!"
+    );
+  } catch (error) {
+    if (error.name === "AbortError") {
+      return null;
+    }
+    if (import.meta.env.DEV) {
+      console.error("AI Error:", error);
+    }
+    throw error.message
+      ? error
+      : new Error("Sorry, I encountered a connection error. Please try again.");
+  }
+};
