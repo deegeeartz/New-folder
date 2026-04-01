@@ -17,7 +17,7 @@ const HardwareSection = () => {
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase mb-6 tracking-wide">
               New Division
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
               Hardware & Infrastructure <br />
               <span className="text-blue-500">Done Right.</span>
             </h2>
@@ -33,7 +33,7 @@ const HardwareSection = () => {
                   <Monitor className="text-blue-400" size={24} />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold text-lg">
+                  <h4 className="text-black dark:text-white font-bold text-lg">
                     Premium Device Sales
                   </h4>
                   <p className="text-slate-400 text-sm">
@@ -74,7 +74,7 @@ const HardwareSection = () => {
             <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
             <div className="relative bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl floating-card">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-black dark:text-white">
                   Featured Equipment
                 </h3>
                 <button
@@ -118,7 +118,7 @@ const HardwareSection = () => {
                         <Monitor size={20} className="text-slate-400" />
                       </div>
                       <div>
-                        <div className="font-semibold text-white">
+                        <div className="font-semibold text-black dark:text-white">
                           {item.name}
                         </div>
                         <div className="text-xs text-slate-500">
@@ -144,7 +144,7 @@ const HardwareSection = () => {
                       "I want a bulk procurement quote for devices and office equipment.",
                     )
                   }
-                  className="text-white font-semibold text-sm hover:underline mt-1"
+                  className="text-black dark:text-white font-semibold text-sm hover:underline mt-1"
                 >
                   Get a bulk procurement quote
                 </button>

@@ -30,7 +30,7 @@ const FaqSection = () => {
   return (
     <section
       id="faqs"
-      className="py-16 sm:py-24 bg-slate-900/70 dark:bg-slate-900/70 light:bg-slate-50 scroll-mt-24"
+      className="py-16 sm:py-24 bg-white dark:bg-slate-900/70 scroll-mt-24"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="text-center mb-12">
@@ -56,7 +56,7 @@ const FaqSection = () => {
             return (
               <div
                 key={faq.question}
-                className="rounded-2xl border border-slate-800 bg-slate-900/70 light:bg-white overflow-hidden"
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 overflow-hidden"
               >
                 <button
                   type="button"

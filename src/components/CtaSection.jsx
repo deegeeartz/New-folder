@@ -15,7 +15,7 @@ const CtaSection = () => {
         }}
       ></div>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
           Transform your business with technology that scales.
         </h2>
         <p className="text-blue-200 text-sm sm:text-base font-medium mb-5">
@@ -46,7 +46,7 @@ const CtaSection = () => {
           </button>
           <a
             href="mailto:info@quonote.com?subject=Quonote%20Sales%20Enquiry"
-            className="btn-micro px-8 py-4 bg-blue-700 text-white font-bold rounded-lg border border-blue-500 hover:bg-blue-800 transition-transform transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto text-center"
+            className="btn-micro px-8 py-4 bg-blue-700 text-black dark:text-white font-bold rounded-lg border border-blue-500 hover:bg-blue-800 transition-transform transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto text-center"
           >
             Contact Sales Team
           </a>

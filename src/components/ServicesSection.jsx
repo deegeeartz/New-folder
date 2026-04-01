@@ -169,7 +169,7 @@ const ServicesSection = () => {
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4">
               Our Expertise
             </h2>
             <p className="text-slate-400 max-w-xl">
@@ -198,8 +198,8 @@ const ServicesSection = () => {
                 onClick={() => setActiveTab(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   activeTab === cat
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25 border-transparent"
-                    : "bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 backdrop-blur-sm"
+                    ? "bg-blue-600 text-black dark:text-white shadow-lg shadow-blue-500/25 border-transparent"
+                    : "bg-slate-800/50 text-slate-400 hover:text-black dark:hover:text-white border border-slate-700/50 backdrop-blur-sm"
                 }`}
               >
                 {cat}
@@ -230,7 +230,7 @@ const ServicesSection = () => {
                     <p className="text-[11px] font-bold tracking-[0.2em] text-blue-400/80 uppercase">
                       {service.category}
                     </p>
-                    <p className="text-white font-semibold text-base mt-1">
+                    <p className="text-black dark:text-white font-semibold text-base mt-1">
                       {service.title}
                     </p>
                   </div>

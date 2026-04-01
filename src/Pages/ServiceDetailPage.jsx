@@ -66,7 +66,7 @@ const ServiceDetailPage = () => {
               <div className="flex flex-wrap gap-3">
                 <a
                   href="#contact"
-                  className="btn-micro rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500 transition-colors"
+                  className="btn-micro rounded-xl bg-blue-600 px-6 py-3 font-semibold text-black dark:text-white hover:bg-blue-500 transition-colors"
                 >
                   Discuss this service
                 </a>

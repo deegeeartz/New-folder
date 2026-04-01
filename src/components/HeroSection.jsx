@@ -98,19 +98,19 @@ const HeroSection = () => {
                   "I want help choosing the right hardware and infrastructure setup for my business.",
                 )
               }
-              className="px-7 py-3 text-base w-full sm:w-auto"
+              className="px-7 py-3 text-base w-full sm:w-auto border border-black bg-transparent text-black dark:text-white dark:hover:bg-black dark:hover:text-white hover:bg-transparent hover:text-black"
             >
               View Hardware Store
             </Button>
           </div>
-          <div className="flex flex-wrap gap-3 text-xs text-slate-300">
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+          <div className="flex flex-wrap gap-3 text-xs text-black dark:text-white">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               AI Strategy
             </span>
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               Custom Development
             </span>
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               Trusted by Lanzcape (Belgium) & ASMB (Morocco)
             </span>
           </div>

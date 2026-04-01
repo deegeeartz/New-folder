@@ -317,7 +317,7 @@ const ContactSection = () => {
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="inline-flex justify-center items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="inline-flex justify-center items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-black dark:text-white hover:bg-blue-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === "loading" ? (
                       <>

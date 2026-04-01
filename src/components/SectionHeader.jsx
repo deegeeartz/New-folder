@@ -8,7 +8,7 @@ const SectionHeader = ({
   typewriterWords = [],
 }) => (
   <div className={`mb-12 ${centered ? "text-center" : "text-left"}`}>
-    <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+    <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 tracking-tight">
       {title}
     </h2>
     <div
