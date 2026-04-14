@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Button from "./Button";
 import QuonoteLogo from "./QuonoteLogo";
-import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,7 +44,6 @@ const Navbar = () => {
           >
             Hardware Store
           </a>
-          <ThemeToggle />
           <Button
             variant="primary"
             href="/#contact"
@@ -55,7 +53,6 @@ const Navbar = () => {
           </Button>
         </div>
         <div className="flex md:hidden items-center gap-3">
-          <ThemeToggle />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
