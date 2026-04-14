@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Quonote Digital — Your Digital Execution Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:    #0B1221;
+  --navy2:   #0D1829;
+  --card:    #0F1C2E;
+  --card2:   #111827;
+  --cyan:    #00D4FF;
+  --cyan2:   #00B8E0;
+  --slate:   #64748B;
+  --muted:   #94A3B8;
+  --white:   #FFFFFF;
+  --dark:    #060D18;
+  --line:    #1A2A3A;
+  --build:   #0D2240;
+  --grow:    #0A2216;
+  --auto:    #071828;
+  --infra:   #160E28;
+  --empower: #1C1A0A;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--white);
+  touch-action: pan-y;
+}
+
+.deck {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
+
+.slides-wrapper {
+  display: flex;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
+}
+
+.slide {
+  min-width: 100vw;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--navy);
+  position: relative;
+  padding: 0;
+  scrollbar-width: none;
+}
+.slide::-webkit-scrollbar { display: none; }
+
+.slide-inner {
+  min-height: 100%;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  padding-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide::before {
+  content: '';
+  position: fixed;
+  left: 0; top: 0;
+  width: 3px; height: 100vh;
+  background: var(--cyan);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.inner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(1rem, 3vw, 1.8rem);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark { display: flex; align-items: center; gap: 0.5rem; }
+.wm-icon { width: clamp(22px, 4vw, 30px); height: clamp(22px, 4vw, 30px); flex-shrink: 0; }
+.wm-text { line-height: 1; }
+.wm-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(11px, 2.5vw, 15px); color: var(--white); letter-spacing: 0.05em; }
+.wm-sub { font-size: clamp(7px, 1.5vw, 9px); color: var(--slate); letter-spacing: 0.08em; }
+.section-label { font-size: clamp(7px, 1.5vw, 9px); color: var(--slate); letter-spacing: 0.12em; text-transform: uppercase; }
+
+.slide-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 2.8rem;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+  z-index: 20;
+  border-top: 1px solid var(--line);
+}
+
+.footer-corp { font-size: 7px; color: var(--slate); letter-spacing: 0.06em; }
+.footer-label { font-size: 7px; color: var(--slate); letter-spacing: 0.1em; text-transform: uppercase; }
+.footer-num { font-size: 7px; color: var(--slate); }
+
+.nav-dots {
+  position: fixed;
+  bottom: 3.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 30;
+}
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--slate);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.nav-dot.active { width: 18px; border-radius: 3px; background: var(--cyan); }
+
+.nav-arrows {
+  position: fixed;
+  bottom: 3.4rem;
+  right: clamp(1rem, 4vw, 2rem);
+  display: flex;
+  gap: 6px;
+  z-index: 30;
+}
+
+.nav-btn {
+  width: 32px; height: 32px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--cyan);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-btn:hover, .nav-btn:active { background: var(--cyan); color: var(--navy); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.hero-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(28px, 7vw, 56px); line-height: 1.05; margin-bottom: 0.4em; }
+.slide-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(20px, 5vw, 36px); line-height: 1.1; margin-bottom: 0.5rem; }
+.slide-subtitle { font-size: clamp(10px, 2.2vw, 13px); color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+.cyan { color: var(--cyan); }
+.muted { color: var(--muted); }
+.slate { color: var(--slate); }
+
+.card { background: var(--card); border-radius: 10px; padding: clamp(0.8rem, 2.5vw, 1.2rem); position: relative; overflow: hidden; }
+.card.top-bar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cyan); }
+.card.left-bar::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--cyan); }
+.card-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(11px, 2.5vw, 14px); color: var(--white); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+.card-body { font-size: clamp(9px, 2vw, 11px); color: var(--muted); line-height: 1.6; }
+.card-num { font-size: 8px; color: var(--cyan); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.5rem, 1.5vw, 0.8rem); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 0.8rem); }
+
+@media (max-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
+.banner { background: var(--dark); border-radius: 8px; padding: 0.8rem 1rem; position: relative; overflow: hidden; text-align: center; }
+.banner::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cyan); }
+.banner-main { font-size: clamp(10px, 2.2vw, 12px); color: var(--cyan); font-weight: 600; margin-bottom: 0.25rem; }
+.banner-sub { font-size: clamp(8px, 1.8vw, 10px); color: var(--slate); }
+
+.tag { background: #0D1828; border-radius: 5px; padding: 0.3rem 0.5rem; font-size: clamp(8px, 1.8vw, 10px); color: var(--cyan); font-weight: 600; text-align: center; letter-spacing: 0.03em; }
+
+.division-row { border-radius: 8px; padding: clamp(0.6rem, 2vw, 0.9rem); padding-left: clamp(0.9rem, 2.5vw, 1.2rem); position: relative; overflow: hidden; border-left: 3px solid var(--cyan); }
+.div-num { font-size: 8px; color: var(--cyan); font-weight: 700; margin-bottom: 0.1rem; }
+.div-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(13px, 3vw, 17px); color: var(--white); }
+.div-sub { font-size: clamp(8px, 1.8vw, 10px); color: var(--cyan); margin-bottom: 0.35rem; }
+.div-body { font-size: clamp(9px, 2vw, 11px); color: var(--muted); line-height: 1.5; }
+
+.process-step { background: var(--card); border-radius: 10px; padding: 1rem; position: relative; overflow: hidden; text-align: center; }
+.process-step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cyan); }
+.step-num { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 6vw, 40px); font-weight: 800; color: var(--cyan); line-height: 1; margin-bottom: 0.4rem; }
+.step-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(10px, 2.2vw, 13px); color: var(--white); margin-bottom: 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--line); }
+.step-body { font-size: clamp(9px, 2vw, 11px); color: var(--muted); line-height: 1.6; }
+
+.contact-card { background: var(--card2); border-radius: 8px; padding: 0.8rem 0.5rem; text-align: center; position: relative; overflow: hidden; }
+.contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cyan); }
+.contact-label { font-size: 8px; color: var(--cyan); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+.contact-val { font-size: clamp(9px, 2vw, 11px); color: var(--white); }
+
+.project-card { border-radius: 10px; padding: clamp(0.8rem, 2.5vw, 1.2rem); position: relative; overflow: hidden; }
+.project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cyan); }
+.client-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: white; border-radius: 6px; padding: 0.3rem 0.6rem; margin-bottom: 0.6rem; }
+.client-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(11px, 2.5vw, 14px); color: #1a1a1a; }
+.delivery-item { display: flex; align-items: center; gap: 0.5rem; background: #0D2040; border-radius: 6px; padding: 0.5rem 0.7rem; font-size: clamp(9px, 2vw, 11px); color: var(--white); font-weight: 500; margin-bottom: 0.35rem; }
+.delivery-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+.vp-strip { border-radius: 7px; padding: 0.7rem 0.9rem; position: relative; border-left: 3px solid var(--cyan); }
+.vp-title { font-size: clamp(9px, 2vw, 11px); color: var(--white); font-weight: 700; margin-bottom: 0.2rem; }
+.vp-body { font-size: clamp(8px, 1.8vw, 10px); color: var(--slate); line-height: 1.5; }
+
+.cover-logo { display: flex; align-items: center; gap: 0.7rem; margin-bottom: clamp(1rem, 3vw, 1.5rem); }
+.cover-icon svg { width: clamp(48px, 10vw, 72px); height: auto; }
+.cover-wordmark-text { line-height: 1; }
+.cover-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(24px, 6vw, 48px); color: var(--white); letter-spacing: 0.02em; display: block; }
+.cover-sub-name { font-size: clamp(10px, 2.2vw, 14px); color: var(--muted); letter-spacing: 0.12em; display: block; margin-top: 2px; }
+.tagline-line { height: 1px; background: var(--line); margin-bottom: 0.5rem; width: min(260px, 60%); }
+.tagline { font-size: clamp(10px, 2vw, 13px); color: var(--muted); margin-bottom: clamp(1.2rem, 3vw, 2rem); letter-spacing: 0.04em; }
+.hero-body { font-size: clamp(11px, 2.2vw, 14px); color: var(--muted); line-height: 1.7; margin-bottom: clamp(1.2rem, 3vw, 2rem); max-width: 55ch; }
+
+.pills-row { display: flex; gap: clamp(0.4rem, 1.5vw, 0.6rem); flex-wrap: wrap; margin-bottom: clamp(1rem, 2.5vw, 1.5rem); }
+.pill { background: var(--card); border-top: 2px solid var(--cyan); border-radius: 6px; padding: 0.45rem 0.7rem; font-size: clamp(7.5px, 1.6vw, 9.5px); color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.4rem, 1.5vw, 0.6rem); margin-bottom: clamp(1rem, 2.5vw, 1.5rem); }
+@media (max-width: 480px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+.stat-item { text-align: center; }
+.stat-item::before { content: ''; display: block; height: 1px; background: var(--line); margin-bottom: 0.4rem; }
+.stat-val { font-size: clamp(10px, 2.2vw, 12px); color: var(--cyan); font-weight: 700; }
+.stat-sub { font-size: clamp(7px, 1.5vw, 9px); color: var(--slate); }
+
+.cover-contact { display: flex; align-items: center; gap: clamp(0.8rem, 2vw, 1.2rem); flex-wrap: wrap; }
+.contact-btn { background: var(--cyan); color: var(--navy); border-radius: 6px; padding: 0.55rem 1.1rem; font-size: clamp(9px, 2vw, 11px); font-weight: 700; letter-spacing: 0.04em; text-decoration: none; display: inline-block; }
+.contact-phone { font-size: clamp(10px, 2vw, 12px); color: var(--muted); }
+
+.cta-center { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; justify-content: center; }
+.glow-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); width: clamp(250px, 50vw, 400px); height: clamp(250px, 50vw, 400px); background: radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.cta-content { position: relative; z-index: 1; width: 100%; }
+.cta-logo { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+.cta-headline { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(22px, 5.5vw, 44px); line-height: 1.05; margin-bottom: 1rem; }
+.cta-body { font-size: clamp(11px, 2.2vw, 14px); color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; max-width: 52ch; margin-left: auto; margin-right: auto; }
+
+.contacts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+@media (max-width: 420px) { .contacts-grid { grid-template-columns: 1fr; max-width: 260px; } }
+
+.quote-line { height: 1px; background: var(--line); margin: 0.8rem 0; max-width: 500px; margin-left: auto; margin-right: auto; }
+.quote-text { font-size: clamp(9px, 2vw, 11px); color: var(--slate); font-style: italic; margin-bottom: 1rem; }
+.divs-strip { display: flex; justify-content: center; gap: clamp(0.8rem, 2vw, 1.5rem); flex-wrap: wrap; }
+.divs-strip span { font-size: clamp(7px, 1.5vw, 9px); color: #1A3A4A; font-weight: 700; letter-spacing: 0.1em; }
+
+.expert-card { border-radius: 8px; padding: 0.7rem 0.8rem; position: relative; overflow: hidden; }
+.expert-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--cyan); }
+.expert-name { font-size: clamp(9px, 2vw, 11px); color: var(--white); font-weight: 700; margin-bottom: 0.2rem; }
+.expert-desc { font-size: clamp(8px, 1.7vw, 9.5px); color: var(--muted); }
+
+.slide.active .slide-inner > * { animation: slide-up 0.5s ease both; }
+.slide.active .slide-inner > *:nth-child(1) { animation-delay: 0.05s; }
+.slide.active .slide-inner > *:nth-child(2) { animation-delay: 0.12s; }
+.slide.active .slide-inner > *:nth-child(3) { animation-delay: 0.18s; }
+.slide.active .slide-inner > *:nth-child(4) { animation-delay: 0.24s; }
+.slide.active .slide-inner > *:nth-child(5) { animation-delay: 0.3s; }
+.slide.active .slide-inner > *:nth-child(6) { animation-delay: 0.36s; }
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 900px) {
+  .slide-inner { max-width: 1100px; margin: 0 auto; padding: 2.5rem; padding-bottom: 5rem; }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+  .who-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; }
+  .client-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .vp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+}
+
+@media (max-width: 899px) {
+  .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .who-grid { display: flex; flex-direction: column; gap: 1.2rem; }
+  .client-grid { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
+  .partner-grid { display: flex; flex-direction: column; gap: 1rem; }
+  .vp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+}
+
+@media (max-width: 420px) {
+  .process-grid { grid-template-columns: 1fr; }
+  .vp-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="slides-wrapper" id="slidesWrapper">
+
+  <!-- SLIDE 1 — COVER -->
+  <div class="slide active" data-section="Introduction">
+    <div class="slide-inner">
+      <div class="cover-logo">
+        <div class="cover-icon" style="width:clamp(56px,10vw,80px);height:clamp(56px,10vw,80px)">
+          <img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain">
+        </div>
+        <div class="cover-wordmark-text">
+          <span class="cover-name" style="font-weight:900;letter-spacing:0.06em">QUONOTE</span>
+          <span class="cover-sub-name" style="letter-spacing:0.22em;font-weight:500">DIGITAL</span>
+        </div>
+      </div>
+      <div class="tagline-line"></div>
+      <p class="tagline">Your Digital Execution Partner</p>
+      <h1 class="hero-title">We don't just consult.<br><span class="cyan">We build. We automate.<br>We equip.</span></h1>
+      <p class="hero-body">Quonote is a global technology partner helping startups, SMEs, and enterprises deploy AI-powered workflows, custom software, and scalable infrastructure — so they can focus on what matters: growth.</p>
+      <div class="pills-row">
+        <div class="pill">BUILD</div>
+        <div class="pill">GROW</div>
+        <div class="pill">AUTOMATE</div>
+        <div class="pill">INFRASTRUCTURE</div>
+        <div class="pill">EMPOWER</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="stat-val">AI-Native</div><div class="stat-sub">Built-in intelligence</div></div>
+        <div class="stat-item"><div class="stat-val">End-to-End</div><div class="stat-sub">Strategy to execution</div></div>
+        <div class="stat-item"><div class="stat-val">Global</div><div class="stat-sub">Clients worldwide</div></div>
+        <div class="stat-item"><div class="stat-val">Brand–Code</div><div class="stat-sub">Design · Build · Automate</div></div>
+      </div>
+      <div class="cover-contact">
+        <a href="mailto:info@quonote.com" class="contact-btn">info@quonote.com</a>
+        <span class="contact-phone">+234 816 294 1439</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — THE OPPORTUNITY -->
+  <div class="slide" data-section="The Opportunity">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">The Opportunity</span>
+      </div>
+      <h2 class="slide-title">Every great idea deserves to be <span class="cyan">built.</span></h2>
+      <p class="slide-subtitle">The gap between vision and reality is almost always a technology execution problem. Quonote exists to close that gap — completely.</p>
+      <div class="grid-2" style="margin-bottom:0.7rem">
+        <div class="card top-bar"><div class="card-title">VISION → REALITY</div><p class="card-body">You have a concept, a product idea, or a brand to launch. We turn that vision into working software, a distinctive brand identity, automated workflows, and live infrastructure.</p></div>
+        <div class="card top-bar"><div class="card-title">IDEAS THAT SCALE</div><p class="card-body">From a first sketch to an enterprise-grade platform — we architect and build systems designed to grow with your ambition, not against it.</p></div>
+      </div>
+      <div class="grid-2" style="margin-bottom:0.9rem">
+        <div class="card left-bar" style="background:#0D1C2E"><div style="font-size:7px;color:var(--slate);font-weight:700;letter-spacing:.1em;margin-bottom:.3rem">EXECUTION CHALLENGE</div><div class="card-title">CLOSING EXECUTION GAPS</div><p class="card-body">Many businesses have the strategy but lack the technical execution muscle. We embed as your delivery partner and get it done.</p></div>
+        <div class="card left-bar" style="background:#0D1C2E"><div style="font-size:7px;color:var(--slate);font-weight:700;letter-spacing:.1em;margin-bottom:.3rem">EXECUTION CHALLENGE</div><div class="card-title">TECHNOLOGY THAT FITS</div><p class="card-body">Off-the-shelf tools rarely fit your exact workflow. We build, integrate, and automate solutions tailored to how your business actually operates.</p></div>
+      </div>
+      <div class="banner"><div class="banner-main">Quonote bridges the gap between what your business imagines and what technology can deliver.</div><div class="banner-sub">Strategy. Software. Automation. Infrastructure. All under one roof.</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — WHO WE ARE -->
+  <div class="slide" data-section="About Us">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">About Us</span>
+      </div>
+      <div class="who-grid">
+        <div>
+          <p style="font-size:clamp(13px,3vw,16px);color:var(--muted);margin-bottom:.3rem">Quonote is a</p>
+          <h2 class="slide-title" style="margin-bottom:.2rem">Digital Execution</h2>
+          <h2 class="slide-title" style="color:var(--cyan);margin-bottom:.8rem">Partner.</h2>
+          <div style="height:1px;background:#1A3A4A;width:180px;margin-bottom:.9rem"></div>
+          <p class="slide-subtitle" style="margin-bottom:1rem">We drive smarter, AI-powered workflows for scaling businesses through integrated software, hardware, and brand solutions — globally, with a network of dedicated experts ready to execute at every layer.</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="card left-bar" style="padding:.7rem .8rem .7rem 1rem"><div class="card-title" style="margin-bottom:.2rem">INTEGRATION</div><p class="card-body">Merging software intelligence with physical infrastructure.</p></div>
+            <div class="card left-bar" style="padding:.7rem .8rem .7rem 1rem"><div class="card-title" style="margin-bottom:.2rem">SCALABILITY</div><p class="card-body">Systems built for the next stage — from MVP to Enterprise.</p></div>
+            <div class="card left-bar" style="padding:.7rem .8rem .7rem 1rem"><div class="card-title" style="margin-bottom:.2rem">TRANSPARENCY</div><p class="card-body">Outcome-focused delivery with no black-box processes.</p></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:8px;color:var(--cyan);font-weight:700;letter-spacing:.12em;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid var(--line)">WHO WORKS WITH YOU</div>
+          <p style="font-size:clamp(9px,2vw,11px);color:var(--muted);line-height:1.6;margin-bottom:.8rem">When you partner with Quonote, you access a dedicated network of specialists — each an expert in their domain, all aligned to your goals.</p>
+          <div class="grid-2" style="gap:.45rem;margin-bottom:.7rem">
+            <div class="expert-card" style="background:var(--build)"><div class="expert-name">Software Engineers</div><div class="expert-desc">Full-stack & backend builders</div></div>
+            <div class="expert-card" style="background:var(--auto)"><div class="expert-name">AI Specialists</div><div class="expert-desc">LLM, automation & data pipelines</div></div>
+            <div class="expert-card" style="background:#1A1028"><div class="expert-name">Brand & UI Design</div><div class="expert-desc">Identity, UX & visual design</div></div>
+            <div class="expert-card" style="background:var(--infra)"><div class="expert-name">Cloud Architects</div><div class="expert-desc">Infrastructure, DevOps & scale</div></div>
+            <div class="expert-card" style="background:#0A1C28"><div class="expert-name">Hardware Experts</div><div class="expert-desc">Procurement, setup & integration</div></div>
+            <div class="expert-card" style="background:var(--grow)"><div class="expert-name">Strategy & Growth</div><div class="expert-desc">Roadmapping & business design</div></div>
+          </div>
+          <div class="banner"><div class="banner-main">One brief. Every specialist. Fully coordinated.</div><div class="banner-sub">You speak to one team. We handle the rest.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — WHAT WE DO -->
+  <div class="slide" data-section="Services">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">Services</span>
+      </div>
+      <h2 class="slide-title">Five Divisions. <span class="cyan">One Integrated Partner.</span></h2>
+      <p class="slide-subtitle" style="margin-bottom:1rem">Every service you need, under one roof.</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="division-row" style="background:var(--build)"><div class="div-num">01</div><div class="div-name">BUILD</div><div class="div-sub">Software · Web · UI/UX · Branding · Identity</div><p class="div-body">Custom digital products, brand identities, and marketing assets — from MVPs to full-scale platforms and everything that represents your brand.</p></div>
+        <div class="division-row" style="background:var(--grow)"><div class="div-num">02</div><div class="div-name">GROW</div><div class="div-sub">Strategy · Marketing · Roadmapping</div><p class="div-body">Smarter paths to market — aligning technology decisions with growth objectives and commercial outcomes.</p></div>
+        <div class="division-row" style="background:var(--auto)"><div class="div-num">03</div><div class="div-name">AUTOMATE</div><div class="div-sub">AI · Workflows · Data</div><p class="div-body">AI assistants, automation pipelines, and data systems that eliminate repetitive work and surface actionable intelligence.</p></div>
+        <div class="division-row" style="background:var(--infra)"><div class="div-num">04</div><div class="div-name">INFRASTRUCTURE</div><div class="div-sub">Hardware · Procurement</div><p class="div-body">Physical technology stack — sourced, deployed, and integrated as a consultancy engagement, not a transaction.</p></div>
+        <div class="division-row" style="background:var(--empower)"><div class="div-num">05</div><div class="div-name">EMPOWER</div><div class="div-sub">Training · Remote Management</div><p class="div-body">Skills, systems, and support to help your teams own and operate technology with full confidence.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — HOW WE WORK -->
+  <div class="slide" data-section="Our Process">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">Our Process</span>
+      </div>
+      <h2 class="slide-title">A clear process. <span class="cyan">No black boxes.</span></h2>
+      <p class="slide-subtitle">Every engagement is structured around outcomes. We work with you from discovery through deployment and beyond.</p>
+      <div class="process-grid" style="margin-bottom:0.8rem">
+        <div class="process-step"><div class="step-num">1</div><div class="step-title">DISCOVER</div><p class="step-body">We audit your systems, workflows, and goals to identify where technology creates the most leverage.</p></div>
+        <div class="process-step"><div class="step-num">2</div><div class="step-title">DESIGN</div><p class="step-body">We map out a tailored solution architecture — software, automation, infrastructure — scoped to your timeline.</p></div>
+        <div class="process-step"><div class="step-num">3</div><div class="step-title">DEPLOY</div><p class="step-body">We build and implement with full transparency: regular checkpoints, no surprises, outcome-focused milestones.</p></div>
+        <div class="process-step"><div class="step-num">4</div><div class="step-title">EMPOWER</div><p class="step-body">We don't disappear post-launch. We train your team, monitor systems, and stay available as you scale.</p></div>
+      </div>
+      <div class="banner"><div class="banner-main">Every engagement begins with a scoping session — so you always know exactly what you're getting.</div><div class="banner-sub">No retainers without roadmaps. No roadmaps without clarity.</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 — WHO WE WORK WITH -->
+  <div class="slide" data-section="Our Clients">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">Our Clients</span>
+      </div>
+      <h2 class="slide-title">Built for every stage. <span class="cyan">Scaled to every ambition.</span></h2>
+      <div class="client-grid">
+        <div class="card top-bar" style="background:#0A1A2E">
+          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(14px,3vw,18px);margin-bottom:.2rem">STARTUPS</div>
+          <div style="font-size:9px;color:var(--cyan);margin-bottom:.6rem">Early-stage ventures</div>
+          <div style="height:1px;background:var(--line);margin-bottom:.6rem"></div>
+          <p class="card-body" style="margin-bottom:.8rem">You need to move fast, validate your product, and build lean. We deliver MVPs, automate founder workflows, and set up infrastructure that won't break when you scale.</p>
+          <div style="display:flex;flex-direction:column;gap:.3rem">
+            <div class="tag">MVP Development</div><div class="tag">Lean Automation</div><div class="tag">Tech Stack Setup</div><div class="tag">AI Integration</div>
+          </div>
+        </div>
+        <div class="card top-bar" style="background:#091E12">
+          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(14px,3vw,18px);margin-bottom:.2rem">SMEs</div>
+          <div style="font-size:9px;color:var(--cyan);margin-bottom:.6rem">Growth-stage businesses</div>
+          <div style="height:1px;background:var(--line);margin-bottom:.6rem"></div>
+          <p class="card-body" style="margin-bottom:.8rem">You've found product-market fit and need to scale operations without scaling headcount. We automate processes, upgrade systems, and build confidently for the next stage.</p>
+          <div style="display:flex;flex-direction:column;gap:.3rem">
+            <div class="tag">Process Automation</div><div class="tag">System Upgrades</div><div class="tag">Data Intelligence</div><div class="tag">Team Empowerment</div>
+          </div>
+        </div>
+        <div class="card top-bar" style="background:#130A22">
+          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(14px,3vw,18px);margin-bottom:.2rem">ENTERPRISES</div>
+          <div style="font-size:9px;color:var(--cyan);margin-bottom:.6rem">Scaling organisations</div>
+          <div style="height:1px;background:var(--line);margin-bottom:.6rem"></div>
+          <p class="card-body" style="margin-bottom:.8rem">You operate at complexity and need a partner who can navigate it. We deliver integrated technology strategy, custom platforms, and AI deployments aligned with your architecture.</p>
+          <div style="display:flex;flex-direction:column;gap:.3rem">
+            <div class="tag">AI Strategy</div><div class="tag">Custom Platforms</div><div class="tag">Infrastructure Procurement</div><div class="tag">Change Management</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 — WHY QUONOTE -->
+  <div class="slide" data-section="Our Edge">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">Our Edge</span>
+      </div>
+      <h2 class="slide-title">Not just another agency. <span class="cyan">One partner. Every layer.</span></h2>
+      <div class="grid-2" style="gap:.55rem;margin-bottom:.55rem">
+        <div class="card left-bar" style="background:#0A1E38"><div class="card-title">END-TO-END DELIVERY</div><p class="card-body">From strategy to software to hardware — one integrated partner instead of five separate vendors.</p></div>
+        <div class="card left-bar" style="background:#071828"><div class="card-title">AI-NATIVE APPROACH</div><p class="card-body">AI is embedded into every solution we build — not bolted on as a feature afterthought.</p></div>
+        <div class="card left-bar" style="background:#0A1E38"><div class="card-title">OUTCOME ACCOUNTABILITY</div><p class="card-body">We define success metrics upfront and report against them throughout every engagement.</p></div>
+        <div class="card left-bar" style="background:#160E28"><div class="card-title">HARDWARE + SOFTWARE</div><p class="card-body">Procurement, deployment, and integration of both physical and digital infrastructure — unified.</p></div>
+        <div class="card left-bar" style="background:#0A2218"><div class="card-title">COMPETITIVE & ADAPTIVE PRICING</div><p class="card-body">No fixed retainers that don't fit. Every quote is built around your specific scope, stage, and budget — always cost-efficient, always competitive.</p></div>
+        <div class="card left-bar" style="background:#1A0E28"><div class="card-title">YOUR BUSINESS IS OUR BUSINESS</div><p class="card-body">We don't work for you — we work with you. Every consultation, build, design, and delivery is treated as if we are the product owners. Our best, every time.</p></div>
+      </div>
+      <div class="banner"><div class="banner-main">We don't work for you. We work with you — as if every project is our own.</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 — PARTNER PROJECTS -->
+  <div class="slide" data-section="Our Work">
+    <div class="slide-inner">
+      <div class="inner-header">
+        <div class="wordmark">
+          <span class="wm-icon" style="display:flex;align-items:center;justify-content:center"><img src="/logo-blue.png" alt="Quonote" style="width:100%;height:100%;object-fit:contain"></span>
+          <div class="wm-text"><div class="wm-name">QUONOTE</div><div class="wm-sub">DIGITAL</div></div>
+        </div>
+        <span class="section-label">Our Work</span>
+      </div>
+      <h2 class="slide-title">Ideas we've helped <span class="cyan">bring to life.</span></h2>
+      <p class="slide-subtitle">Real partners. Real products. Real impact.</p>
+      <div class="partner-grid">
+        <div class="project-card" style="background:#0A1828">
+          <div class="client-pill"><img src="/logo-blue.png" alt="Lanzcape" style="height:28px;width:auto;object-fit:contain"><span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(13px,3vw,16px);color:#1a1a1a;letter-spacing:0.04em;margin-left:0.4rem">LANZCAPE</span></div>
+          <div style="font-size:8px;color:var(--slate);margin-bottom:.15rem">Brussels, Belgium</div>
+          <div style="font-size:7.5px;color:var(--cyan);font-weight:700;letter-spacing:.08em;margin-bottom:.6rem">EU PUBLIC AFFAIRS & LEGALTECH</div>
+          <p style="font-size:clamp(9px,2vw,11px);color:var(--muted);line-height:1.6;margin-bottom:.8rem">Lanzcape is a mobile-first EU legislative monitoring platform helping advocacy professionals across Europe track regulatory files, receive real-time policy alerts, and access expert guidance on EU affairs.</p>
+          <div style="font-size:7.5px;color:var(--slate);font-weight:700;letter-spacing:.1em;margin-bottom:.5rem;padding-top:.5rem;border-top:1px solid var(--line)">WHAT WE DELIVERED</div>
+          <div class="delivery-item"><span class="dot"></span>Software Implementation</div>
+          <div class="delivery-item"><span class="dot"></span>AI Assistant Integration</div>
+          <div class="delivery-item"><span class="dot"></span>Cloud Architecture Consultancy</div>
+          <div class="delivery-item"><span class="dot"></span>Ongoing Software Support</div>
+        </div>
+        <div class="project-card" style="background:#0A1C14">
+          <div style="background:#0D2818;border-radius:6px;padding:.5rem .8rem;margin-bottom:.6rem;text-align:center"><span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(12px,3vw,16px);color:var(--cyan)">ASMb OOD LTD.</span></div>
+          <div style="font-size:8px;color:var(--slate);margin-bottom:.15rem">Morocco</div>
+          <div style="font-size:7.5px;color:var(--cyan);font-weight:700;letter-spacing:.08em;margin-bottom:.6rem">HOSPITALITY AUDIT & COMPLIANCE</div>
+          <p style="font-size:clamp(9px,2vw,11px);color:var(--muted);line-height:1.6;margin-bottom:.8rem">ASMb OOD operates in the hospitality sector, where inspectors relied on paper-based processes to conduct audits at hotels and venues — a slow, error-prone, and resource-heavy workflow.</p>
+          <div style="font-size:7.5px;color:var(--slate);font-weight:700;letter-spacing:.1em;margin-bottom:.5rem;padding-top:.5rem;border-top:1px solid var(--line)">WHAT WE DELIVERED</div>
+          <div class="delivery-item" style="background:#0D2818"><span class="dot"></span>Custom Hospitality Audit Tool</div>
+          <div class="delivery-item" style="background:#0D2818"><span class="dot"></span>Paperless Inspection System</div>
+          <div class="delivery-item" style="background:#0D2818"><span class="dot"></span>Automated Reporting Workflows</div>
+          <div class="delivery-item" style="background:#0D2818"><span class="dot"></span>Ongoing Software Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — CALL TO ACTION -->
+  <div class="slide" data-section="Let's Talk">
+    <div class="slide-inner" style="justify-content:center;min-height:calc(100vh - 4rem)">
+      <div class="glow-bg"></div>
+      <div class="cta-content">
+        <div class="cta-logo">
+          <img src="/logo-blue.png" alt="Quonote" style="width:clamp(44px,8vw,60px);height:clamp(44px,8vw,60px);object-fit:contain">
+          <div>
+            <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(20px,5vw,32px);color:white;letter-spacing:.02em">QUONOTE</div>
+            <div style="font-size:clamp(9px,2vw,12px);color:var(--muted);letter-spacing:.12em">DIGITAL</div>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--line);width:min(160px,40%);margin:0 auto .8rem"></div>
+        <h2 class="cta-headline">LET'S BUILD SOMETHING<br><span class="cyan">THAT SCALES.</span></h2>
+        <p class="cta-body">Whether you're a founder launching your first product, an operator streamlining a growing business, or an enterprise leader deploying AI at scale — Quonote is ready to execute alongside you.</p>
+        <div class="contacts-grid">
+          <div class="contact-card"><div class="contact-label">WEBSITE</div><div class="contact-val">quonote.com</div></div>
+          <div class="contact-card"><div class="contact-label">EMAIL</div><div class="contact-val">info@quonote.com</div></div>
+          <div class="contact-card"><div class="contact-label">CALL US</div><div class="contact-val">+234 816 294 1439</div></div>
+        </div>
+        <div class="vp-grid" style="max-width:600px;margin:0 auto .8rem">
+          <div class="vp-strip" style="background:#0A1C10;text-align:left"><div class="vp-title">ADAPTIVE PRICING</div><div class="vp-body">Customised to your scope, stage, and budget — always competitive.</div></div>
+          <div class="vp-strip" style="background:#160A28;text-align:left"><div class="vp-title">YOUR VISION, OUR OWNERSHIP</div><div class="vp-body">We treat every project as if it is our own. Our best, every time.</div></div>
+        </div>
+        <div class="quote-line"></div>
+        <p class="quote-text">"We don't just consult. We build. We automate. We equip."</p>
+        <div class="divs-strip">
+          <span>BUILD</span><span>GROW</span><span>AUTOMATE</span><span>INFRASTRUCTURE</span><span>EMPOWER</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /slides-wrapper -->
+
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-arrows">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&#8249;</button>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&#8250;</button>
+  </div>
+  <div class="slide-footer" id="slideFooter">
+    <span class="footer-corp">A subsidiary of Quonote Enterprise</span>
+    <span class="footer-label" id="footerLabel"></span>
+    <span class="footer-num" id="footerNum"></span>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const wrapper = document.getElementById('slidesWrapper');
+const dotsContainer = document.getElementById('navDots');
+const footerLabel = document.getElementById('footerLabel');
+const footerNum = document.getElementById('footerNum');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let current = 0;
+const total = slides.length;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(index) {
+  if (index < 0 || index >= total) return;
+  slides[current].classList.remove('active');
+  current = index;
+  slides[current].classList.add('active');
+  slides[current].scrollTop = 0;
+  wrapper.style.transform = `translateX(-${current * 100}vw)`;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  footerLabel.textContent = (slides[current].dataset.section || '').toUpperCase();
+  footerNum.textContent = `${current + 1}  /  ${total}`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+}
+
+function navigate(dir) { goTo(current + dir); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+});
+
+let touchStartX = 0, isSwiping = false;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; isSwiping = false; }, { passive: true });
+document.addEventListener('touchmove', e => {
+  const dx = e.touches[0].clientX - touchStartX;
+  if (!isSwiping && Math.abs(dx) > 10) isSwiping = true;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  if (!isSwiping) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+  isSwiping = false;
+});
+
+goTo(0);
+</script>
+</body>
+</html>

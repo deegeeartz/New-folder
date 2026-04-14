@@ -2,7 +2,7 @@ import React from 'react';
 import { Send } from 'lucide-react';
 
 const ChatInput = ({ input, setInput, handleSend, isLoading }) => {
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') handleSend();
   };
 
@@ -13,8 +13,9 @@ const ChatInput = ({ input, setInput, handleSend, isLoading }) => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="Ask about digital strategy..."
+          maxLength={500}
           className="bg-transparent border-none outline-none text-white text-sm flex-grow placeholder:text-slate-500"
         />
         <button

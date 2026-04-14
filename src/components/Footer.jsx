@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  MessageSquareText,
+  MessageCircle,
   Mail,
   Briefcase,
   MonitorSmartphone,
@@ -35,7 +35,7 @@ const Footer = () => {
                 aria-label="Open strategy chat"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
               >
-                <MessageSquareText size={16} />
+                <MessageCircle size={16} />
                 Strategy Chat
               </button>
               <a
@@ -113,12 +113,12 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/#contact" className="hover:text-blue-400">
+                <a href="/#audiences" className="hover:text-blue-400">
                   For Startups
                 </a>
               </li>
               <li>
-                <a href="/#contact" className="hover:text-blue-400">
+                <a href="/#audiences" className="hover:text-blue-400">
                   For MSMEs
                 </a>
               </li>

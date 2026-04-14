@@ -15,7 +15,7 @@ In **Node.js App Manager**:
 
 - Application root: `repositories/quonote-app`
 - Application startup file: `server.cjs`
-- Node version: `24.x`
+- Node version: `20.x`
 - App mode: `production`
 
 Environment variables:
@@ -37,10 +37,18 @@ PassengerStartupFile server.cjs
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
 ```
 
+## SSH access
+
+```bash
+ssh olgmxestep@66.29.148.146 -p 21098
+```
+
+> **Note:** Port 21098 is the correct cPanel SSH port. If it times out, your current network is blocking it — switch to a mobile hotspot or use cPanel's browser Terminal (cPanel → Terminal).
+
 ## Standard deployment flow
 
 1. Push changes to GitHub from local machine.
-2. SSH to server and pull latest code:
+2. SSH to server:
 
 ```bash
 cd /home/olgmxestep/repositories/quonote-app
@@ -50,7 +58,7 @@ git pull
 3. Activate Node virtual environment (required for `node`/`npm` commands):
 
 ```bash
-source /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/activate
+source /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/activate
 which node
 which npm
 ```
@@ -86,7 +94,7 @@ Cause: shell is not inside the cPanel nodevenv.
 Fix:
 
 ```bash
-source /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/activate
+source /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/activate
 which npm
 ```
 
@@ -97,7 +105,7 @@ Cause: dependencies not installed in app environment.
 Fix:
 
 ```bash
-source /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/activate
+source /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/activate
 cd /home/olgmxestep/repositories/quonote-app
 npm install
 touch tmp/restart.txt
@@ -131,7 +139,7 @@ curl -i https://www.quonote.com/health
 Manual verification:
 
 ```bash
-source /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/activate
+source /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/activate
 cd /home/olgmxestep/repositories/quonote-app
 node server.cjs
 ```
@@ -147,7 +155,7 @@ If manual run works but cPanel does not:
 If cPanel app control is failing but urgent restore is needed:
 
 ```bash
-nohup /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/node /home/olgmxestep/repositories/quonote-app/server.cjs > /home/olgmxestep/repositories/quonote-app/app.log 2>&1 &
+nohup /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/node /home/olgmxestep/repositories/quonote-app/server.cjs > /home/olgmxestep/repositories/quonote-app/app.log 2>&1 &
 ```
 
 Verify:
@@ -167,7 +175,7 @@ pkill -f "/home/olgmxestep/repositories/quonote-app/server.cjs"
 ```bash
 cd /home/olgmxestep/repositories/quonote-app
 git pull
-source /home/olgmxestep/nodevenv/repositories/quonote-app/24/bin/activate
+source /home/olgmxestep/nodevenv/repositories/quonote-app/20/bin/activate
 npm install
 touch tmp/restart.txt
 sleep 6
