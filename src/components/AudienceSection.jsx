@@ -26,6 +26,7 @@ const AudienceSection = () => {
               title: "Startups",
               desc: "Launch faster with MVP delivery, lean systems, and product foundations built for growth.",
               color: "blue",
+              href: "/audiences/startups",
               features: [
                 "MVP Delivery",
                 "Product Roadmapping",
@@ -37,6 +38,7 @@ const AudienceSection = () => {
               title: "Growing Businesses",
               desc: "Reduce operational drag, improve visibility, and build systems that support revenue growth.",
               color: "purple",
+              href: "/audiences/growing-businesses",
               features: [
                 "Process Automation",
                 "Sales Enablement",
@@ -48,6 +50,7 @@ const AudienceSection = () => {
               title: "Established Teams",
               desc: "Modernize legacy workflows, equip teams properly, and improve delivery across departments.",
               color: "emerald",
+              href: "/audiences/established-teams",
               features: [
                 "System Modernization",
                 "AI Workflow Integration",

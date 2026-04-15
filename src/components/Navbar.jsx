@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Button from "./Button";
 import QuonoteLogo from "./QuonoteLogo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+        <Link to="/" aria-label="Go to homepage" className="inline-flex items-center">
+          <QuonoteLogo className="h-8 w-auto sm:h-9 md:h-10" priority />
+        </Link>
 
   useEffect(() => {
     const handleScroll = () => {

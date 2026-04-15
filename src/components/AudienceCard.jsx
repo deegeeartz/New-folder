@@ -1,7 +1,8 @@
 import React from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const AudienceCard = ({ title, desc, features, color }) => {
+const AudienceCard = ({ title, desc, features, color, href }) => {
   const colorBgMap = {
     blue: "from-blue-500/15 via-blue-400/10 to-cyan-400/5",
     purple: "from-purple-500/15 via-indigo-400/10 to-blue-400/5",
@@ -28,9 +29,18 @@ const AudienceCard = ({ title, desc, features, color }) => {
           </li>
         ))}
       </ul>
-      <button className="text-blue-300 font-semibold flex items-center hover:text-cyan-200 transition-colors">
-        Learn More <ArrowRight size={16} className="ml-2" />
-      </button>
+      {href ? (
+        <Link
+          to={href}
+          className="text-blue-300 font-semibold inline-flex items-center hover:text-cyan-200 transition-colors"
+        >
+          Learn More <ArrowRight size={16} className="ml-2" />
+        </Link>
+      ) : (
+        <button className="text-blue-300 font-semibold flex items-center hover:text-cyan-200 transition-colors">
+          Learn More <ArrowRight size={16} className="ml-2" />
+        </button>
+      )}
     </div>
   );
 };
