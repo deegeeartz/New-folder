@@ -16,7 +16,12 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
+
+    try {
+      localStorage.setItem("theme", "dark");
+    } catch {
+      // Ignore storage write errors (privacy mode/storage restrictions)
+    }
   }, []);
 
   const toggleTheme = () => {
