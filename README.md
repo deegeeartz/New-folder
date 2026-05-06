@@ -8,6 +8,10 @@ For production deployment and troubleshooting on cPanel/Passenger, see:
 
 - [`DEPLOYMENT_RUNBOOK.md`](./DEPLOYMENT_RUNBOOK.md)
 
+## Team Onboarding Docs
+
+- [`FRONTEND_INTERN_GUIDE.md`](./FRONTEND_INTERN_GUIDE.md) — setup, local run, branch workflow, and push/PR process for frontend interns
+
 ## Getting Started
 
 ### Prerequisites
