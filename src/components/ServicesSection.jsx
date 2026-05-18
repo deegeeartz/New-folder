@@ -33,7 +33,7 @@ const ServicesSection = () => {
     "Empower",
   ];
 
-  const services = [
+  const services = useMemo(() => [
     // Build & Design
     {
       title: "Software Development",
@@ -137,7 +137,7 @@ const ServicesSection = () => {
       category: "Empower",
       icon: Globe,
     },
-  ];
+  ], []);
 
   const filteredServices = useMemo(
     () => (activeTab === "All" ? services : services.filter((s) => s.category === activeTab)),
@@ -178,10 +178,12 @@ const ServicesSection = () => {
               fits your next growth move.
             </p>
             <p className="text-blue-300 text-sm font-medium mt-3">
-              <span className="text-blue-400">↳ </span>
+              <span className="text-blue-400 arrow-sign">↳ </span>
               <span className="inline-flex items-center gap-1">
-                <span>Delivering:</span>
-                <span className="text-cyan-300">
+                <span className="delivering-text text-cyan-300 drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">
+                  Delivering:
+                </span>
+                <span className="delivering-text text-cyan-300 drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">
                   {activeTab === "All"
                     ? "end-to-end digital execution"
                     : `${activeTab.toLowerCase()} outcomes that scale`}

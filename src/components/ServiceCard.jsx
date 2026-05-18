@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({
@@ -25,7 +26,7 @@ const ServiceCard = ({
       >
         {IconComponent && (
           <IconComponent
-            className={`text-blue-400 group-hover:text-white transition-colors duration-300`}
+              className={`text-blue-400 group-hover:text-white transition-colors duration-300 light-mode-icon`}
             size={isBento ? 28 : 24}
           />
         )}
@@ -36,7 +37,7 @@ const ServiceCard = ({
       </div>
 
       <h3
-        className={`font-bold text-white mb-2 lg:mb-3 group-hover:text-blue-300 transition-colors relative z-10 ${isBento ? "text-lg lg:text-xl xl:text-2xl" : "text-xl"}`}
+        className={`font-bold text-white mb-2 lg:mb-3 group-hover:text-white transition-colors relative z-10 ${isBento ? "text-lg lg:text-xl xl:text-2xl" : "text-xl"}`}
       >
         {title}
       </h3>

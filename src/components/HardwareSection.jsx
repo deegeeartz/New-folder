@@ -14,7 +14,7 @@ const HardwareSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase mb-6 tracking-wide">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase mb-6 tracking-wide glass-cta green-cta">
               New Division
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">

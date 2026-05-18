@@ -103,7 +103,7 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           {/* Left column — info */}
           <div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-300 text-xs font-semibold tracking-wide mb-5">
+            <div className="inline-flex items-center px-2 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide mb-5 glass-cta blue-cta">
               Contact Quonote
             </div>
             <h2

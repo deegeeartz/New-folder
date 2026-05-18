@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* Explicit white text for all card text elements (except delivering-text) */
+:root[data-theme='light'] #services h3,
+:root[data-theme='light'] #services p,
+:root[data-theme='light'] #services div[class*="text-blue-"] {
+  color: #ffffff !important;
+}
+
+/* Override: keep delivering-text and arrow blue in light mode */
+:root[data-theme='light'] #services p .delivering-text {
+  color: #2563eb !important; /* blue-600 for light mode */
+}
+
+:root[data-theme='light'] #services p .arrow-sign {
+  color: #2563eb !important; /* blue-600 for light mode */
+}
+
+/* Keep icons the same color in light and dark mode */
+:root[data-theme='light'] #services .light-mode-icon {
+  color: #60a5fa !important; /* blue-400 - same as dark mode */
+}
+
+/* Keep Delivering text cyan in dark mode */
+#services .delivering-text {
+  color: #06b6d4 !important; /* cyan-300 */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,6 +52,7 @@
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-primary);
   background-color: var(--bg-primary);
+  color-scheme: dark;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,17 +60,19 @@
 
 /* Light theme */
 :root[data-theme='light'] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #1e293b;
-  --text-tertiary: #475569;
+  --bg-primary: #f8f8ff;
+  --bg-secondary: #f5f5f8;
+  --bg-tertiary: #f5f5f8;
+  --salt-white: #e6e7eb;
+  --text-primary: #000000;
+  --text-secondary: #0f172a;
+  --text-tertiary: #1e293b;
   --border-color: rgba(15, 23, 42, 0.15);
-  --panel: rgba(248, 250, 252, 0.95);
+  --panel: rgba(248, 248, 255, 0.95);
   --panel-border: rgba(15, 23, 42, 0.12);
-  --card-bg: rgba(255, 255, 255, 1);
+  --card-bg: rgba(248, 248, 255, 1);
   --shadow-color: rgba(0, 0, 0, 0.08);
+  color-scheme: light;
 }
 
 body {
@@ -58,9 +87,546 @@ body {
 }
 
 :root[data-theme='light'] body {
-  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.05), transparent 35%),
-    radial-gradient(circle at 80% 10%, rgba(168, 85, 247, 0.05), transparent 35%),
-    var(--bg-primary);
+  background: var(--bg-primary);
+  background-image: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Light mode chatbox styling */
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-slate-900,
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-slate-900\/95 {
+  background-color: #ffffff !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-slate-800 {
+  background-color: #f5f5f8 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-slate-800\/50,
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-slate-800\/30 {
+  background-color: rgba(245, 245, 248, 0.5) !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .bg-gradient-to-r {
+  background-color: #2563eb !important;
+  background-image: linear-gradient(to right, #1d4ed8, #2563eb) !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .border-slate-700 {
+  border-color: #e2e8f0 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .border-slate-800 {
+  border-color: #cbd5e1 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .border-slate-600 {
+  border-color: #cbd5e1 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 :is(.text-slate-300, .text-slate-400, .text-slate-500) {
+  color: #000000 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .text-blue-400 {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .text-blue-100 {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .text-white {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .text-yellow-300 {
+  color: #f59e0b !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 .placeholder\:text-slate-500::placeholder {
+  color: #9ca3af !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 input {
+  color: #000000 !important;
+}
+
+:root[data-theme='light'] .fixed.bottom-6.right-6.z-50 input::placeholder {
+  color: #9ca3af !important;
+}
+
+:root[data-theme='light'] :is(.bg-slate-700, .bg-slate-800, .bg-slate-800\/30, .bg-slate-900, .bg-slate-900\/30, .bg-slate-900\/50, .bg-slate-900\/60, .bg-slate-900\/70, .bg-slate-900\/80, .bg-slate-900\/85, .bg-slate-900\/95, .bg-slate-950, .bg-slate-950\/70) {
+  background-color: var(--bg-secondary) !important;
+  background-image: none !important;
+}
+
+:root[data-theme='light'] :is(.from-slate-700, .from-slate-800, .from-slate-900, .from-slate-900\/90) {
+  --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+:root[data-theme='light'] :is(.via-slate-700, .via-slate-800, .via-slate-900) {
+  --tw-gradient-stops: var(--tw-gradient-from), #e2e8f0 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+:root[data-theme='light'] :is(.to-slate-700, .to-slate-800, .to-slate-900, .to-slate-950) {
+  --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme='light'] :is(.text-white, .text-slate-50, .text-slate-100, .text-slate-200) {
+  color: #000000 !important;
+}
+
+:root[data-theme='light'] :is(.text-slate-300, .text-slate-400) {
+  color: #0f172a !important;
+}
+
+:root[data-theme='light'] :is(.text-slate-500, .text-slate-600, .text-slate-700) {
+  color: #1e293b !important;
+}
+
+:root[data-theme='light'] :is(
+  [class*='text-blue-'],
+  [class*='text-cyan-'],
+  [class*='text-indigo-']
+) {
+  color: #1d4ed8 !important;
+}
+
+:root[data-theme='light'] :is(
+  .text-blue-100,
+  .text-blue-200,
+  .text-blue-300,
+  .text-blue-400,
+  .text-blue-500,
+  .text-cyan-100,
+  .text-cyan-200,
+  .text-cyan-300,
+  .text-indigo-100,
+  .text-indigo-200,
+  .text-indigo-300
+) {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] :is(.border-slate-700, .border-slate-800, .border-slate-900) {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+:root[data-theme='light'] :is(.bg-white.text-blue-600, .bg-white.text-blue-700, .bg-white.text-slate-900) {
+  color: #0f172a !important;
+}
+
+:root[data-theme='light'] :is(.hover\:text-blue-300:hover, .hover\:text-blue-400:hover, .hover\:text-blue-500:hover) {
+  color: #1d4ed8 !important;
+}
+
+:root[data-theme='light'] :is(.hover\:text-cyan-200:hover, .hover\:text-cyan-300:hover, .hover\:text-indigo-300:hover) {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] h1,
+:root[data-theme='light'] h2,
+:root[data-theme='light'] h3,
+:root[data-theme='light'] h4,
+:root[data-theme='light'] h5,
+:root[data-theme='light'] h6 {
+  color: #000000 !important;
+}
+
+:root[data-theme='light'] p {
+  color: #1e293b !important;
+}
+
+:root[data-theme='light'] :is(.bg-blue-500.text-white, .bg-blue-600.text-white, .bg-blue-700.text-white, .bg-cyan-500.text-white, .bg-cyan-600.text-white, .bg-indigo-600.text-white) {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme='light'] .nav-glass {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme='light'] .hero-spotlight {
+  background: none;
+}
+
+:root[data-theme='light'] .hero-gradient-orb {
+  display: none;
+}
+
+:root[data-theme='light'] :is(
+  [class*='bg-gradient-']:not(.bg-clip-text),
+  [class*='radial-gradient']:not(.bg-clip-text)
+) {
+  background-image: none !important;
+}
+
+:root[data-theme='light'] .hero-gradient-text {
+  background-image: none !important;
+  color: #2563eb !important;
+  -webkit-text-fill-color: #2563eb !important;
+}
+
+:root[data-theme='light'] .floating-card {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme='light'] .floating-card:hover {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  border-color: rgba(37, 99, 235, 0.2);
+  transform: translateY(-6px) !important;
+}
+
+:root[data-theme='light'] .mesh-gradient {
+  background-color: var(--bg-primary);
+  background-image: none;
+}
+
+:root[data-theme='light'] .cta-banner h2,
+:root[data-theme='light'] .cta-banner .text-white,
+:root[data-theme='light'] .cta-banner .text-blue-100,
+:root[data-theme='light'] .cta-banner .text-blue-100\/90,
+:root[data-theme='light'] .cta-banner .text-blue-100\/80,
+:root[data-theme='light'] .cta-banner .text-blue-200 {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .cta-banner .text-blue-100,
+:root[data-theme='light'] .cta-banner .text-blue-100\/90,
+:root[data-theme='light'] .cta-banner .text-blue-100\/80 {
+  color: #dbeafe !important;
+}
+
+:root[data-theme='light'] .cta-banner .text-blue-200 {
+  color: #bfdbfe !important;
+}
+
+:root[data-theme='light'] .cta-banner .bg-white.text-blue-600 {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] .cta-banner .bg-blue-700.text-white {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .cta-banner a.font-semibold {
+  color: #dbeafe !important;
+}
+
+:root[data-theme='light'] #audiences .floating-card {
+  background-image: none !important;
+}
+
+:root[data-theme='light'] #audiences .floating-card h3 {
+  line-height: 1.1;
+}
+
+:root[data-theme='light'] #audiences .floating-card p {
+  line-height: 1.7;
+}
+
+:root[data-theme='light'] #audiences .floating-card ul {
+  line-height: 1.6;
+}
+
+/* Light-mode glassmorphism button (light blue tint) */
+:root[data-theme='light'] .glass-btn {
+  background: rgba(232, 245, 255, 0.64);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  color: var(--text-primary);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background-color 220ms ease, transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+:root[data-theme='light'] .glass-btn svg {
+  color: #1e40af; /* deep-ish blue for icons */
+}
+
+:root[data-theme='light'] .glass-btn:hover {
+  background: rgba(224, 240, 255, 0.9);
+  border-color: rgba(37, 99, 235, 0.22);
+  color: #04263b;
+}
+
+:root[data-theme='light'] .glass-btn:active {
+  transform: translateY(1px) !important;
+}
+
+:root[data-theme='light'] .glass-btn.rounded-full {
+  border-radius: 9999px !important;
+}
+
+:root[data-theme='light'] {
+  /* Keep non-color features identical to dark mode; only colors change */
+}
+
+/* Light mode hover effects - properly scoped */
+
+/* Services section: keep the area readable in light mode with black copy and blue actions */
+:root[data-theme='light'] #services :is(.bg-slate-900, .bg-slate-900\/40, .bg-slate-900\/50, .bg-slate-900\/60, .bg-slate-900\/70, .bg-slate-900\/95, .bg-slate-950, .bg-slate-800, .bg-slate-800\/50, .bg-slate-800\/30) {
+  background-color: var(--bg-secondary) !important;
+  background-image: none !important;
+}
+
+:root[data-theme='light'] #services :is(h2, h3, p, li, span, .text-white, .text-slate-300, .text-slate-400, .text-slate-500, .text-blue-300, .text-blue-400, .text-blue-400\/80, .text-cyan-300) {
+  color: #000000 !important;
+}
+
+:root[data-theme='light'] #services :is(a, button) {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+:root[data-theme='light'] #services button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
+}
+
+:root[data-theme='light'] #services button:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Explicit override: make service card titles and descriptions salt-white in light mode
+   Placed at file end to override earlier generic light-mode rules. */
+:root[data-theme='light'] #services .floating-card h3,
+:root[data-theme='light'] #services .floating-card p,
+:root[data-theme='light'] #services .card-glow h3,
+:root[data-theme='light'] #services .card-glow p,
+:root[data-theme='light'] #services .group h3,
+:root[data-theme='light'] #services .group p,
+:root[data-theme='light'] #services .rounded-2xl h3,
+:root[data-theme='light'] #services .rounded-2xl p,
+:root[data-theme='light'] #services .rounded-2xl .text-white,
+:root[data-theme='light'] #services .rounded-2xl .text-slate-400 {
+  color: var(--salt-white) !important; /* salt white */
+}
+
+/* Keep the section heading and main description visually distinct (leave as default) */
+:root[data-theme='light'] #services > div > div:first-child h2,
+:root[data-theme='light'] #services > div > div:first-child > div > p {
+  color: inherit !important;
+}
+
+/* Force salt-white for all text inside service card containers in light mode */
+:root[data-theme='light'] #services .card-glow,
+:root[data-theme='light'] #services .card-glow *,
+:root[data-theme='light'] #services .floating-card,
+:root[data-theme='light'] #services .floating-card *,
+:root[data-theme='light'] #services .group,
+:root[data-theme='light'] #services .group *,
+:root[data-theme='light'] #services .rounded-2xl,
+:root[data-theme='light'] #services .rounded-2xl * {
+  color: var(--salt-white) !important; /* salt white */
+}
+
+:root[data-theme='light'] #services a {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] #services a:hover {
+  color: #1d4ed8 !important;
+  transform: translateY(-1px);
+}
+
+:root[data-theme='light'] #services svg {
+  color: #2563eb !important;
+  fill: #2563eb !important;
+}
+
+:root[data-theme='light'] #services .floating-card:hover {
+  box-shadow: 0 10px 40px rgba(37, 99, 235, 0.12) !important;
+  border-color: rgba(37, 99, 235, 0.18) !important;
+}
+
+:root[data-theme='light'] #services .group-hover\:text-white {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] #services .group-hover\:text-blue-300:hover,
+:root[data-theme='light'] #services .hover\:text-blue-300:hover {
+  color: #1d4ed8 !important;
+}
+
+:root[data-theme='light'] #services .group-hover\:scale-110:hover,
+:root[data-theme='light'] #services .group-hover\:rotate-3:hover {
+  transform: none !important;
+}
+
+:root[data-theme='light'] #services .card-glow:active,
+:root[data-theme='light'] #services .floating-card:active,
+:root[data-theme='light'] #services .group:active {
+  transform: scale(1.03) !important;
+  transition: transform 150ms ease;
+}
+
+:root[data-theme='light'] #services .mt-8 button,
+:root[data-theme='light'] #services .inline-flex.items-center.text-xs,
+:root[data-theme='light'] #services .inline-flex.items-center.text-sm {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
+}
+
+:root[data-theme='light'] #services .mt-8 button:hover,
+:root[data-theme='light'] #services .inline-flex.items-center.text-xs:hover,
+:root[data-theme='light'] #services .inline-flex.items-center.text-sm:hover {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
+}
+
+:root[data-theme='light'] #services a[class*="text-blue-"] {
+  background-color: transparent !important;
+  color: #2563eb !important;
+  border-radius: 9999px;
+  padding: 0;
+}
+
+:root[data-theme='light'] header .btn-micro {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
+}
+
+:root[data-theme='light'] header .btn-micro:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
+}
+
+:root[data-theme='light'] #services .w-12.h-12,
+:root[data-theme='light'] #services .w-14.h-14 {
+  background-color: #ffffff !important;
+}
+
+:root[data-theme='light'] #services .card-glow,
+:root[data-theme='light'] #services .floating-card,
+:root[data-theme='light'] #services .rounded-2xl.border.border-slate-800\/70,
+:root[data-theme='light'] #services .group {
+  background-color: #2563eb !important;
+  background-image: none !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme='light'] #services .card-glow:hover,
+:root[data-theme='light'] #services .floating-card:hover,
+:root[data-theme='light'] #services .rounded-2xl.border.border-slate-800\/70:hover,
+:root[data-theme='light'] #services .group:hover {
+  background-color: #2563eb !important;
+  background-image: none !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+:root[data-theme='light'] #services .card-glow .absolute.inset-0,
+:root[data-theme='light'] #services .floating-card .absolute.inset-0,
+:root[data-theme='light'] #services .group .absolute.inset-0 {
+  display: none !important;
+}
+
+:root[data-theme='light'] #services .floating-card :is(h3, p, li, span, .text-white, .text-slate-300, .text-slate-400, .text-slate-500, .text-blue-300, .text-blue-400, .text-blue-400\/80, .text-cyan-300),
+:root[data-theme='light'] #services .rounded-2xl.border.border-slate-800\/70 :is(p, span, h3) {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] #services .floating-card svg,
+:root[data-theme='light'] #services .rounded-2xl.border.border-slate-800\/70 svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+:root[data-theme='light'] #services .floating-card a,
+:root[data-theme='light'] #services .floating-card a:hover,
+:root[data-theme='light'] #services .floating-card a:focus,
+:root[data-theme='light'] #services .floating-card a:active {
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+:root[data-theme='light'] #services .floating-card a * {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] #services .floating-card a span,
+:root[data-theme='light'] #services .floating-card a span:last-child {
+  color: #ffffff !important;
+  transform: none !important;
+}
+
+:root[data-theme='light'] #services .floating-card .group\/link:hover,
+:root[data-theme='light'] #services .floating-card .group\/link:hover span:last-child {
+  color: #ffffff !important;
+  transform: none !important;
+}
+
+:root[data-theme='light'] #services .floating-card a.text-blue-400,
+:root[data-theme='light'] #services .floating-card a.text-blue-400:hover,
+:root[data-theme='light'] #services .floating-card a.text-blue-400 span,
+:root[data-theme='light'] #services .floating-card a.text-blue-400 span:last-child {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .btn-micro:hover::after {
+  transform: translateX(380%) rotate(20deg) !important;
+}
+
+:root[data-theme='light'] a:hover {
+  opacity: 1;
+}
+
+:root[data-theme='light'] a:hover.text-slate-300,
+:root[data-theme='light'] a:hover.text-slate-500,
+:root[data-theme='light'] a:hover.text-slate-400 {
+  color: #2563eb !important;
+}
+
+:root[data-theme='light'] .hover\:border-blue-500:hover,
+:root[data-theme='light'] .hover\:border-blue-500\/30:hover {
+  border-color: #2563eb !important;
+}
+
+:root[data-theme='light'] .hover\:scale-110:hover {
+  transform: scale(1.1) !important;
+}
+
+:root[data-theme='light'] .focus-within\:border-blue-500:focus-within,
+:root[data-theme='light'] input:focus {
+  border-color: #2563eb !important;
+  outline: none;
+}
+
+::selection {
+  background-color: #2563eb;
+  color: #ffffff;
 }
 
 a {
@@ -74,6 +640,96 @@ a {
   backdrop-filter: blur(12px);
   position: relative;
   overflow: hidden;
+}
+
+/* Hero accept button - glass morphism, white and shiny */
+.hero-accept-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-primary);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.28);
+  transition: transform 180ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.hero-accept-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.32);
+}
+
+.hero-accept-btn .accept-dot {
+  flex: 0 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+/* Dark-mode: keep subtle translucent white */
+:root .hero-accept-btn {
+  color: #e6eefc;
+}
+
+/* Light-mode: make it bright white glass */
+:root[data-theme='light'] .hero-accept-btn {
+  background: rgba(255,255,255,0.86) !important;
+  border: 1px solid rgba(15,23,42,0.06) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 8px 30px rgba(15,23,42,0.06) !important;
+}
+
+:root[data-theme='light'] .hero-accept-btn .accept-dot {
+  background: #2563eb !important;
+}
+
+
+
+:root .hero-accept-btn .accept-dot {
+  background: #60a5fa;
+}
+
+/* Reusable glass CTA for badges/buttons in light mode */
+:root[data-theme='light'] .glass-cta {
+  background: rgba(255,255,255,0.92) !important;
+  border: 1px solid rgba(15,23,42,0.06) !important;
+  color: var(--text-primary) !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(15,23,42,0.06) !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+:root[data-theme='light'] .glass-cta:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(15,23,42,0.08) !important;
+}
+
+:root[data-theme='light'] .glass-cta .accept-dot {
+  background: #2563eb !important;
+}
+
+/* Keep specific badge colors in light mode */
+:root[data-theme='light'] .glass-cta.green-cta {
+  color: #34d399 !important; /* emerald-400 */
+  border-color: rgba(52,211,153,0.12) !important;
+}
+
+:root[data-theme='light'] .glass-cta.blue-cta {
+  color: #60a5fa !important; /* blue-300 */
+  border-color: rgba(96,165,250,0.12) !important;
+}
+
+/* Make Contact Quonote badge blue brighter like other blues (both modes) */
+.glass-cta.blue-cta {
+  color: #1d4ed8 !important; /* blue-700/600-ish for visibility */
+  border-color: rgba(29,78,216,0.12) !important;
 }
 
 .glass-panel::before {

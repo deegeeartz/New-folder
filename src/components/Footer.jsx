@@ -33,7 +33,7 @@ const Footer = () => {
                   )
                 }
                 aria-label="Open strategy chat"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors glass-btn"
               >
                 <MessageCircle size={16} />
                 Strategy Chat
@@ -41,7 +41,7 @@ const Footer = () => {
               <a
                 href="/#services"
                 aria-label="View services"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors glass-btn"
               >
                 <Briefcase size={16} />
                 Services
@@ -49,7 +49,7 @@ const Footer = () => {
               <a
                 href="/#hardware"
                 aria-label="View hardware section"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors glass-btn"
               >
                 <MonitorSmartphone size={16} />
                 Hardware
@@ -57,7 +57,7 @@ const Footer = () => {
               <a
                 href="mailto:info@quonote.com"
                 aria-label="Email info@quonote.com"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm text-slate-300 hover:bg-blue-600 hover:text-white transition-colors glass-btn"
               >
                 <Mail size={16} />
                 info@quonote.com
