@@ -11,6 +11,16 @@ const HeroSection = () => {
       return;
     }
 
+    const hoverCapable =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches;
+
+    if (!hoverCapable) {
+      section.style.setProperty("--cursor-x", "50%");
+      section.style.setProperty("--cursor-y", "40%");
+      return undefined;
+    }
+
     const updateSpotlight = (event) => {
       const rect = section.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 100;

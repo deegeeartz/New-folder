@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import AiConsultantWidget from "./AiConsultantWidget";
+
+const AiConsultantWidget = lazy(() => import("./AiConsultantWidget"));
 
 const SiteLayout = ({ children }) => {
   return (
@@ -15,7 +16,9 @@ const SiteLayout = ({ children }) => {
       <Navbar />
       {children}
       <Footer />
-      <AiConsultantWidget />
+      <Suspense fallback={null}>
+        <AiConsultantWidget />
+      </Suspense>
     </div>
   );
 };
