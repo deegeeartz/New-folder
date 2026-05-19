@@ -40,16 +40,16 @@ const HeroSection = () => {
       className="relative pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-28 overflow-hidden"
     >
       <div className="hero-spotlight absolute inset-0 pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-blue-900/30 via-indigo-900/10 to-transparent blur-3xl pointer-events-none float-slow"></div>
+      <div className="hero-gradient-orb hero-gradient-orb-top absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-blue-900/30 via-indigo-900/10 to-transparent blur-3xl pointer-events-none float-slow"></div>
       <div
-        className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-purple-900/15 blur-3xl pointer-events-none float-slow"
+        className="hero-gradient-orb hero-gradient-orb-bottom absolute bottom-0 left-0 w-1/2 h-1/2 bg-purple-900/15 blur-3xl pointer-events-none float-slow"
         style={{ animationDelay: "0.6s" }}
       ></div>
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10">
         <div className="max-w-4xl space-y-6">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-900/40 border border-blue-500/30 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide animate-fade-in-up">
-            <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
+          <div className="hero-accept-btn inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold tracking-wide animate-fade-in-up">
+            <span className="accept-dot w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
             Now Accepting New Clients
           </div>
           <h1
@@ -65,7 +65,7 @@ const HeroSection = () => {
                   "smarter AI-powered workflows.",
                   "scalable digital execution.",
                 ]}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400"
+                className="hero-gradient-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400"
                 typeSpeed={80}
                 deleteSpeed={28}
                 pauseMs={2200}

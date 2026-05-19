@@ -4,7 +4,7 @@ import TypewriterText from "./TypewriterText";
 
 const CtaSection = () => {
   return (
-    <section className="py-16 sm:py-24 bg-blue-600 relative overflow-hidden scroll-mt-24">
+    <section className="cta-banner py-16 sm:py-24 bg-blue-600 relative overflow-hidden scroll-mt-24">
       <div
         className="absolute inset-0 opacity-15"
         style={{
