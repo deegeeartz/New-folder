@@ -26,7 +26,11 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 flex justify-between items-center">
-        <Link to="/" aria-label="Go to homepage" className="inline-flex items-center">
+        <Link
+          to="/"
+          aria-label="Go to homepage"
+          className="inline-flex items-center"
+        >
           <QuonoteLogo className="h-8 w-auto sm:h-9 md:h-10" priority />
         </Link>
         <div className="hidden md:flex space-x-8 xl:space-x-10 items-center text-sm font-medium">

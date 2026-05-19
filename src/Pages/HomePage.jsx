@@ -11,7 +11,9 @@ const HardwareSection = lazy(() => import("../components/HardwareSection"));
 const FaqSection = lazy(() => import("../components/FaqSection"));
 const CtaSection = lazy(() => import("../components/CtaSection"));
 
-const SectionFallback = () => <div aria-hidden="true" className="min-h-[1px]" />;
+const SectionFallback = () => (
+  <div aria-hidden="true" className="min-h-[1px]" />
+);
 
 export default function HomePage() {
   return (

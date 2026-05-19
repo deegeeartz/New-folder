@@ -25,7 +25,9 @@ export const ThemeProvider = ({ children }) => {
       // Ignore storage read errors (privacy mode/storage restrictions)
     }
 
-    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    return window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
   });
 
   useEffect(() => {

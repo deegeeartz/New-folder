@@ -67,7 +67,9 @@ const TypewriterText = ({
 
   return (
     <span className="relative inline-block max-w-full align-baseline whitespace-normal">
-      <span className={`invisible block max-w-full whitespace-normal break-words sm:whitespace-nowrap ${className}`}>
+      <span
+        className={`invisible block max-w-full whitespace-normal break-words sm:whitespace-nowrap ${className}`}
+      >
         {longestWord}
       </span>
       <span className="block max-w-full whitespace-normal break-words sm:absolute sm:left-0 sm:top-0 sm:whitespace-nowrap">
