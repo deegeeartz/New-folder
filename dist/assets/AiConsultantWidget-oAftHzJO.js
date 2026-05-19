@@ -1,4 +1,4 @@
-import{j as t,u as $}from"./index-ZfNyn1dC.js";import{r as u}from"./react-vendor-CxZW2Qpy.js";import{p as S,X as A,q as k,L as E,r as M}from"./ui-vendor-D8arTTmF.js";const T=`
+import{j as t,u as $}from"./index-DgyKnoO_.js";import{r as u}from"./react-vendor-CxZW2Qpy.js";import{p as S,X as A,q as k,L as E,r as M}from"./ui-vendor-D8arTTmF.js";const T=`
       You are Quonote's frontline AI assistant.
       Your role is to triage needs, suggest relevant services, and move users toward a consultation.
 

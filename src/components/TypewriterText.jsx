@@ -72,7 +72,7 @@ const TypewriterText = ({
       >
         {longestWord}
       </span>
-      <span className="block max-w-full whitespace-normal break-words sm:absolute sm:left-0 sm:top-0 sm:whitespace-nowrap">
+      <span className="absolute left-0 top-0 block max-w-full whitespace-normal break-words sm:whitespace-nowrap">
         <span className={`${className} break-words`}>{visibleText}</span>
         {!prefersReducedMotion && (
           <span
