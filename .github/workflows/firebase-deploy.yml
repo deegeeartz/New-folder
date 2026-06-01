@@ -1,0 +1,41 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main # Change this to your primary branch name if it is different
+
+jobs:
+  deploy:
+    name: Build and Deploy to Firebase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Frontend
+        run: npm run build
+
+      - name: Deploy to Firebase
+        env:
+          # We use the Service Account Key for authentication (modern standard)
+          FIREBASE_CLI_PREVIEWS: daily
+        run: |
+          # Write the service account key from GitHub Secrets to a temp file
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > service-account-key.json
+          
+          # Run deployment using npx
+          GOOGLE_APPLICATION_CREDENTIALS=service-account-key.json npx firebase-tools deploy --only hosting,functions
+          
+          # Clean up the key file
+          rm service-account-key.json

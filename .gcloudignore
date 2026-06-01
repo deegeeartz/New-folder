@@ -1,0 +1,51 @@
+# Ignore git and configuration
+.git
+.gitignore
+.firebaserc
+firebase.json
+.gcloudignore
+
+# Ignore local dependencies (will be installed by Cloud Build)
+node_modules/
+
+# Ignore frontend source files and static assets
+src/
+public/
+dist/
+
+# Ignore local environment files and logs
+.env
+.env.local
+.env.production
+.env.development
+.env.development.local
+.env.production.local
+.env.test.local
+*.log
+server_error.log
+server_output.log
+tmp/
+*.zip
+
+# Ignore local build configurations
+vite.config.js
+tailwind.config.js
+postcss.config.js
+eslint.config.js
+BRAND_STANDARDS.md
+CPANEL_DEPLOYMENT.md
+DEPLOYMENT.md
+DEPLOYMENT_CHECKLIST.md
+DEPLOYMENT_RUNBOOK.md
+DOCKER_DEPLOYMENT.md
+Dockerfile
+FRONTEND_INTERN_GUIDE.md
+GITHUB_AUTODEPLOY.md
+IMPLEMENTATION_SUMMARY.md
+PERFORMANCE.md
+QUICK_DEPLOY.md
+README.md
+docker-compose.yml
+start.ps1
+test-safety.cjs
+loader.cjs

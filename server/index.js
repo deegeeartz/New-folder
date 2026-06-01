@@ -4,6 +4,7 @@ import { config } from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { onRequest } from 'firebase-functions/v2/https';
 import geminiProxy from './gemini-proxy.js';
 import contactRouter from './contact.js';
 
@@ -99,10 +100,17 @@ app.get('/health', (req, res) => {
 });
 
 // Only listen if executed directly (not imported)
-if (import.meta.url === `file://${process.argv[1]}`) {
+const isDirectRun = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+if (isDirectRun) {
   app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
   });
 }
+
+// Export the Firebase Cloud Function
+export const api = onRequest({
+  cors: true,
+  maxInstances: 10 // Limit concurrency to avoid excessive cold starts/costs under free tier
+}, app);
 
 export default app;
