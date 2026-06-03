@@ -22,7 +22,7 @@ const ChatInput = ({ input, setInput, handleSend, isLoading }) => {
           onClick={handleSend}
           disabled={isLoading}
           className={`p-1.5 rounded-full transition-colors ${ 
-            input.trim() ? 'bg-blue-600 text-white hover:bg-blue-500' : 'bg-slate-700 text-slate-500'
+            input.trim() ? 'bg-blue-600 text-black dark:text-white hover:bg-blue-500' : 'bg-slate-700 text-slate-500'
           }`}
         >
           <Send size={16} />

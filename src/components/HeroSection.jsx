@@ -98,14 +98,14 @@ const HeroSection = () => {
               View Hardware Store
             </Button>
           </div>
-          <div className="flex flex-wrap gap-3 text-xs text-slate-300">
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+          <div className="flex flex-wrap gap-3 text-xs text-black dark:text-white">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               AI Strategy
             </span>
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               Custom Development
             </span>
-            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700">
+            <span className="glass-panel px-3 py-2 rounded-full border border-slate-700 text-black dark:text-white">
               Trusted by Lanzcape (Belgium) & ASMB (Morocco)
             </span>
           </div>

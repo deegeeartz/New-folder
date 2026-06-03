@@ -20,7 +20,7 @@ const QuonoteLogo = ({
         style={{
           filter: theme === "light" ? "none" : "brightness(1.1) contrast(1.2)",
         }}
-        fetchPriority={priority ? "high" : "auto"}
+        fetchpriority={priority ? "high" : "auto"}
         loading={lazy ? "lazy" : "eager"}
         decoding={priority ? "sync" : "async"}
       />

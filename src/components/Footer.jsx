@@ -19,12 +19,12 @@ const Footer = () => {
               <QuonoteLogo className="h-10 w-auto md:h-11" lazy />
             </div>
 
-            <p className="text-slate-500 max-w-sm mb-6">
+            <p className="text-black dark:text-white max-w-sm mb-6">
               A subsidiary of <strong>Quonote Enterprise</strong>. We design AI,
               software, automation, and infrastructure systems for ambitious
               teams across growth-stage and established businesses.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 text-black dark:text-white">
               <button
                 type="button"
                 onClick={() =>
@@ -66,10 +66,10 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-base md:text-lg mb-6">
+            <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-6">
               Solutions
             </h4>
-            <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
+            <ul className="space-y-3 lg:space-y-4 text-black dark:text-white text-sm lg:text-base">
               <li>
                 <a
                   href="/services/ai-consulting/"
@@ -103,10 +103,10 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-base md:text-lg mb-6">
+            <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-6">
               Company
             </h4>
-            <ul className="space-y-3 lg:space-y-4 text-slate-500 text-sm lg:text-base">
+            <ul className="space-y-3 lg:space-y-4 text-black dark:text-white text-sm lg:text-base">
               <li>
                 <a href="/#audiences" className="hover:text-blue-400">
                   Who We Serve

@@ -58,17 +58,16 @@ const FaqSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section
+        <section
       id="faqs"
-      className="py-16 sm:py-24 bg-slate-900/70 scroll-mt-24"
-    >
+      className="py-16 sm:py-24 bg-white dark:bg-slate-900/70 scroll-mt-24"
+        >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="text-center mb-12">
           <h2
-            className="text-3xl md:text-5xl font-bold mb-4"
-            style={{ color: "var(--text-primary)" }}
+            className="text-3xl md:text-5xl font-bold mb-4 text-blue-500 dark:text-blue-400"
           >
-            Frequently asked questions
+            Frequently asked Questions
           </h2>
           <p
             className="text-base sm:text-lg"
@@ -86,29 +85,26 @@ const FaqSection = () => {
             return (
               <div
                 key={faq.question}
-                className="rounded-2xl border border-slate-800 bg-slate-900/70 overflow-hidden"
+                className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 overflow-hidden transition-all duration-300 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-900/10"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-300 hover:bg-slate-50 dark:hover:bg-slate-800/50"
                 >
                   <span
-                    className="font-semibold text-base sm:text-lg"
-                    style={{ color: "var(--text-primary)" }}
+                    className="font-semibold text-base sm:text-lg text-slate-900 dark:text-white"
                   >
                     {faq.question}
                   </span>
                   <ChevronDown
                     size={20}
-                    className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-                    style={{ color: "var(--text-secondary)" }}
+                    className={`text-blue-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
                 {isOpen && (
                   <div
-                    className="px-6 pb-5 text-sm sm:text-base leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
+                    className="px-6 pb-5 text-sm sm:text-base leading-relaxed text-slate-500 dark:text-slate-400"
                   >
                     {faq.answer}
                   </div>

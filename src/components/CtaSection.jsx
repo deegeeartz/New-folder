@@ -15,7 +15,7 @@ const CtaSection = () => {
         }}
       ></div>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
           Transform your business with technology that scales.
         </h2>
         <p className="text-blue-200 text-sm sm:text-base font-medium mb-5">
@@ -40,13 +40,13 @@ const CtaSection = () => {
                 "I want to book a free consultation and discuss the best digital growth plan for my business.",
               )
             }
-            className="btn-micro px-8 py-4 bg-white text-blue-600 font-bold rounded-lg shadow-xl hover:bg-gray-100 transition-transform transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto"
+            className="btn-micro px-8 py-4 bg-slate-950 text-white font-bold rounded-lg border border-slate-700 shadow-xl hover:border-blue-500/50 hover:bg-slate-900 transition-all transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto"
           >
             Book Free Consultation
           </button>
           <a
             href="mailto:info@quonote.com?subject=Quonote%20Sales%20Enquiry"
-            className="btn-micro px-8 py-4 bg-blue-700 text-white font-bold rounded-lg border border-blue-500 hover:bg-blue-800 transition-transform transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto text-center"
+            className="btn-micro px-8 py-4 bg-transparent text-black dark:text-white font-bold rounded-lg border border-slate-700 hover:border-blue-500/50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all transform hover:-translate-y-1 active:scale-[0.98] w-full sm:w-auto text-center"
           >
             Contact Sales Team
           </a>

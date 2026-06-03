@@ -63,7 +63,7 @@ const StatsBar = () => {
               className="glass-panel rounded-2xl border border-slate-800/80 p-5 text-center shadow-lg shadow-slate-900/40 floating-card reveal-up"
               delay={60 * idx}
             >
-              <div className="text-3xl font-bold text-white mb-1">
+              <div className="text-3xl font-bold text-black dark:text-white mb-1">
                 {counts[idx]}
                 {stat.suffix}
               </div>

@@ -98,7 +98,7 @@ const AiConsultantWidget = () => {
           <ChatHeader onClose={() => setIsOpen(false)} />
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900/95">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-slate-900/95" style={{ background: "white" }}>
             {messages.map((msg, index) => (
               <ChatMessage key={index} message={msg} />
             ))}
@@ -131,9 +131,9 @@ const AiConsultantWidget = () => {
         className="group flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full shadow-lg shadow-blue-600/30 hover:scale-110 transition-transform duration-300"
       >
         {isOpen ? (
-          <X size={24} className="text-white" />
+          <X size={24} className="text-black dark:text-white" />
         ) : (
-          <Bot size={28} className="text-white animate-pulse" />
+          <Bot size={28} className="text-black dark:text-white animate-pulse" />
         )}
 
         {/* Tooltip hint when closed */}

@@ -26,7 +26,7 @@ const ServiceCard = ({
       >
         {IconComponent && (
           <IconComponent
-              className={`text-blue-400 group-hover:text-white transition-colors duration-300 light-mode-icon`}
+            className={`text-blue-400 group-hover:text-white transition-colors duration-300 light-mode-icon`}
             size={isBento ? 28 : 24}
           />
         )}

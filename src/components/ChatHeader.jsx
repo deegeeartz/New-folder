@@ -11,7 +11,7 @@ const ChatHeader = ({ onClose }) => {
           <p className="text-white text-xs opacity-90">Powered by Gemini ✨</p>
         </div>
       </div>
-      <button onClick={onClose} className="text-white/80 hover:text-white">
+      <button onClick={onClose} className="text-black/80 dark:text-white/80 hover:text-black dark:hover:text-white">
         <X size={18} />
       </button>
     </div>

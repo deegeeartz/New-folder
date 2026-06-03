@@ -163,7 +163,7 @@ const ContactSection = () => {
           </div>
 
           {/* Right column — form */}
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8 shadow-2xl shadow-slate-950/30">
+          <div className="rounded-3xl bg-slate-900/80 backdrop-blur border border-slate-800 p-6 sm:p-8 transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20">
             {/* ── Success state ── */}
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center text-center py-10 gap-4">
@@ -327,7 +327,7 @@ const ContactSection = () => {
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="inline-flex justify-center items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="inline-flex justify-center items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-black dark:text-white hover:bg-blue-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === "loading" ? (
                       <>

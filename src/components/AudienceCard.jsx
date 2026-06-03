@@ -11,11 +11,10 @@ const AudienceCard = ({ title, desc, features, color, href }) => {
   const accentBg = colorBgMap[color] || colorBgMap.blue;
 
   return (
-    <div className="relative flex h-full flex-col p-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 border border-slate-800 overflow-hidden floating-card">
+    <div className="group relative flex h-full flex-col p-8 rounded-2xl bg-slate-900/80 backdrop-blur border border-slate-800 overflow-hidden transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20 floating-card">
       <div
-        className={`absolute -top-10 -right-10 w-48 h-48 bg-gradient-to-br ${accentBg} rounded-full blur-3xl opacity-80`}
+        className={`absolute -top-10 -right-10 w-48 h-48 bg-gradient-to-br ${accentBg} rounded-full blur-3xl opacity-70 transition-opacity duration-300 group-hover:opacity-90`}
       ></div>
-      <div className="absolute inset-0 border border-white/5 rounded-2xl pointer-events-none"></div>
       <h3 className="relative z-10 text-2xl font-bold leading-tight text-white mb-3">
         {title}
       </h3>
@@ -26,7 +25,7 @@ const AudienceCard = ({ title, desc, features, color, href }) => {
         {features.map((feat, idx) => (
           <li key={idx} className="flex items-start text-sm text-slate-300">
             <CheckCircle
-              className="text-blue-500 mr-2 flex-shrink-0"
+              className="text-blue-400 mr-2 flex-shrink-0"
               size={16}
             />
             {feat}
@@ -36,12 +35,12 @@ const AudienceCard = ({ title, desc, features, color, href }) => {
       {href ? (
         <Link
           to={href}
-          className="relative z-10 mt-auto text-blue-300 font-semibold inline-flex items-center hover:text-cyan-200 transition-colors"
+          className="relative z-10 mt-auto inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors"
         >
           Learn More <ArrowRight size={16} className="ml-2" />
         </Link>
       ) : (
-        <button className="relative z-10 mt-auto text-blue-300 font-semibold flex items-center hover:text-cyan-200 transition-colors">
+        <button className="relative z-10 mt-auto flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors">
           Learn More <ArrowRight size={16} className="ml-2" />
         </button>
       )}

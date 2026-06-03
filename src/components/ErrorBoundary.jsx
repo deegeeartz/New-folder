@@ -39,7 +39,7 @@ class ErrorBoundary extends React.Component {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
               Oops! Something went wrong
             </h2>
             <p className="text-slate-400 mb-6">
@@ -48,7 +48,7 @@ class ErrorBoundary extends React.Component {
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="px-6 py-3 bg-blue-600 text-black dark:text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Refresh Page
             </button>
