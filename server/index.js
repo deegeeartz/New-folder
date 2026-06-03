@@ -55,15 +55,16 @@ app.get('/debug-assets', (req, res) => {
   });
 });
 
-// Enable strict CORS but allow Vercel/Localhost
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'https://quonote.com',
-  'https://www.quonote.com',
-  'https://quonote-frontend.vercel.app', // Generic Vercel stub (user will need to update this if different)
-  process.env.VITE_VERCEL_URL // dynamic Vercel URL
-];
+// Enable strict CORS but allow Vercel/Firebase/Localhost
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : [
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'https://quonote.com',
+      'https://www.quonote.com',
+      'https://quonote-frontend.vercel.app'
+    ];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -72,7 +73,10 @@ app.use(cors({
     
     // Check if origin matches any allowed domain
     const isAllowed = allowedOrigins.some(allowed => 
-      origin === allowed || origin.endsWith('.vercel.app') // Allow all vercel preview deployments
+      origin === allowed || 
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.web.app') ||
+      origin.endsWith('.firebaseapp.com')
     );
 
     if (isAllowed) {
