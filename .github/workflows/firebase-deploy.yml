@@ -3,7 +3,7 @@ name: Deploy to Firebase
 on:
   push:
     branches:
-      - main # Change this to your primary branch name if it is different
+      - main
 
 jobs:
   deploy:
@@ -26,16 +26,25 @@ jobs:
       - name: Build Frontend
         run: npm run build
 
-      - name: Deploy to Firebase
-        env:
-          # We use the Service Account Key for authentication (modern standard)
-          FIREBASE_CLI_PREVIEWS: daily
+      - name: Create .env file for Functions
         run: |
-          # Write the service account key from GitHub Secrets to a temp file
+          echo "NODE_ENV=production" > .env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+          echo "GEMINI_MODEL=${{ secrets.GEMINI_MODEL }}" >> .env
+          echo "ALLOWED_ORIGINS=${{ secrets.ALLOWED_ORIGINS }}" >> .env
+          echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
+
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}"
+          channelId: live
+          projectId: quonote-app
+
+      - name: Deploy Cloud Functions
+        run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > service-account-key.json
-          
-          # Run deployment using npx
-          GOOGLE_APPLICATION_CREDENTIALS=service-account-key.json npx firebase-tools deploy --only hosting,functions
-          
-          # Clean up the key file
+          export GOOGLE_APPLICATION_CREDENTIALS=service-account-key.json
+          npx firebase-tools deploy --only functions --force --project quonote-app
           rm service-account-key.json
